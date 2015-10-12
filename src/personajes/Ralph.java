@@ -1,5 +1,6 @@
 package personajes;
 import entorno.Ladrillo;
+import entorno.Seccion;
 import misc.Posicion;
 
 public class Ralph {
@@ -23,6 +24,7 @@ public class Ralph {
 		setTimeLadrillo(tiempo_lad);
 		setVelocidad(vel_ralph);
 		setSeccion(sec);
+		//setImagen(img);
 		//por ser prueba se informa lo realizado
 		System.out.println(" ");
 		System.out.println("Ralph se inicio en la Seccion " +Seccion.id()+ " en la posicion "+getPosicion().getX()+ ", "+getPosicion().getY());
@@ -54,7 +56,7 @@ public class Ralph {
 	}
 
 	public int getTimeLadrillo(){
-		return time_ladrillos;
+		return time_ladrillo;
 	}
 
 	public int getVelocidad(){
