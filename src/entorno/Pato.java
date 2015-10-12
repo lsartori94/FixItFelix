@@ -1,9 +1,11 @@
 package entorno;
+import misc.Posicion;
 
 public class Pato {
 	private Posicion posicion;
 	private int velocidad;
-	private Sprite imagen;
+	//se comenta Sprite por ser prueba
+//	private Sprite imagen;
 
 	public Posicion getPosicion() {
 		return posicion;
@@ -21,16 +23,16 @@ public class Pato {
 		this.velocidad = velocidad;
 	}
 
-	public Sprite getImagen() {
-		return imagen;
-	}
+//	public Sprite getImagen() {
+//		return imagen;
+//	}
 
-	public void setImagen(Sprite imagen) {
-		this.imagen = imagen;
-	}
+//	public void setImagen(Sprite imagen) {
+//		this.imagen = imagen;
+//	}
 
-	public void mover(Direccion dir){
-
-	}
+//	public void mover(Direccion dir){
+//
+//	}
 
 }

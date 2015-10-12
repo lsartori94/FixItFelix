@@ -1,19 +1,35 @@
 package personajes;
+import misc.Posicion;
 
 public class Felix {
 	private Posicion posicion;
-	private Sprite imagen;
+	//se comenta Sprite por ser prueba
+//	private Sprite imagen;
 	private int vidas;
 	private boolean poder;
 
-	public Sprite getImagen() {
+	//inicia Default Felix
+	public void iniciar(){
+		//se asume como posicion inicial el piso 0 a la mitad del mapa (fila 3 de 5)
+		Posicion tmp_pos= new Posicion(3, 0);
+		setPosicion(tmp_pos);
+		setVidas(3);
+		setPoder(false);
+		//aca se define la imagen con setImagen
+		//por ser prueba se informa creacion
+		System.out.println(" ");
+		System.out.println("Felix se creo en la posicion "+getPosicion().getX()+", "+getPosicion().getY()+" con "+getVidas()+" vidas");
+		System.out.println("Poder de Felix= "+Poder());
+	}
+
+/*	public Sprite getImagen() {
 		return imagen;
 	}
 
 	public void setImagen(Sprite imagen) {
 		this.imagen = imagen;
 	}
-
+*/
 	public Posicion getPosicion() {
 		return posicion;
 	}
@@ -38,20 +54,33 @@ public class Felix {
 		this.poder = poder;
 	}
 
+	//metodo a ejecutar para mover a Felix en una direccion
+	//direccion no se utiliza por ser prueba
+//	public void mover(Direccion dir){
+//		
+//	}
+
+	//metodo a ejecutar cuando se tenga que arreglar algo
 	public void martillar(){
-		//metodo a ejecutar cuando se tenga que arreglar algo
+
 	}
 
+	//metodo a ejecutar cuando se reciba un golpe
 	public void golpe(){
-		//metodo a ejecutar cuando se reciba un golpe
+		int v_temp= getVidas();
+		setVidas(v_temp --);
+		//luego se debe implementar el Sprite correspondiente
 	}
 
+	// metodo a ejecutar cuando se gane el nivel
 	public void victoria(){
-		// metodo a ejecutar cuando se gane el nivel
+
 	}
 
-	public void getVida(){
-		// suma una vida al total
+	// suma una vida al total
+	public void sumarVida(){
+		int v_temp= getVidas();
+		setVidas(v_temp ++);
 	}
 
 }

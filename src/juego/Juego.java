@@ -1,4 +1,6 @@
 package juego;
+import personajes.Felix;
+import personajes.Ralph;
 
 public final class Juego {
 	private Ralph ralph;
