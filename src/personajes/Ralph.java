@@ -9,7 +9,8 @@ public class Ralph {
 	private int time_ladrillo;
 	//espera entre cambio de posicion
 	private int velocidad;
-	private Ladrillo ladrillo;
+	private Ladrillo [] ladrillos;
+	private int ladrillo_act;
 	//tiempo de espera entre ladrillos
 	private int intervalo_lad;
 	//Sprite se comenta por ser prueba
@@ -18,16 +19,18 @@ public class Ralph {
 	private Posicion posicion;
 
 	//metodo para iniciar a Ralph por nivel. no se asume Sprite por ser prueba
-	public void Ralph(int cant_lad, int tiempo_lad, int vel_ralph, Posicion pos, Seccion sec/*, Sprite img*/){
+	public Ralph(int cant_lad, int tiempo_lad, int vel_lad, int vel_ralph, Posicion pos, Seccion sec/*, Sprite img*/){
 		setPosicion(pos);
 		setCantLadrillos(cant_lad);
+		crearLadrillos(cant_lad, vel_lad, pos);
 		setTimeLadrillo(tiempo_lad);
+		setLadrillo_act(0);
 		setVelocidad(vel_ralph);
 		setSeccion(sec);
 		//setImagen(img);
 		//por ser prueba se informa lo realizado
 		System.out.println(" ");
-		System.out.println("Ralph se inicio en la Seccion " +Seccion.id()+ " en la posicion "+getPosicion().getX()+ ", "+getPosicion().getY());
+		System.out.println("Ralph se inicio en la Seccion " +seccion.getId()+ " en la posicion "+getPosicion().getX()+ ", "+getPosicion().getY());
 		System.out.println("Ralph tiene "+getCantLadrillos()+ " ladrillos, con un espacio de lanzamiento de "+getTimeLadrillo()+" segundos");
 		System.out.println("Ralph se mueve de lugar cada "+getVelocidad()+" segundos");
 	}
@@ -40,7 +43,10 @@ public class Ralph {
 
 	//metodo a ejecutar para que Ralph tire un ladrillo
 	public void shoot(){
-		
+		ladrillos[ladrillo_act].caer();
+		setCantLadrillos(getCantLadrillos()-1);
+		setLadrillo_act(getLadrillo_act()-1);
+		System.out.println("Ralph lanzo un ladrillo");
 	}
 
 	public Posicion getPosicion(){
@@ -65,6 +71,8 @@ public class Ralph {
 
 	public void setPosicion(Posicion pos){
 		posicion= pos;
+		//al ser prueba se informa del movimiento
+		System.out.println("Ralph se movio a ["+posicion.getX()+" , "+posicion.getY()+"]");
 	}
 
 //	public void setImagen(Sprite img){
@@ -91,14 +99,37 @@ public class Ralph {
 		this.seccion = seccion;
 	}
 
-
 	public int getIntervalo_lad() {
 		return intervalo_lad;
 	}
 
-
 	public void setIntervalo_lad(int intervalo_lad) {
 		this.intervalo_lad = intervalo_lad;
 	}
+
+	private void crearLadrillos(int cant, int vel, Posicion pos){
+		for(int i= 0; i<cant; i++){
+			ladrillos[i]= new Ladrillo(pos, vel);
+		}
+	}
+
+	public void romper(/*Sprite img*/){
+		seccion.getVentana(posicion).setRota(true);
+		//al ser prueba no se modifica imagen
+		//seccion.getVentana(posicion).setImagen(img);
+		System.out.println("Ralph rompio la Ventana ["+posicion.getX()+" , "+posicion.getY()+"]");
+	}
 	
+	public void setLadrillo_act(int act){
+		ladrillo_act= act;
+	}
+
+	public int getLadrillo_act(){
+		return ladrillo_act;
+	}
+
+	public void mover(Direccion dir){
+
+	}
+
 }

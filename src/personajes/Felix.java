@@ -61,8 +61,10 @@ public class Felix {
 //	}
 
 	//metodo a ejecutar cuando se tenga que arreglar algo
-	public void martillar(){
-
+	public void martillar(/*Sprite img*/){
+		//setImagen(img);
+		//se informa por ser prueba
+		System.out.println("Felix martilla ventana");
 	}
 
 	//metodo a ejecutar cuando se reciba un golpe
@@ -70,6 +72,8 @@ public class Felix {
 		int v_temp= getVidas();
 		setVidas(v_temp --);
 		//luego se debe implementar el Sprite correspondiente
+		//por ser prueba se informa
+		System.out.println("Felix perdio una vida. Vidas restantes= "+getVidas());
 	}
 
 	// metodo a ejecutar cuando se gane el nivel
@@ -83,4 +87,7 @@ public class Felix {
 		setVidas(v_temp ++);
 	}
 
+	public void mover(Direccion dir){
+		
+	}
 }

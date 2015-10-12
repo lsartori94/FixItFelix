@@ -1,15 +1,19 @@
 package entorno;
 
+import misc.Posicion;
+
 public class Seccion {
 	private int cant_filas;
 	private int cant_columnas;
 	private int cant_rotas;
 	private int cant_modificador;
+	private int id;
 	//se comenta Sprite por ser prueba
 //	private Sprite imagen;
-	private Ventana [] ventanas;
+	private Ventana [][] ventanas;
 
-	public Seccion(int c_f, int c_c, int c_rot, int c_mod, Ventana[] ventanas/*,Sprite img*/){
+	//metodo de inicio de Seccion
+	public Seccion(int c_f, int c_c, int c_rot, int c_mod, Ventana[][] ventanas/*,Sprite img*/){
 		setCant_filas(c_f);
 		setCant_columnas(c_c);
 		setCant_rotas(c_rot);
@@ -18,7 +22,7 @@ public class Seccion {
 		//setImagen(img);
 		//por ser prueba se informa creacion
 		System.out.println(" ");
-		System.out.println("Se creo seccion con "+getCant_filas()+" filas, "+getCant_columnas()+" columnas");
+		System.out.println("Se creo seccion con "+getCant_filas()+" filas, "+getCant_columnas()+" columnas, con ID "+getId());
 		System.out.println("La seccion posee "+ getCant_rotas()+" ventanas rotas y "+getCant_modificador()+" ventanas modificadas");
 	}
 
@@ -62,12 +66,24 @@ public class Seccion {
 //		this.imagen = imagen;
 //	}
 
-	public Ventana[] getVentanas() {
-		return ventanas;
+	public Ventana [][] getVentanas() {
+		Ventana [][] tmp_v= ventanas.clone();
+		return tmp_v;
 	}
 
-	public void setVentanas(Ventana[] ventanas) {
+	public void setVentanas(Ventana[][] ventanas) {
 		this.ventanas = ventanas;
 	}
 	
+	public int getId(){
+		return id;
+	}
+
+	public void setId(int ident){
+		id= ident;
+	}
+
+	public Ventana getVentana(Posicion pos){
+		return ventanas[pos.getX()][pos.getY()];
+	}
 }
