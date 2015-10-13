@@ -12,7 +12,7 @@ public class Felix {
 	//inicia Default Felix
 	public void iniciar(){
 		//se asume como posicion inicial el piso 0 a la mitad del mapa (fila 3 de 5)
-		Posicion tmp_pos= new Posicion(3, 0);
+		Posicion tmp_pos= new Posicion(2, 0);
 		setPosicion(tmp_pos);
 		setVidas(3);
 		setPoder(false);

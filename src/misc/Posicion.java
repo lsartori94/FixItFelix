@@ -1,6 +1,6 @@
 package misc;
 
-public class Posicion {
+public class Posicion implements Comparable<Posicion>{
 	private int x;	//posicion horizontal
 	private int y;	//posicion vertical
 	
@@ -29,6 +29,16 @@ public class Posicion {
 	//setea posicion vertical
 	public void setY(int y) {
 		this.y = y;
+	}
+
+	//si son iguales devuelve 0, caso contrario es indistinto
+	public int compareTo(Posicion o) {
+		// TODO Auto-generated method stub
+		if(x == o.x){
+			if(y == o.y)
+				return 0;
+		}
+		return -1;
 	}
 
 }

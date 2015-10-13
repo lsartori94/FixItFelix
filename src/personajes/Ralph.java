@@ -114,6 +114,10 @@ public class Ralph {
 		}
 	}
 
+	public Ladrillo [] getLadrillos(){
+		return ladrillos;
+	}
+
 	public void romper(/*Sprite img*/){
 		seccion.getVentana(posicion).setRota(true);
 		//al ser prueba no se modifica imagen

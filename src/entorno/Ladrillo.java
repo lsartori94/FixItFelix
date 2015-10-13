@@ -5,6 +5,7 @@ public class Ladrillo {
 	private Posicion posicion;
 	private int velocidad;
 	private boolean visible;
+
 	//al ser prueba se comenta Sprite
 //	private Sprite imagen;
 
