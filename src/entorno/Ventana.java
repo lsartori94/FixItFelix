@@ -6,6 +6,8 @@ public class Ventana {
 		private boolean rota;
 		//golpes para arreglar
 		private int golpes_fix;
+		//golpes acumulados
+		private int golpes_act;
 		//al ser prueba se comenta Sprite
 		//private Sprite imagen;
 		
@@ -14,6 +16,7 @@ public class Ventana {
 			setMoldura(mold);
 			setMacetero(mace);
 			setGolpes_fix(fix);
+			setGolpes_act(0);
 			//setImagen(img);
 			setRota(rota);
 			//por ser prueba se informa cracion
@@ -61,6 +64,14 @@ public class Ventana {
 //			this.imagen = imagen;
 //		}
 
+		public int getGolpes_act() {
+			return golpes_act;
+		}
+
+		public void setGolpes_act(int golpes_act) {
+			this.golpes_act = golpes_act;
+		}
+
 		public void romper(/*Sprite img*/){
 			setRota(true);
 			//por ser prueba no se cambia Sprite
@@ -68,8 +79,8 @@ public class Ventana {
 		}
 
 		public void arreglar(/*Sprite img*/){
-			setGolpes_fix(getGolpes_fix()-1);
-			if(getGolpes_fix() == 0)
+			setGolpes_act(getGolpes_act()+1);
+			if(getGolpes_act() == getGolpes_fix())
 				//setImagen(img);
 				//al ser pruba se informa
 				System.out.println("Ventana Arreglada");

@@ -5,10 +5,11 @@ public class Doble_panel extends Ventana{
 	private Panel panel_inferior;
 	private Panel panel_superior;
 
-	public Doble_panel(boolean mold, boolean mace, boolean rota, boolean pie, Panel p_i, Panel p_s) {
-		super(mold, mace, rota, 4);
+	public Doble_panel(boolean mold, boolean mace, boolean rota/*, Sprite img*/) {
+		super(mold, mace, rota, 4/*, Sprite img*/);
 		// TODO Auto-generated constructor stub
-		setPie(pie);
+		Panel p_i= new Panel(true, true);
+		Panel p_s= new Panel(true, true);
 		setPanel_inferior(p_i);
 		setPanel_superior(p_s);
 	}
@@ -41,4 +42,20 @@ public class Doble_panel extends Ventana{
 		this.panel_superior = panel_superrior;
 	}
 
+	public void romper(/*Sprite img*/){
+		panel_inferior.romper();
+		panel_superior.romper();
+		super.setGolpes_act(0);
+	}
+
+	@Override
+	public void arreglar(/*Sprite img*/){
+		super.arreglar(/*img*/);
+		if(super.getGolpes_act() <= 2){
+			panel_inferior.arreglar();
+		}else if(super.getGolpes_act() > 2){
+			panel_superior.arreglar();
+		}
+		
+	}
 }

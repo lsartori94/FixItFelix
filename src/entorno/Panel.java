@@ -30,4 +30,9 @@ public class Panel {
 			setCompleta(true);
 		setParcial(true);
 	}
+
+	public void romper(){
+		setParcial(false);
+		setCompleta(false);
+	}
 }
