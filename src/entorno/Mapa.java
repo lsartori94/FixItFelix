@@ -9,7 +9,7 @@ public class Mapa {
 		setCant_secciones(tamanio);
 		setSecciones(secc);
 		//por ser prueba se informa creacion
-		System.out.println("Se creo mapa con "+getCant_secciones());
+		System.out.println("Se creo mapa con "+getCant_secciones()+" secciones");
 	}
 
 	public int getCant_secciones() {

@@ -97,7 +97,7 @@ public class Felix {
 		switch (d.getValue()) {
 			case 1:
 				tmp.setY(tmp.getY()+1);
-				if (tmp.getY() < 5){
+				if (tmp.getY() < 3){
 					setPosicion(tmp);
 					System.out.println("Felix se movio arriba");
 				}else

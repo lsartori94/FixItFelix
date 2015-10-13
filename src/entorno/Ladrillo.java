@@ -2,7 +2,7 @@ package entorno;
 import misc.Posicion;
 
 public class Ladrillo {
-	private Posicion posicion;
+	private Posicion posicionl;
 	private int velocidad;
 	private boolean visible;
 
@@ -16,16 +16,16 @@ public class Ladrillo {
 		setVisible(false);
 		//al ser prueba se informa creacion
 		System.out.println(" ");
-		System.out.println("Se creo ladrillo de posicion "+getPosicion()+" y de velocidad de caida "+getVelocidad());
+		System.out.println("Se creo ladrillo de posicion ["+getPosicion().getX()+" , "+getPosicion().getY()+"] y de velocidad de caida "+getVelocidad());
 	}
 
 	public Posicion getPosicion() {
-		return posicion;
+		return posicionl;
 	}
 
 	//metodo a ejecutar para mover al ladrillo
 	public void setPosicion(Posicion posicion) {
-		this.posicion = posicion;
+		posicionl = posicion;
 	}
 
 	public int getVelocidad() {
@@ -60,10 +60,11 @@ public class Ladrillo {
 //			setImagen(posicion);
 		}
 		Posicion tmp_pos= getPosicion();
+		System.out.println("tmp_pos "+tmp_pos.getX()+" "+tmp_pos.getY() );
 		tmp_pos.setY(tmp_pos.getY()-1);
 		setPosicion(tmp_pos);
 //		setImagen(posicion);
 		System.out.println(" ");
-		System.out.println("El ladrillo cayo a la posicion ["+posicion.getX()+" , "+posicion.getY()+"]");
+		System.out.println("El ladrillo cayo a la posicion ["+posicionl.getX()+" , "+posicionl.getY()+"]");
 	}
 }

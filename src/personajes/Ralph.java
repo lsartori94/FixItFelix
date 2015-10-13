@@ -23,6 +23,7 @@ public class Ralph {
 	public Ralph(int cant_lad, int tiempo_lad, int vel_lad, int vel_ralph, Posicion pos, Seccion sec/*, Sprite img*/){
 		setPosicion(pos);
 		setCantLadrillos(cant_lad);
+		
 		crearLadrillos(cant_lad, vel_lad, pos);
 		setTimeLadrillo(tiempo_lad);
 		setLadrillo_act(0);
@@ -44,10 +45,12 @@ public class Ralph {
 
 	//metodo a ejecutar para que Ralph tire un ladrillo
 	public void shoot(){
-		ladrillos[ladrillo_act].caer();
-		setCantLadrillos(getCantLadrillos()-1);
-		setLadrillo_act(getLadrillo_act()-1);
 		System.out.println("Ralph lanzo un ladrillo");
+		System.out.println("Antes de caer "+posicion.getX()+" "+posicion.getY() );
+		ladrillos[ladrillo_act].caer();
+		System.out.println("Dps de caer "+posicion.getX()+" "+posicion.getY() );
+		setCantLadrillos(getCantLadrillos()-1);
+		setLadrillo_act(getLadrillo_act()+1);
 	}
 
 	public Posicion getPosicion(){
@@ -82,6 +85,7 @@ public class Ralph {
 
 	public void setCantLadrillos(int lad){
 		cant_ladrillos= lad;
+		ladrillos= new Ladrillo [lad];
 	}
 
 	public void setTimeLadrillo(int tlad){
@@ -135,11 +139,11 @@ public class Ralph {
 
 	public void move(Direccion d){
 		Posicion tmp= posicion;
-		
+		System.out.println("Antes del move "+tmp.getX()+" "+tmp.getY() );
 		switch (d.getValue()) {
 			case 1:
 				tmp.setY(tmp.getY()+1);
-				if (tmp.getY() < 5){
+				if (tmp.getY() < 3){
 					setPosicion(tmp);
 					System.out.println("Ralph se movio arriba");
 				}else

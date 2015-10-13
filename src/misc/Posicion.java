@@ -6,8 +6,8 @@ public class Posicion implements Comparable<Posicion>{
 	
 	//inicia posicion
 	public Posicion(int col, int fil){
-		setX(fil);
-		setY(col);
+		setX(col);
+		setY(fil);
 	}
 
 	//devuelve posicion horizontal

@@ -13,7 +13,7 @@ public final class Juego {
 //	private Tiempo tiempo;
 //	private Highscore highscores;
 
-	public void main(String[] args) {
+	public void go() {
 		// TODO Auto-generated method stub
 		comenzar();
 		while(true){
@@ -42,6 +42,9 @@ public final class Juego {
 		sec[0]= new Seccion(3,5,7,0, vent);
 		Mapa map= new Mapa(sec, 1);
 		
+		System.out.println("Se va a inicializar Felix");
+		
+		felix= new Felix();
 		felix.iniciar();
 		
 		Posicion posR= new Posicion(0, 2);
