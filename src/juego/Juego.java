@@ -31,10 +31,10 @@ public final class Juego {
 
 	private void comenzar(){
 		// codigo a ejecutar para iniciar el juego
-		int filas= 3;
+		int filas= 5;
 		int colum= 5;
 		Ventana [][] vent = new Ventana[colum][filas];
-		for(int i=0; i<filas; i++){
+		for(int i=1; i<filas-1; i++){
 			for(int j=0; j<colum; j++){
 				if(j % 2 == 0)
 					vent[j][i]= new Doble_panel(false, false, false);
@@ -56,7 +56,7 @@ public final class Juego {
 		felix= new Felix();
 		felix.iniciar();
 		
-		Posicion posR= new Posicion(0, 2);
+		Posicion posR= new Posicion(0, 4);
 		ralph= new Ralph(50, 1, 1, 1, posR, sec[0]);
 
 	}
