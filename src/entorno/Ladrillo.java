@@ -14,9 +14,6 @@ public class Ladrillo {
 		setPosicionl(posl);
 		setVelocidad(vel);
 		setVisible(false);
-		//al ser prueba se informa creacion
-		System.out.println(" ");
-		System.out.println("Se creo ladrillo de posicion ["+getPosicionl().getX()+" , "+getPosicionl().getY()+"] y de velocidad de caida "+getVelocidad());
 	}
 
 	public Posicion getPosicionl() {
@@ -59,7 +56,6 @@ public class Ladrillo {
 //			setVisible(true);
 //			setImagen(posicion);
 //		}
-		System.out.println("Antes "+posicionl.getX()+" "+posicionl.getY() );
 		if(posicionl.getY() > 0){
 			Posicion tmp = new Posicion(posicionl.getX(),posicionl.getY()-1);
 			setPosicionl(tmp);

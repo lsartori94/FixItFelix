@@ -42,6 +42,7 @@ public final class Juego {
 		sec[0]= new Seccion(3,5,7,0, vent);
 		Mapa map= new Mapa(sec, 1);
 		
+		System.out.println("");
 		System.out.println("Se va a inicializar Felix");
 		
 		felix= new Felix();
@@ -66,15 +67,15 @@ public final class Juego {
 
 	private boolean checkGameFin(){
 		int l_act= ralph.getLadrillo_act();
-		Ladrillo [] ladrillos= ralph.getLadrillos();
 		//evalua los ladrillos tirados para ver si golpearona felix
 		for(int i= 0; i < l_act; i++){
-			if(ladrillos[i].getPosicionl().equals(felix.getPosicion())){
+			Ladrillo lad= ralph.getLadrillo(i);
+			if(lad.getPosicionl().compareTo(felix.getPosicion())==0){
 				felix.golpe();
 			}
 			if(felix.getVidas() == 0)
 				return true;
-			ladrillos[i].caer();
+			//lad.caer();
 		}
 		return false;
 	}

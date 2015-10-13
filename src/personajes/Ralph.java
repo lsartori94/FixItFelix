@@ -45,9 +45,7 @@ public class Ralph {
 	//metodo a ejecutar para que Ralph tire un ladrillo
 	public void shoot(){
 		System.out.println("Ralph lanzo un ladrillo");
-		System.out.println("Antes de caer "+posicion.getX()+" "+posicion.getY() );
 		ladrillos[getLadrillo_act()].caer();
-		System.out.println("Dps de caer "+posicion.getX()+" "+posicion.getY() );
 		setCantLadrillos(getCantLadrillos()-1);
 		setLadrillo_act(getLadrillo_act()+1);
 	}
@@ -84,7 +82,6 @@ public class Ralph {
 
 	public void setCantLadrillos(int lad){
 		cant_ladrillos= lad;
-		ladrillos= new Ladrillo [lad];
 	}
 
 	public void setTimeLadrillo(int tlad){
@@ -112,13 +109,17 @@ public class Ralph {
 	}
 
 	private void crearLadrillos(int cant, int vel, Posicion pos){
+		Ladrillo [] tmp= new Ladrillo[cant];
 		for(int i= 0; i<cant; i++){
-			ladrillos[i]= new Ladrillo(pos, vel);
+			tmp[i]= new Ladrillo(pos, vel);
 		}
+		ladrillos= tmp;
+		System.out.println("");
+		System.out.println("Se crearon "+cant+" ladrillos de posicion ["+pos.getX()+" , "+pos.getY()+"] con velocidad de caida "+vel);
 	}
 
-	public Ladrillo [] getLadrillos(){
-		return ladrillos;
+	public Ladrillo getLadrillo(int i){
+		return ladrillos[i];
 	}
 
 	public void romper(/*Sprite img*/){
@@ -138,7 +139,6 @@ public class Ralph {
 
 	public void move(Direccion d){
 		Posicion tmp= posicion;
-		System.out.println("Antes del move "+tmp.getX()+" "+tmp.getY() );
 		switch (d.getValue()) {
 			case 1:
 				tmp.setY(tmp.getY()+1);
