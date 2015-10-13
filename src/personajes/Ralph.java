@@ -134,38 +134,38 @@ public class Ralph {
 		switch (d.getValue()) {
 			case 1:
 				tmp.setY(tmp.getY()+1);
-				if (tmp es accesible)
-					posicion = tmp;
+				if (tmp.getY() < 5)
+					setPosicion(tmp);
+					System.out.println("Ralph se movio arriba");
 				else
 					System.out.println("No se puede acceder a esa posición");
-					tmp = posicion;
 				break;
 			
 			case 2:
 				tmp.setY(tmp.getY()-1);
-				if (tmp es accesible)
-					posicion = tmp;
+				if (tmp.getY() > 0)
+					setPosicion(tmp);
+					System.out.println("Ralph se movio abajo");
 				else
 					System.out.println("No se puede acceder a esa posición");
-					tmp = posicion;
 				break;
 		
 			case 3:
 				tmp.setX(tmp.getX()-1);
-				if (tmp es accesible)
-					posicion = tmp;
+				if (tmp.getX() > 0)
+					setPosicion(tmp);
+					System.out.println("Ralph se movio a la izq");
 				else
 					System.out.println("No se puede acceder a esa posición");
-					tmp = posicion;
 				break;
 			
 			case 4:
 				tmp.setX(tmp.getX()+1);
-				if (tmp es accesible)
-					posicion = tmp;
+				if (tmp.getX() < 5)
+					setPosicion(tmp);
+					System.out.println("Ralph se movio a la der");
 				else
 					System.out.println("No se puede acceder a esa posición");
-					tmp = posicion;
 				break;
 			
 			default:
