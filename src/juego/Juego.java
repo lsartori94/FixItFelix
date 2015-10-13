@@ -69,7 +69,7 @@ public final class Juego {
 		Ladrillo [] ladrillos= ralph.getLadrillos();
 		//evalua los ladrillos tirados para ver si golpearona felix
 		for(int i= 0; i < l_act; i++){
-			if(ladrillos[i].getPosicion().equals(felix.getPosicion())){
+			if(ladrillos[i].getPosicionl().equals(felix.getPosicion())){
 				felix.golpe();
 			}
 			if(felix.getVidas() == 0)

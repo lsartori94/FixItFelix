@@ -23,8 +23,7 @@ public class Ralph {
 	public Ralph(int cant_lad, int tiempo_lad, int vel_lad, int vel_ralph, Posicion pos, Seccion sec/*, Sprite img*/){
 		setPosicion(pos);
 		setCantLadrillos(cant_lad);
-		
-		crearLadrillos(cant_lad, vel_lad, pos);
+		crearLadrillos(cant_lad, vel_lad, getPosicion());
 		setTimeLadrillo(tiempo_lad);
 		setLadrillo_act(0);
 		setVelocidad(vel_ralph);
@@ -47,7 +46,7 @@ public class Ralph {
 	public void shoot(){
 		System.out.println("Ralph lanzo un ladrillo");
 		System.out.println("Antes de caer "+posicion.getX()+" "+posicion.getY() );
-		ladrillos[ladrillo_act].caer();
+		ladrillos[getLadrillo_act()].caer();
 		System.out.println("Dps de caer "+posicion.getX()+" "+posicion.getY() );
 		setCantLadrillos(getCantLadrillos()-1);
 		setLadrillo_act(getLadrillo_act()+1);

@@ -10,22 +10,22 @@ public class Ladrillo {
 //	private Sprite imagen;
 
 	//metodo de creacion de ladrillo
-	public Ladrillo(Posicion pos, int vel){
-		setPosicion(pos);
+	public Ladrillo(Posicion posl, int vel){
+		setPosicionl(posl);
 		setVelocidad(vel);
 		setVisible(false);
 		//al ser prueba se informa creacion
 		System.out.println(" ");
-		System.out.println("Se creo ladrillo de posicion ["+getPosicion().getX()+" , "+getPosicion().getY()+"] y de velocidad de caida "+getVelocidad());
+		System.out.println("Se creo ladrillo de posicion ["+getPosicionl().getX()+" , "+getPosicionl().getY()+"] y de velocidad de caida "+getVelocidad());
 	}
 
-	public Posicion getPosicion() {
+	public Posicion getPosicionl() {
 		return posicionl;
 	}
 
 	//metodo a ejecutar para mover al ladrillo
-	public void setPosicion(Posicion posicion) {
-		posicionl = posicion;
+	private void setPosicionl(Posicion posi) {
+		posicionl = posi;
 	}
 
 	public int getVelocidad() {
@@ -55,15 +55,17 @@ public class Ladrillo {
 
 	//metodo a ejecutar para que el ladrillo caiga un piso
 	public void caer(){
-		if(!visible){
-			setVisible(true);
+//		if(!visible){
+//			setVisible(true);
 //			setImagen(posicion);
+//		}
+		System.out.println("Antes "+posicionl.getX()+" "+posicionl.getY() );
+		if(posicionl.getY() > 0){
+			Posicion tmp = new Posicion(posicionl.getX(),posicionl.getY()-1);
+			setPosicionl(tmp);
+			//setPosicionl();
 		}
-		Posicion tmp_pos= getPosicion();
-		System.out.println("tmp_pos "+tmp_pos.getX()+" "+tmp_pos.getY() );
-		tmp_pos.setY(tmp_pos.getY()-1);
-		setPosicion(tmp_pos);
-//		setImagen(posicion);
+		//		setImagen(posicion);
 		System.out.println(" ");
 		System.out.println("El ladrillo cayo a la posicion ["+posicionl.getX()+" , "+posicionl.getY()+"]");
 	}
