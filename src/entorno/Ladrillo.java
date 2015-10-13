@@ -56,13 +56,13 @@ public class Ladrillo {
 //			setVisible(true);
 //			setImagen(posicion);
 //		}
-		if(posicionl.getY() >= 0){
+		if(posicionl.getY() > 0){
 			Posicion tmp = new Posicion(posicionl.getX(),posicionl.getY()-1);
 			setPosicionl(tmp);
 			//setPosicionl();
 		}
 		//		setImagen(posicion);
-		System.out.println(" ");
-		System.out.println("El ladrillo cayo a la posicion ["+posicionl.getX()+" , "+posicionl.getY()+"]");
+		//System.out.println(" ");
+		//System.out.println("El ladrillo cayo a la posicion ["+posicionl.getX()+" , "+posicionl.getY()+"]");
 	}
 }
