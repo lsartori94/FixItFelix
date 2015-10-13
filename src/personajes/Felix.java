@@ -106,7 +106,7 @@ public class Felix {
 		
 		case 2:
 			tmp.setY(tmp.getY()-1);
-			if (tmp.getY() > 0){
+			if (tmp.getY() > 1){
 				setPosicion(tmp);
 				System.out.println("Felix se movio abajo");
 			}else

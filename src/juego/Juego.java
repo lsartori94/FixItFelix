@@ -90,8 +90,8 @@ public final class Juego {
 	}
 
 	private void f_move(){
-		if(felix.getPosicion().getY() < 3){
-			if(felix.getPosicion().getY() % 2 == 0){
+		if(felix.getPosicion().getY() < 4){
+			if(felix.getPosicion().getY() % 2 != 0){
 				if(felix.getPosicion().getX()<4){
 					felix.move(Direccion.RIGHT);
 				}else if(felix.getPosicion().getX()==4)

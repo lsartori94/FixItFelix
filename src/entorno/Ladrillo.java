@@ -61,8 +61,8 @@ public class Ladrillo {
 			setPosicionl(tmp);
 			//setPosicionl();
 		}
-		//		setImagen(posicion);
-	//	System.out.println(" ");
-	//	System.out.println("El ladrillo cayo a la posicion ["+posicionl.getX()+" , "+posicionl.getY()+"]");
+//		setImagen(posicion);
+//		System.out.println(" ");
+//		System.out.println("El ladrillo cayo a la posicion ["+posicionl.getX()+" , "+posicionl.getY()+"]");
 	}
 }
