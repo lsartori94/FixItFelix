@@ -27,9 +27,11 @@ public final class Juego {
 
 	private void comenzar(){
 		// codigo a ejecutar para iniciar el juego
-		Ventana [][] vent = new Ventana[5][3];
-		for(int i=0; i<3; i++){
-			for(int j=0; j<5; j++){
+		int filas= 3;
+		int colum= 5;
+		Ventana [][] vent = new Ventana[colum][filas];
+		for(int i=0; i<filas; i++){
+			for(int j=0; j<colum; j++){
 				if(j % 2 == 0)
 					vent[j][i]= new Doble_panel(false, false, false);
 				else
@@ -37,6 +39,7 @@ public final class Juego {
 
 			}
 		}
+		System.out.println("Se crearon "+(filas*colum)+" ventanas de doble panel sin modificadores");
 		
 		Seccion [] sec= new Seccion [1];
 		sec[0]= new Seccion(3,5,7,0, vent);

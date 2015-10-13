@@ -74,7 +74,7 @@ public class Felix {
 	//metodo a ejecutar cuando se reciba un golpe
 	public void golpe(){
 		int v_temp= getVidas();
-		setVidas(v_temp --);
+		setVidas((v_temp -1));
 		//luego se debe implementar el Sprite correspondiente
 		//por ser prueba se informa
 		System.out.println("Felix perdio una vida. Vidas restantes= "+getVidas());

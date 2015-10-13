@@ -19,9 +19,6 @@ public class Ventana {
 			setGolpes_act(0);
 			//setImagen(img);
 			setRota(rota);
-			//por ser prueba se informa cracion
-			System.out.println(" ");
-			System.out.println("Se creo ventana con moldura= "+moldura()+", macetero= "+macetero()+", rota= "+rota()+" y "+getGolpes_fix()+" golpes para arreglarse");
 		}
 
 		public boolean moldura() {
