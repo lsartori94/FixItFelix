@@ -26,6 +26,7 @@ public final class Juego {
 				r_move();
 			if(checkGameFin())
 				break;
+			System.out.println("");
 		}
 	}
 
