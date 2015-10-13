@@ -142,7 +142,7 @@ public class Ralph {
 	switch (d.getValue()) {
 		case 1:
 			tmp.setY(tmp.getY()+1);
-			if (tmp.getY() < 3){
+			if (tmp.getY() < 4){
 				setPosicion(tmp);
 				System.out.println("Ralph se movio arriba");
 			}else
@@ -151,7 +151,7 @@ public class Ralph {
 		
 		case 2:
 			tmp.setY(tmp.getY()-1);
-			if (tmp.getY() > 0){
+			if (tmp.getY() > 1){
 				setPosicion(tmp);
 				System.out.println("Ralph se movio abajo");
 			}else

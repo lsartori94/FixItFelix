@@ -78,7 +78,7 @@ public final class Juego {
 		//evalua los ladrillos tirados para ver si golpearona felix
 		for(int i= 0; i < l_act; i++){
 			Ladrillo lad= ralph.getLadrillo(i);
-		//	System.out.println("Posicion del ladrillo "+i+" "+lad.getPosicionl().getX()+" "+lad.getPosicionl().getY());
+			System.out.println("Posicion del ladrillo "+i+" "+lad.getPosicionl().getX()+" "+lad.getPosicionl().getY());
 			if(lad.getPosicionl().compareTo(felix.getPosicion())==0){
 				felix.golpe();
 			}
@@ -90,8 +90,8 @@ public final class Juego {
 	}
 
 	private void f_move(){
-		if(felix.getPosicion().getY() < 3){
-			if(felix.getPosicion().getY() % 2 == 0){
+		if(felix.getPosicion().getY() < 4){
+			if(felix.getPosicion().getY() % 2 != 0){
 				if(felix.getPosicion().getX()<4){
 					felix.move(Direccion.RIGHT);
 				}else if(felix.getPosicion().getX()==4)
