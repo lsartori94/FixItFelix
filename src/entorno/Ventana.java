@@ -77,7 +77,7 @@ public class Ventana {
 
 		public void arreglar(/*Sprite img*/){
 			setGolpes_act(getGolpes_act()+1);
-			System.out.println("GOLPES ACUUTAL "+getGolpes_act());
+		//	System.out.println("GOLPES ACUUTAL "+getGolpes_act());
 			if(getGolpes_act() == getGolpes_fix()){
 				//setImagen(img);
 				//al ser pruba se informa
