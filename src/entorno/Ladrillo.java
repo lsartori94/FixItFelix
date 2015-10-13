@@ -56,7 +56,7 @@ public class Ladrillo {
 //			setVisible(true);
 //			setImagen(posicion);
 //		}
-		if(posicionl.getY() > 0){
+		if(posicionl.getY() >= 0){
 			Posicion tmp = new Posicion(posicionl.getX(),posicionl.getY()-1);
 			setPosicionl(tmp);
 			//setPosicionl();

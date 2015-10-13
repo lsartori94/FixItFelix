@@ -20,9 +20,8 @@ public class Mapa {
 		this.cant_secciones = cant_secciones;
 	}
 
-	public Seccion [] getSecciones() {
-		Seccion [] tmp_secc= secciones.clone();
-		return tmp_secc;
+	public Seccion getSeccion(int i) {
+		return secciones[i];
 	}
 
 	public void setSecciones(Seccion[] secciones) {

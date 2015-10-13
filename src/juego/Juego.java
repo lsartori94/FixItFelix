@@ -8,7 +8,7 @@ public final class Juego {
 	private Ralph ralph;
 	private Felix felix;
 	private int d = 0;
-//	private Mapa mapa;
+	private Mapa mapa;
 //	private Puntaje puntaje;
 //	private Tiempo tiempo;
 //	private Highscore highscores;
@@ -18,8 +18,12 @@ public final class Juego {
 		comenzar();
 		while(true){
 			ralph.shoot();
-			f_move();
-			r_move();
+			if(mapa.getSeccion(0).getVentana(felix.getPosicion()).rota()){
+				f_martillar();
+			}else{
+				f_move();
+			}
+				r_move();
 			if(checkGameFin())
 				break;
 		}
@@ -44,7 +48,8 @@ public final class Juego {
 		Seccion [] sec= new Seccion [1];
 		sec[0]= new Seccion(3,5,7,0, vent);
 		Mapa map= new Mapa(sec, 1);
-		
+		mapa= map;
+				
 		System.out.println("");
 		System.out.println("Se va a inicializar Felix");
 		
@@ -122,4 +127,8 @@ public final class Juego {
 	}
 	}
 
+	private void f_martillar(){
+		felix.martillar();
+		mapa.getSeccion(0).getVentana(felix.getPosicion()).arreglar();
+	}
 }
