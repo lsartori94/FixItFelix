@@ -28,7 +28,8 @@ public final class Juego {
 				break;
 			System.out.println("");
 		}
-		System.out.println("Ralph acerto 3 ladrillos luego de lanzar "+(50-ralph.getCantLadrillos()));
+		int vfinal= felix.vidasInicio-felix.getVidas();
+		System.out.println("Ralph acerto "+vfinal+ " ladrillos luego de lanzar "+(50-ralph.getCantLadrillos()));
 		System.out.println("Fin de simulacion.");
 	}
 

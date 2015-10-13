@@ -8,13 +8,14 @@ public class Felix {
 //	private Sprite imagen;
 	private int vidas;
 	private boolean poder;
+	public final int vidasInicio= 3;
 
 	//inicia Default Felix
 	public void iniciar(){
 		//se asume como posicion inicial el piso 0 a la mitad del mapa (fila 3 de 5)
 		Posicion tmp_pos= new Posicion(2, 1);
 		setPosicion(tmp_pos);
-		setVidas(3);
+		setVidas(vidasInicio);
 		setPoder(false);
 		//aca se define la imagen con setImagen
 		//por ser prueba se informa creacion
