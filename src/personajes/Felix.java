@@ -92,49 +92,49 @@ public class Felix {
 	}
 
 	public void move(Direccion d){
-		Posicion tmp= posicion;
+	Posicion tmp= posicion;
+	
+	switch (d.getValue()) {
+		case 1:
+			tmp.setY(tmp.getY()+1);
+			if (tmp.getY() < 3){
+				setPosicion(tmp);
+				System.out.println("Felix se movio arriba");
+			}else
+				System.out.println("Felix no puede acceder a esa posicion");
+			break;
 		
-		switch (d.getValue()) {
-			case 1:
-				tmp.setY(tmp.getY()+1);
-				if (tmp.getY() < 3){
-					setPosicion(tmp);
-					System.out.println("Felix se movio arriba");
-				}else
-					System.out.println("No se puede acceder a esa posición");
-				break;
-			
-			case 2:
-				tmp.setY(tmp.getY()-1);
-				if (tmp.getY() > 0){
-					setPosicion(tmp);
-					System.out.println("Felix se movio abajo");
-				}else
-					System.out.println("No se puede acceder a esa posición");
-				break;
+		case 2:
+			tmp.setY(tmp.getY()-1);
+			if (tmp.getY() > 0){
+				setPosicion(tmp);
+				System.out.println("Felix se movio abajo");
+			}else
+				System.out.println("Felix no puede acceder a esa posicion");
+			break;
+	
+		case 3:
+			tmp.setX(tmp.getX()-1);
+			if (tmp.getX() > 0){
+				setPosicion(tmp);
+				System.out.println("Felix se movio a la izq");
+			}else
+				System.out.println("Felix no puede acceder a esa posicion");
+			break;
 		
-			case 3:
-				tmp.setX(tmp.getX()-1);
-				if (tmp.getX() > 0){
-					setPosicion(tmp);
-					System.out.println("Felix se movio a la izq");
-				}else
-					System.out.println("No se puede acceder a esa posición");
-				break;
-			
-			case 4:
-				tmp.setX(tmp.getX()+1);
-				if (tmp.getX() < 5){
-					setPosicion(tmp);
-					System.out.println("Felix se movio a la der");
-				}else
-					System.out.println("No se puede acceder a esa posición");
-				break;
-			
-			default:
-				System.out.println("Direction Error.");
-				break;
-		}
+		case 4:
+			tmp.setX(tmp.getX()+1);
+			if (tmp.getX() < 5){
+				setPosicion(tmp);
+				System.out.println("Felix se movio a la der");
+			}else
+				System.out.println("Felix no puede acceder a esa posicion");
+			break;
+		
+		default:
+			System.out.println("Direction Error.");
+			break;
 	}
+}
 
 }
