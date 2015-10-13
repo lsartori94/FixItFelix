@@ -16,7 +16,7 @@ public final class Juego {
 	public void go() {
 		// TODO Auto-generated method stub
 		comenzar();
-		while(true){
+		while(ralph.getCantLadrillos() != 0){
 			ralph.shoot();
 			if(mapa.getSeccion(0).getVentana(felix.getPosicion()).rota()){
 				f_martillar();
@@ -28,6 +28,8 @@ public final class Juego {
 				break;
 			System.out.println("");
 		}
+		System.out.println("Ralph acerto 3 ladrillos luego de lanzar "+(50-ralph.getCantLadrillos()));
+		System.out.println("Fin de simulacion.");
 	}
 
 	private void comenzar(){
@@ -79,7 +81,7 @@ public final class Juego {
 		//evalua los ladrillos tirados para ver si golpearona felix
 		for(int i= 0; i < l_act; i++){
 			Ladrillo lad= ralph.getLadrillo(i);
-			System.out.println("Posicion del ladrillo "+i+" "+lad.getPosicionl().getX()+" "+lad.getPosicionl().getY());
+		//	System.out.println("Posicion del ladrillo "+i+" "+lad.getPosicionl().getX()+" "+lad.getPosicionl().getY());
 			if(lad.getPosicionl().compareTo(felix.getPosicion())==0){
 				felix.golpe();
 			}
@@ -95,9 +97,14 @@ public final class Juego {
 			if(felix.getPosicion().getY() % 2 != 0){
 				if(felix.getPosicion().getX()<4){
 					felix.move(Direccion.RIGHT);
-				}else if(felix.getPosicion().getX()==4)
-					felix.move(Direccion.UP);
-			}else{
+				}else if(felix.getPosicion().getX()==4){
+					if(felix.getPosicion().getY()==3){
+						System.out.println("Felix llego al final de su recorrido.");
+					}else{
+						felix.move(Direccion.UP);
+					}
+				}
+				}else{
 				if(felix.getPosicion().getX()>0 ){
 					felix.move(Direccion.LEFT);
 				}

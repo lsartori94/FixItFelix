@@ -38,7 +38,7 @@ public class Felix {
 	public void setPosicion(Posicion posicion) {
 		this.posicion = posicion;
 		//al ser prueba se informa del movimiento
-		System.out.println("Felix se movio a ["+posicion.getX()+" , "+posicion.getY()+"]");
+		//System.out.println("Felix se movio a ["+posicion.getX()+" , "+posicion.getY()+"]");
 
 	}
 
@@ -117,7 +117,7 @@ public class Felix {
 			tmp.setX(tmp.getX()-1);
 			if (tmp.getX() >= 0){
 				setPosicion(tmp);
-				System.out.println("Felix se movio a la izq");
+				System.out.println("Felix se movio a la izquierda.");
 			}else
 				System.out.println("Felix no puede acceder a esa posicion");
 			break;
@@ -126,7 +126,7 @@ public class Felix {
 			tmp.setX(tmp.getX()+1);
 			if (tmp.getX() < 5){
 				setPosicion(tmp);
-				System.out.println("Felix se movio a la der");
+				System.out.println("Felix se movio a la derecha.");
 			}else
 				System.out.println("Felix no puede acceder a esa posicion");
 			break;

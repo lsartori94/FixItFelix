@@ -44,10 +44,12 @@ public class Ralph {
 
 	//metodo a ejecutar para que Ralph tire un ladrillo
 	public void shoot(){
-		System.out.println("Ralph lanzo un ladrillo");
-		ladrillos[getLadrillo_act()].caer();
-		setCantLadrillos(getCantLadrillos()-1);
-		setLadrillo_act(getLadrillo_act()+1);
+		if(getCantLadrillos() != 0){
+			System.out.println("Ralph lanzo un ladrillo");
+			ladrillos[getLadrillo_act()].caer();
+			setCantLadrillos(getCantLadrillos()-1);
+			setLadrillo_act(getLadrillo_act()+1);
+		}
 	}
 
 	public Posicion getPosicion(){
@@ -73,7 +75,7 @@ public class Ralph {
 	public void setPosicion(Posicion pos){
 		posicion= pos;
 		//al ser prueba se informa del movimiento
-		System.out.println("Ralph se movio a ["+posicion.getX()+" , "+posicion.getY()+"]");
+		//System.out.println("Ralph se movio a ["+posicion.getX()+" , "+posicion.getY()+"]");
 	}
 
 //	public void setImagen(Sprite img){
@@ -162,7 +164,7 @@ public class Ralph {
 			tmp.setX(tmp.getX()-1);
 			if (tmp.getX() >= 0){
 				setPosicion(tmp);
-				System.out.println("Ralph se movio a la izq");
+				System.out.println("Ralph se movio a la izquierda.");
 			}else
 				System.out.println("Ralph no puede acceder a esa posicion");
 			break;
@@ -171,7 +173,7 @@ public class Ralph {
 			tmp.setX(tmp.getX()+1);
 			if (tmp.getX() < 5){
 				setPosicion(tmp);
-				System.out.println("Ralph se movio a la der");
+				System.out.println("Ralph se movio a la derecha.");
 			}else
 				System.out.println("Ralph no puede acceder a esa posicion");
 			break;
