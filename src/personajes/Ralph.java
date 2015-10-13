@@ -128,8 +128,48 @@ public class Ralph {
 		return ladrillo_act;
 	}
 
-	public void mover(Direccion dir){
-
-	}
-
+	public void move(Direccion d){
+		Posicion tmp= posicion;
+		
+		switch (d.getValue()) {
+			case 1:
+				tmp.setY(tmp.getY()+1);
+				if (tmp es accesible)
+					posicion = tmp;
+				else
+					System.out.println("No se puede acceder a esa posición");
+					tmp = posicion;
+				break;
+			
+			case 2:
+				tmp.setY(tmp.getY()-1);
+				if (tmp es accesible)
+					posicion = tmp;
+				else
+					System.out.println("No se puede acceder a esa posición");
+					tmp = posicion;
+				break;
+		
+			case 3:
+				tmp.setX(tmp.getX()-1);
+				if (tmp es accesible)
+					posicion = tmp;
+				else
+					System.out.println("No se puede acceder a esa posición");
+					tmp = posicion;
+				break;
+			
+			case 4:
+				tmp.setX(tmp.getX()+1);
+				if (tmp es accesible)
+					posicion = tmp;
+				else
+					System.out.println("No se puede acceder a esa posición");
+					tmp = posicion;
+				break;
+			
+			default:
+				System.out.println("Direction Error.");
+				break;
+		}
 }
