@@ -1,4 +1,5 @@
 package personajes;
+import misc.Direccion;
 import misc.Posicion;
 
 public class Felix {
@@ -36,6 +37,9 @@ public class Felix {
 
 	public void setPosicion(Posicion posicion) {
 		this.posicion = posicion;
+		//al ser prueba se informa del movimiento
+		System.out.println("Felix se movio a ["+posicion.getX()+" , "+posicion.getY()+"]");
+
 	}
 
 	public int getVidas() {
@@ -93,37 +97,37 @@ public class Felix {
 		switch (d.getValue()) {
 			case 1:
 				tmp.setY(tmp.getY()+1);
-				if (tmp.getY() < 5)
+				if (tmp.getY() < 5){
 					setPosicion(tmp);
 					System.out.println("Felix se movio arriba");
-				else
+				}else
 					System.out.println("No se puede acceder a esa posición");
 				break;
 			
 			case 2:
 				tmp.setY(tmp.getY()-1);
-				if (tmp.getY() > 0)
+				if (tmp.getY() > 0){
 					setPosicion(tmp);
 					System.out.println("Felix se movio abajo");
-				else
+				}else
 					System.out.println("No se puede acceder a esa posición");
 				break;
 		
 			case 3:
 				tmp.setX(tmp.getX()-1);
-				if (tmp.getX() > 0)
+				if (tmp.getX() > 0){
 					setPosicion(tmp);
 					System.out.println("Felix se movio a la izq");
-				else
+				}else
 					System.out.println("No se puede acceder a esa posición");
 				break;
 			
 			case 4:
 				tmp.setX(tmp.getX()+1);
-				if (tmp.getX() < 5)
+				if (tmp.getX() < 5){
 					setPosicion(tmp);
 					System.out.println("Felix se movio a la der");
-				else
+				}else
 					System.out.println("No se puede acceder a esa posición");
 				break;
 			
@@ -131,4 +135,6 @@ public class Felix {
 				System.out.println("Direction Error.");
 				break;
 		}
+	}
+
 }

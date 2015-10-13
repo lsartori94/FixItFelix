@@ -1,4 +1,4 @@
-package entorno;
+package misc;
 
 
 public enum Direccion {

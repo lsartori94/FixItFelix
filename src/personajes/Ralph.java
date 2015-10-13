@@ -1,6 +1,7 @@
 package personajes;
 import entorno.Ladrillo;
 import entorno.Seccion;
+import misc.Direccion;
 import misc.Posicion;
 
 public class Ralph {
@@ -134,37 +135,37 @@ public class Ralph {
 		switch (d.getValue()) {
 			case 1:
 				tmp.setY(tmp.getY()+1);
-				if (tmp.getY() < 5)
+				if (tmp.getY() < 5){
 					setPosicion(tmp);
 					System.out.println("Ralph se movio arriba");
-				else
+				}else
 					System.out.println("No se puede acceder a esa posición");
 				break;
 			
 			case 2:
 				tmp.setY(tmp.getY()-1);
-				if (tmp.getY() > 0)
+				if (tmp.getY() > 0){
 					setPosicion(tmp);
 					System.out.println("Ralph se movio abajo");
-				else
+				}else
 					System.out.println("No se puede acceder a esa posición");
 				break;
 		
 			case 3:
 				tmp.setX(tmp.getX()-1);
-				if (tmp.getX() > 0)
+				if (tmp.getX() > 0){
 					setPosicion(tmp);
 					System.out.println("Ralph se movio a la izq");
-				else
+				}else
 					System.out.println("No se puede acceder a esa posición");
 				break;
 			
 			case 4:
 				tmp.setX(tmp.getX()+1);
-				if (tmp.getX() < 5)
+				if (tmp.getX() < 5){
 					setPosicion(tmp);
 					System.out.println("Ralph se movio a la der");
-				else
+				}else
 					System.out.println("No se puede acceder a esa posición");
 				break;
 			
@@ -172,4 +173,5 @@ public class Ralph {
 				System.out.println("Direction Error.");
 				break;
 		}
+	}
 }

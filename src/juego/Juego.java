@@ -5,10 +5,10 @@ import personajes.Ralph;
 public final class Juego {
 	private Ralph ralph;
 	private Felix felix;
-	private Mapa mapa;
-	private Puntaje puntaje;
-	private Tiempo tiempo;
-	private Highscore highscores;
+//	private Mapa mapa;
+//	private Puntaje puntaje;
+//	private Tiempo tiempo;
+//	private Highscore highscores;
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
