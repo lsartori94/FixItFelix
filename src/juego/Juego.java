@@ -37,20 +37,25 @@ public final class Juego {
 		// codigo a ejecutar para iniciar el juego
 		int filas= 5;
 		int colum= 5;
+		double check;
+		int cantRota =0;
 		Ventana [][] vent = new Ventana[colum][filas];
 		for(int i=1; i<filas-1; i++){
 			for(int j=0; j<colum; j++){
-				if(j % 2 == 0)
+				check = Math.random();
+				if(check > 0.5)
 					vent[j][i]= new Doble_panel(false, false, false);
-				else
+				else{
 					vent[j][i]= new Doble_panel(false, false, true);
-
+					cantRota++;
+				}
 			}
 		}
 		System.out.println("Se crearon "+(filas*colum)+" ventanas de doble panel sin modificadores");
+		System.out.println("De las cuales "+cantRota+" estan rotas.");
 		
 		Seccion [] sec= new Seccion [1];
-		sec[0]= new Seccion(3,5,7,0, vent);
+		sec[0]= new Seccion(3,5,cantRota,0, vent);
 		Mapa map= new Mapa(sec, 1);
 		mapa= map;
 				
