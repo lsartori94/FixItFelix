@@ -1,11 +1,25 @@
 package entorno;
+/**
+ * Clase que representa el balcon.
+ * No posee modificadores.
+ * Requiere 16 golpes para arrelarse.
+ * 
+ * @author lsartori
+ *
+ */
 
 public class Balcon extends Semicirculo{
 	private Panel [] paneles;
 
-	public Balcon(boolean mold, boolean mace, boolean rota, Panel [] paneles) {
-		super(mold, mace, rota);
-		// TODO Auto-generated constructor stub
+	/**
+	 * Constructor de Balcon.
+	 * 
+	 * @param rota = indica si esta roto
+	 * @param paneles = array de paneles
+	 * 
+	 */
+	public Balcon(boolean rota, Panel [] paneles) {
+		super(rota, 16);
 		setPaneles(paneles);
 	}
 
