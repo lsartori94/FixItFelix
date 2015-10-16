@@ -1,11 +1,24 @@
 package entorno;
+/**
+ * Clase que simula la puerta del edificio.
+ * No posee modificadores.
+ * Requiere 8 golpes para arreglarse.
+ * 
+ * @author lsartori
+ *
+ */
 
 public class Puerta extends Semicirculo {
 	private Panel[] paneles;
 
-	public Puerta(boolean mold, boolean mace, boolean rota, Panel [] paneles) {
-		super(mold, mace, rota);
-		// TODO Auto-generated constructor stub
+	/**
+	 * Constructor de Puerta
+	 * 
+	 * @param rota = indica si esta rota
+	 * @param paneles = vector de paneles de la puerta
+	 */
+	public Puerta(boolean rota, Panel [] paneles) {
+		super(rota, 8);
 		setPaneles(paneles);
 	}
 
