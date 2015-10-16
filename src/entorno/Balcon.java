@@ -6,10 +6,11 @@ package entorno;
  * 
  * @author lsartori
  *
+ *Paneles se encuentran comentados por ser prueba.
  */
 
 public class Balcon extends Semicirculo{
-	private Panel [] paneles;
+//	private Panel [] paneles;
 
 	/**
 	 * Constructor de Balcon.
@@ -18,17 +19,17 @@ public class Balcon extends Semicirculo{
 	 * @param paneles = array de paneles
 	 * 
 	 */
-	public Balcon(boolean rota, Panel [] paneles) {
+	public Balcon(boolean rota/*, Panel [] paneles*/) {
 		super(rota, 16);
-		setPaneles(paneles);
+//		setPaneles(paneles);
 	}
 
-	public Panel[] getPaneles() {
-		return paneles;
-	}
+//	public Panel[] getPaneles() {
+//		return paneles;
+//	}
 
-	public void setPaneles(Panel[] paneles) {
-		this.paneles = paneles;
-	}
+//	public void setPaneles(Panel[] paneles) {
+//		this.paneles = paneles;
+//	}
 
 }

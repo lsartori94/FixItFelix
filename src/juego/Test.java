@@ -1,5 +1,9 @@
 package juego;
-
+/**
+ * Clase de Testeo del Juego
+ * @author lsartori
+ *
+ */
 public class Test {
 
 	public static void main(String[] args) {
