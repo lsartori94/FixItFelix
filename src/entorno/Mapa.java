@@ -1,10 +1,21 @@
 package entorno;
 
+/**
+ * Clase que representa el mapa del juego.
+ * Posee un array de seccciones del nivel y un cuantificador.
+ * 
+ * @author lsartori
+ */
 public class Mapa {
 	private int cant_secciones;
 	private Seccion [] secciones;
 
-	//metodo para iniciar mapa por nivel
+	/**
+	 * Metodo para iniciar el mapa en un nivel.
+	 * A futuro modificar para aceptar distintos niveles.
+	 * @param secc = array de secciones.
+	 * @param tamanio = cantidad de secciones.
+	 */
 	public Mapa(Seccion [] secc, int tamanio){
 		setCant_secciones(tamanio);
 		setSecciones(secc);
