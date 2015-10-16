@@ -1,10 +1,24 @@
 package entorno;
 
-public class Semicirculo extends Ventana{
+/**
+ *Clase abstracta que representa a 
+ *las ventanas semicirculares
+ *
+ *Este tipo de ventanas no posee modificadores
+ * 
+ * @param mold= si tiene moldura
+ * @param mace= si posee maceta
+ * @param rota= si esta rota
+ * @param goples_fix= golpes necesarios para arreglarla
+ * 
+ */
+public abstract class Semicirculo extends Ventana{
 
-	public Semicirculo(boolean mold, boolean mace, boolean rota) {
-		super(mold, mace, rota, 16);
-		// TODO Auto-generated constructor stub
+	public Semicirculo(boolean rota, int golpes_fix) {
+		/**
+		 * Llamado al constructor de la clase padre (ventana)
+		 */
+		super(false, false, rota, golpes_fix);
 	}
 
 }
