@@ -1,18 +1,31 @@
 package entorno;
-
 import misc.Posicion;
 
+/**
+ * Clase qye representa una seccion de ventanas.
+ * Tiene una cantidad de filas, columnas, ventanas rotas y ventanas modificadas.
+ * Posee una imagen.
+ * Posee una matriz de ventanas.
+ * @author lsartori
+ */
 public class Seccion {
 	private int cant_filas;
 	private int cant_columnas;
 	private int cant_rotas;
 	private int cant_modificador;
 	private int id;
-	//se comenta Sprite por ser prueba
 //	private Sprite imagen;
 	private Ventana [][] ventanas;
 
-	//metodo de inicio de Seccion
+	/**
+	 * Constructor de la seccion.
+	 * 
+	 * @param c_f = cantidad de filas.
+	 * @param c_c = cantidad de columnas.
+	 * @param c_rot = cantidad de ventanas rotas.
+	 * @param c_mod = cantidad de ventanas modificadas.
+	 * @param ventanas = matriz de ventanas.
+	 */
 	public Seccion(int c_f, int c_c, int c_rot, int c_mod, Ventana[][] ventanas/*,Sprite img*/){
 		setCant_filas(c_f);
 		setCant_columnas(c_c);
