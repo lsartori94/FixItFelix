@@ -1,10 +1,22 @@
 package entorno;
 
+/**
+ * Clase que representa ventana con hoja.
+ * Impide el paso de Felix a traves de la hoja abierta.
+ * No posee otros modificadores.
+ * No puede estar rota.
+ * 
+ * 
+ * Revisar para posterior agregado se sentido de apertura
+ * 
+ * @author lsartori
+ *
+ */
 public class Con_hoja extends Ventana{
 	private boolean abierta;
 	
-	public Con_hoja(boolean moldura ,boolean macetero, boolean abierta){
-		super(moldura, macetero, false, 0);
+	public Con_hoja(boolean abierta){
+		super(false, false, false, 0);
 		setAbierta(abierta);
 	}
 
