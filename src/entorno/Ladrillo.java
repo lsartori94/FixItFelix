@@ -20,7 +20,10 @@ public class Ladrillo {
 		return posicionl;
 	}
 
-	//metodo a ejecutar para mover al ladrillo
+	/*
+	 * Metodo a ejecutar para hacer efectivo el 
+	 * movimiento del ladrillo
+	*/
 	private void setPosicionl(Posicion posi) {
 		posicionl = posi;
 	}
