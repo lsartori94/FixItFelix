@@ -1,15 +1,34 @@
 package entorno;
 
+/**
+ * Clase que representa una ventana de doble panel.
+ * Acepta todos los modificadores, excepto hoja.
+ * Puede tener un pie que da poder.
+ * Requiere 4 golpes para arreglarse.
+ * Posee una imagen.
+ * Tiene un contador de golpes de martillo acumulados.
+ * @author lsartori
+ */
 public class Doble_panel extends Ventana{
 	private boolean pie;
 	private Panel panel_inferior;
 	private Panel panel_superior;
 
+	/**
+	 * Constructor de Doble_panel.
+	 * Setea automaticamente en 4 los golpes requeridos para el arreglo.
+	 * Crea los paneles superior e inferior.
+	 * 
+	 * @param mold = indica si tiene moldura.
+	 * @param mace = indica si tiene maceta.
+	 * @param rota = indica si esta rota.
+	 * @param img = imagen de la ventana.
+	 */
 	public Doble_panel(boolean mold, boolean mace, boolean rota/*, Sprite img*/) {
 		super(mold, mace, rota, 4/*, Sprite img*/);
 		// TODO Auto-generated constructor stub
-		Panel p_i= new Panel(true, true);
-		Panel p_s= new Panel(true, true);
+		Panel p_i= new Panel(rota, rota);
+		Panel p_s= new Panel(rota, rota);
 		setPanel_inferior(p_i);
 		setPanel_superior(p_s);
 	}
@@ -42,12 +61,23 @@ public class Doble_panel extends Ventana{
 		this.panel_superior = panel_superrior;
 	}
 
+	/**
+	 * Metodo que rompe la ventana.
+	 * Setea en rotos ambos paneles.
+	 * Setea en 0 los golpes acumulados.
+	 */
 	public void romper(/*Sprite img*/){
 		panel_inferior.romper();
 		panel_superior.romper();
 		super.setGolpes_act(0);
 	}
 
+	/**
+	 * Sobreescribe arreglar de Ventana.
+	 * Setea la imagen de la ventana.
+	 * Si los golpes acumulados <=2 arregla panel inferior.
+	 * Si los golpes acumulados >2 arregla panel superior.
+	 */
 	@Override
 	public void arreglar(/*Sprite img*/){
 		super.arreglar(/*img*/);
