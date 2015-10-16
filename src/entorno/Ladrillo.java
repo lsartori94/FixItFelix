@@ -1,15 +1,26 @@
 package entorno;
 import misc.Posicion;
 
+/**
+ * Clase que simula un Ladrillo.
+ * Posee una posicion, una velocidad, una imagen
+ * y visibilidad (o no) en pantalla.
+ * 
+ * @author lsartori
+ */
 public class Ladrillo {
 	private Posicion posicionl;
 	private int velocidad;
 	private boolean visible;
-
-	//al ser prueba se comenta Sprite
 //	private Sprite imagen;
 
-	//metodo de creacion de ladrillo
+	/**
+	 * Metodo de cracion de Ladrillo.
+	 * Setea por default al ladrillo en invisible.
+	 * 
+	 * @param posl = posicion inicial del ladrillo.
+	 * @param vel = velocidad de caida del ladrillo (pisos/seg).
+	 */
 	public Ladrillo(Posicion posl, int vel){
 		setPosicionl(posl);
 		setVelocidad(vel);
@@ -20,9 +31,9 @@ public class Ladrillo {
 		return posicionl;
 	}
 
-	/*
+	/**
 	 * Metodo a ejecutar para hacer efectivo el 
-	 * movimiento del ladrillo
+	 * movimiento del ladrillo modificando su posicion
 	*/
 	private void setPosicionl(Posicion posi) {
 		posicionl = posi;
@@ -48,12 +59,17 @@ public class Ladrillo {
 //		return imagen;
 //	}
 	
-	//metodo para definir velocidad de caida del ladrillo
 	public void setVelocidad(int velocidad) {
 		this.velocidad = velocidad;
 	}
 
-	//metodo a ejecutar para que el ladrillo caiga un piso
+	
+	/**
+	 * Metodo a ejecutar para que el ladrillo caiga 1 piso.
+	 * Chequea si la posicion actual es mayor que 0 y si lo es
+	 * realiza la caida.
+	 * Luego de setear la posicion realiza el cambio de imagen.
+	 */
 	public void caer(){
 //		if(!visible){
 //			setVisible(true);
@@ -62,10 +78,7 @@ public class Ladrillo {
 		if(posicionl.getY() > 0){
 			Posicion tmp = new Posicion(posicionl.getX(),posicionl.getY()-1);
 			setPosicionl(tmp);
-			//setPosicionl();
 		}
 //		setImagen(posicion);
-//		System.out.println(" ");
-//		System.out.println("El ladrillo cayo a la posicion ["+posicionl.getX()+" , "+posicionl.getY()+"]");
 	}
 }
