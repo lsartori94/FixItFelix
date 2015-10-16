@@ -6,10 +6,10 @@ package entorno;
  *
  *Este tipo de ventanas no posee modificadores
  * 
- * @param mold= si tiene moldura
- * @param mace= si posee maceta
- * @param rota= si esta rota
- * @param goples_fix= golpes necesarios para arreglarla
+ * @param mold = si tiene moldura
+ * @param macae = si posee maceta
+ * @param rota = si esta rota
+ * @param goples_fix = golpes necesarios para arreglarla
  * 
  */
 public abstract class Semicirculo extends Ventana{
