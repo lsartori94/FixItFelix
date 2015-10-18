@@ -6,8 +6,7 @@ import misc.Posicion;
  * Vuela por una fila.
  * Posee posicion, imagen y velocidad (ventanas/seg).
  * 
- * @author lsartori
- *
+ * @author lsartori Agustín Liébana
  */
 public class Pato {
 	private Posicion posicion;

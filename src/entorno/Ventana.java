@@ -2,7 +2,7 @@ package entorno;
 /**
  * Clase que representa a una ventana.
  * Puede tener todos los tipos de modificadores.
- * @author lsartori
+ * @author lsartori Agustín Liébana
  *
  */
 public class Ventana {

@@ -6,7 +6,7 @@ import misc.Posicion;
  * Posee una posicion, una velocidad, una imagen
  * y visibilidad (o no) en pantalla.
  * 
- * @author lsartori
+ * @author lsartori Agustín Liébana
  */
 public class Ladrillo {
 	private Posicion posicionl;

@@ -1,5 +1,12 @@
 package misc;
 
+/*
+ * Esta clase se encarga simplemente mantener el estado y proveer 
+ * los metodos necesarios para manejar las posiciones de los demas
+ * objetos. Se incluye un comparador para poder hacer los checkeos.
+ * 
+ * @author Agustín Líebana lsartori
+ */
 public class Posicion implements Comparable<Posicion>{
 	private int x;	//posicion horizontal
 	private int y;	//posicion vertical

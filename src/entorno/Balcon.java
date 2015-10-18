@@ -4,7 +4,7 @@ package entorno;
  * No posee modificadores.
  * Requiere 16 golpes para arrelarse.
  * 
- * @author lsartori
+ * @author lsartori Agustín Liébana
  *
  *Paneles se encuentran comentados por ser prueba.
  */

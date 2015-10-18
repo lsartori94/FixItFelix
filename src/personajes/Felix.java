@@ -11,6 +11,14 @@ public class Felix {
 	public final int vidasInicio= 3;
 
 	//inicia Default Felix
+	/*
+	 * Inicializamos a felix en la posicion 2, 1 que se coorresponde con la posicion
+	 * de la puerta del edificio. Ademas seteamos la cantidad de vidas y el estado
+	 * del poder del mismo, en este caso falso.
+	 * 
+	 * @author Agustín Liébana lsartori
+	 * 
+	 */
 	public void iniciar(){
 		//se asume como posicion inicial el piso 0 a la mitad del mapa (fila 3 de 5)
 		Posicion tmp_pos= new Posicion(2, 1);
@@ -32,6 +40,10 @@ public class Felix {
 		this.imagen = imagen;
 	}
 */
+	/*
+	 * Estos metodos proporcionan la informacion pertinente del personaje
+	 * como la posicion y las vidas del mismo.
+	 */
 	public Posicion getPosicion() {
 		return posicion;
 	}
@@ -92,6 +104,12 @@ public class Felix {
 		setVidas(v_temp ++);
 	}
 
+	/*
+	 * Este metodo se encarga de mover a felix a lo largo de la matriz
+	 * que compone la seccion de ventanas. Los diferente case se corresponden
+	 * con los valores del enumerativo Direccion. Los condicionales de cada
+	 * movimiento estan ajustados al diseño actual de la seccion.
+	 */
 	public void move(Direccion d){
 	Posicion tmp= posicion;
 	

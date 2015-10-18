@@ -4,7 +4,7 @@ package entorno;
  * Clase que representa el mapa del juego.
  * Posee un array de seccciones del nivel y un cuantificador.
  * 
- * @author lsartori
+ * @author lsartori Agustín Liébana
  */
 public class Mapa {
 	private int cant_secciones;

@@ -20,6 +20,13 @@ public class Ralph {
 	private Posicion posicion;
 
 	//metodo para iniciar a Ralph por nivel. no se asume Sprite por ser prueba
+	/*
+	 * En el constructor de Ralph, inicializamos su posicion inicial, ademas
+	 * seteamos los atributos relativos a los ladrillos que Ralph lanzará, como
+	 * su cantidad y velocidad y el intervalo de lanzamiento de cada uno.
+	 * 
+	 * @author Agustín Liébana lsartori
+	 */
 	public Ralph(int cant_lad, int tiempo_lad, int vel_lad, int vel_ralph, Posicion pos, Seccion sec/*, Sprite img*/){
 		setPosicion(pos);
 		setCantLadrillos(cant_lad);
@@ -43,6 +50,14 @@ public class Ralph {
 //	}
 
 	//metodo a ejecutar para que Ralph tire un ladrillo
+	/*
+	 * Este metodo se encarga de lanzar un ladrillo. Cada vez que se
+	 * ejecute el mismo, se desencadena el metodo Caer de la clase ladrillo
+	 * asi como se incrementa en uno la cantidad de ladrillos activos, que se
+	 * corresponde con la cantidad de ladrillos que fueron lanzados y se encuentran
+	 * en movimiento decencente, asi como se decrementa la cantidad de ladrillos
+	 * restantes que dispone Ralph para lanzar.
+	 */
 	public void shoot(){
 		if(getCantLadrillos() != 0){
 			System.out.println("Ralph lanzo un ladrillo");
@@ -109,6 +124,14 @@ public class Ralph {
 	public void setIntervalo_lad(int intervalo_lad) {
 		this.intervalo_lad = intervalo_lad;
 	}
+	
+	/*
+	 * Con el metodo crearLadrillos inicializamos el arreglo de
+	 * ladrillos que posee Ralph. Este contiene todos los ladrillos
+	 * que dispone por nivel para lanzar, y cada uno con sus atributos
+	 * y estados particulares. Para el caso del ejemplo son todos
+	 * iguales en cuanto a sus caracteristicas.
+	 */
 
 	private void crearLadrillos(int cant, int vel, Posicion pos){
 		Ladrillo [] tmp= new Ladrillo[cant];
@@ -123,7 +146,12 @@ public class Ralph {
 	public Ladrillo getLadrillo(int i){
 		return ladrillos[i];
 	}
-
+	
+	/*
+	 * Este metodo se utilizara para romper ventanas con Ralph. En el test
+	 * no es utilizado ya que las ventanas y sus estados se inicializan
+	 * de manera aleatoria.
+	 */
 	public void romper(/*Sprite img*/){
 		seccion.getVentana(posicion).setRota(true);
 		//al ser prueba no se modifica imagen
@@ -138,7 +166,12 @@ public class Ralph {
 	public int getLadrillo_act(){
 		return ladrillo_act;
 	}
-
+	
+	/*
+	 * Al igual que felix, este metodo permite el movimiento de Ralph.
+	 * Nuevamente sus condicionales son especificos para el diseño de la
+	 * seccion y pueden mutar en la version completa del juego.
+	 */
 	public void move(Direccion d){
 	Posicion tmp= posicion;
 	switch (d.getValue()) {

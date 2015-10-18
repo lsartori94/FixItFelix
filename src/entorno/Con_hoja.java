@@ -9,7 +9,7 @@ package entorno;
  * 
  * Revisar para posterior agregado se sentido de apertura
  * 
- * @author lsartori
+ * @author lsartori Agustín Liébana
  *
  */
 public class Con_hoja extends Ventana{

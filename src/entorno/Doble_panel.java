@@ -7,7 +7,7 @@ package entorno;
  * Requiere 4 golpes para arreglarse.
  * Posee una imagen.
  * Tiene un contador de golpes de martillo acumulados.
- * @author lsartori
+ * @author lsartori Agustín Liébana
  */
 public class Doble_panel extends Ventana{
 	private boolean pie;

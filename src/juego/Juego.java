@@ -8,7 +8,7 @@ import entorno.*;
  * Conoce a Ralph, a Felix y al mapa.
  * Conoce los puntajes, el tiempo y los historiales de puntajes.
  * 
- * @author lsartori
+ * @author lsartori Agustín Liébana
  *
  */
 public final class Juego {

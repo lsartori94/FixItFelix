@@ -4,7 +4,7 @@ package entorno;
  * No posee modificadores.
  * Requiere 8 golpes para arreglarse.
  * 
- * @author lsartori
+ * @author lsartori Agustín Liébana
  *
  *Los paneles se ecnuentran comentados por no ser necesarios para la prueba.
  */

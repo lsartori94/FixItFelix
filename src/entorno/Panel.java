@@ -2,7 +2,7 @@ package entorno;
 /**
  * Clase que simula el Panel de una Ventana.
  * Puede estar parcial o completamente roto.
- * @author lsartori
+ * @author lsartori Agustín Liébana
  */
 public class Panel {
 	private boolean parcial;

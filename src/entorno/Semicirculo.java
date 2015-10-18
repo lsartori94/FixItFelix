@@ -10,7 +10,8 @@ package entorno;
  * @param macae = si posee maceta
  * @param rota = si esta rota
  * @param goples_fix = golpes necesarios para arreglarla
- * 
+ *
+ * @author Agustín Liébana lsartori
  */
 public abstract class Semicirculo extends Ventana{
 

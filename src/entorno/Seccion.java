@@ -6,7 +6,7 @@ import misc.Posicion;
  * Tiene una cantidad de filas, columnas, ventanas rotas y ventanas modificadas.
  * Posee una imagen.
  * Posee una matriz de ventanas.
- * @author lsartori
+ * @author lsartori Agustín Liébana
  */
 public class Seccion {
 	private int cant_filas;

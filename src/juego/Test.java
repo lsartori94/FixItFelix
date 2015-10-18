@@ -1,7 +1,7 @@
 package juego;
 /**
  * Clase de Testeo del Juego
- * @author lsartori
+ * @author lsartori Agustín Liébana
  *
  */
 public class Test {
