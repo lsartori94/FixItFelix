@@ -25,12 +25,13 @@ public class Seccion {
 	 * @param cmod = cantidad de ventanas modificadas.
 	 * @param ventanas = matriz de ventanas.
 	 */
-	public Seccion(int cF, int cC, int cRot, int cMod, Ventana[][] ventanas){
+	public Seccion(int cF, int cC, int cRot, int cMod, Ventana[][] ventanas, int iD){
 		setCantFilas(cF);
 		setCantColumnas(cC);
 		setCantRotas(cRot);
 		setCantModificador(cMod);
 		setVentanas(ventanas);
+		setId(iD);
 		//por ser prueba se informa creacion
 		System.out.println(" ");
 		System.out.println("Se creo seccion con "+getCantFilas()+" filas, "+getCantColumnas()+" columnas, con ID "+getId());
