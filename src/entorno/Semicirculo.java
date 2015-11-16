@@ -1,5 +1,7 @@
 package entorno;
 
+import misc.Hoja;
+
 /**
  *Clase abstracta que representa a 
  *las ventanas semicirculares
@@ -20,7 +22,7 @@ public abstract class Semicirculo extends Ventana{
 		/**
 		 * Llamado al constructor de la clase padre (ventana)
 		 */
-		super(false, false, rota, golpesFix);
+		super(false, false, rota, Hoja.NO, golpesFix);
 	}
 
 }

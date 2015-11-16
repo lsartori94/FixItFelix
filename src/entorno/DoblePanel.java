@@ -1,5 +1,7 @@
 package entorno;
 
+import misc.Hoja;
+
 /**
  * Clase que representa una ventana de doble panel.
  * Acepta todos los modificadores, excepto hoja.
@@ -26,7 +28,7 @@ public class DoblePanel extends Ventana{
 	 * @param rota = indica si esta rota.
 	 */
 	public DoblePanel(boolean mold, boolean mace, boolean rota) {
-		super(mold, mace, rota, golpesFix);
+		super(mold, mace, rota, Hoja.NO, golpesFix);
 		// TODO Auto-generated constructor stub
 		Panel pR= new Panel(rota, rota);
 		Panel pS= new Panel(rota, rota);

@@ -1,5 +1,7 @@
 package entorno;
 
+import misc.Hoja;
+
 /**
  * Clase que representa a una ventana.
  * Puede tener todos los tipos de modificadores (Moldura, maceta, nicelander).
@@ -12,6 +14,7 @@ public class Ventana {
 		private boolean moldura;
 		private boolean macetero;
 		private boolean rota;
+		private Hoja hoja;
 		private int golpesFix;
 		private int golpesAct;
 		
@@ -22,12 +25,13 @@ public class Ventana {
 		 * @param mace = indica si tiene maceta.
 		 * @param rota = indica si esta rota.
 		 * @param fix = golpes necesarios para arreglarse.
-		 * @param img = imagen de la ventana.
+		 * @param hoja = indica si no tiene hojas (0), si esta cerrada(1) o si esta abierta(2).
 		 */
-		public Ventana(boolean mold, boolean mace, boolean rota, int fix){
+		public Ventana(boolean mold, boolean mace, boolean rota, Hoja hoja, int fix){
 			setMoldura(mold);
 			setMacetero(mace);
 			setGolpesFix(fix);
+			setHoja(hoja);
 			setGolpesAct(golpesIniciar);
 			setRota(rota);
 		}
@@ -72,12 +76,19 @@ public class Ventana {
 			this.golpesAct = golpesAct;
 		}
 
+		
+		public Hoja getHoja() {
+			return hoja;
+		}
+
+		public void setHoja(Hoja hoja) {
+			this.hoja = hoja;
+		}
+
 		/**
 		 * Metodo de rotura de ventana.
 		 * Setea en true el atributo de rota.
 		 * Setea imagen de ventana rota.
-		 * 
-		 * @param img = imagen de ventana rota.
 		 */
 		public void romper(){
 			setRota(true);

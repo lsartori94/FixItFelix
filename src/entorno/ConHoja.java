@@ -1,5 +1,7 @@
 package entorno;
 
+import misc.Hoja;
+
 /**
  * Clase que representa ventana con hoja.
  * Impide el paso de Felix a traves de la hoja abierta.
@@ -13,18 +15,17 @@ package entorno;
  *
  */
 public class ConHoja extends Ventana{
-	private boolean abierta;
+	private Hoja hoja;
 	
-	public ConHoja(boolean abierta){
-		super(false, false, false, 0);
-		setAbierta(abierta);
+	public ConHoja(Hoja hoja){
+		super(false, false, false, hoja, 0);
 	}
 
-	public void setAbierta(boolean bol){
-		abierta= bol;
+	public void setAbierta(Hoja h){
+		hoja= h;
 	}
 
-	public boolean getAbierta(){
-		return abierta;
+	public Hoja getAbierta(){
+		return hoja;
 	}
 }
