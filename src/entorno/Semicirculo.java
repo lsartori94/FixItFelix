@@ -10,6 +10,7 @@ package entorno;
  * @param macae = si posee maceta
  * @param rota = si esta rota
  * @param goplesFix = golpes necesarios para arreglarla
+ * @param img = imagen de la ventana
  *
  * @author Agustín Liébana lsartori
  */

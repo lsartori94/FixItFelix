@@ -14,7 +14,6 @@ public class Seccion {
 	private int cantRotas;
 	private int cantModificador;
 	private int id;
-//	private Sprite imagen;
 	private Ventana [][] ventanas;
 
 	/**
@@ -26,13 +25,12 @@ public class Seccion {
 	 * @param cmod = cantidad de ventanas modificadas.
 	 * @param ventanas = matriz de ventanas.
 	 */
-	public Seccion(int cF, int cC, int cRot, int cMod, Ventana[][] ventanas/*,Sprite img*/){
+	public Seccion(int cF, int cC, int cRot, int cMod, Ventana[][] ventanas){
 		setCantFilas(cF);
 		setCantColumnas(cC);
 		setCantRotas(cRot);
 		setCantModificador(cMod);
 		setVentanas(ventanas);
-		//setImagen(img);
 		//por ser prueba se informa creacion
 		System.out.println(" ");
 		System.out.println("Se creo seccion con "+getCantFilas()+" filas, "+getCantColumnas()+" columnas, con ID "+getId());
@@ -70,14 +68,6 @@ public class Seccion {
 	public void setCantModificador(int cantModificador) {
 		this.cantModificador = cantModificador;
 	}
-
-//	public Sprite getImagen() {
-//		return imagen;
-//	}
-
-//	public void setImagen(Sprite imagen) {
-//		this.imagen = imagen;
-//	}
 
 	public Ventana [][] getVentanas() {
 		Ventana [][] tmpV= ventanas.clone();

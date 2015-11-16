@@ -15,8 +15,6 @@ public class Ralph {
 	private int ladrilloAct;
 	//tiempo de espera entre ladrillos
 	private int intervaloLad;
-	//Sprite se comenta por ser prueba
-	//private Sprite imagen;
 	private Seccion seccion;
 	private Posicion posicion;
 
@@ -28,7 +26,7 @@ public class Ralph {
 	 * 
 	 * @author Agustín Liébana lsartori
 	 */
-	public Ralph(int cantLad, int tiempoLad, int velLad, int velRalph, Posicion pos, Seccion sec/*, Sprite img*/){
+	public Ralph(int cantLad, int tiempoLad, int velLad, int velRalph, Posicion pos, Seccion sec){
 		setPosicion(pos);
 		setCantLadrillos(cantLad);
 		crearLadrillos(cantLad, velLad, getPosicion());
@@ -36,7 +34,6 @@ public class Ralph {
 		setLadrillo_act(ladrilloInicial);
 		setVelocidad(velRalph);
 		setSeccion(sec);
-		//setImagen(img);
 		//por ser prueba se informa lo realizado
 		System.out.println(" ");
 		System.out.println("Ralph se inicio en la Seccion " +seccion.getId()+ " en la posicion "+getPosicion().getX()+ ", "+getPosicion().getY());
@@ -72,10 +69,6 @@ public class Ralph {
 		return posicion;
 	}
 
-//	public Sprite getImagen(){
-//		return imagen;
-//	}
-
 	public int getCantLadrillos(){
 		return cantLadrillos;
 	}
@@ -90,13 +83,7 @@ public class Ralph {
 
 	public void setPosicion(Posicion pos){
 		posicion= pos;
-		//al ser prueba se informa del movimiento
-		//System.out.println("Ralph se movio a ["+posicion.getX()+" , "+posicion.getY()+"]");
 	}
-
-//	public void setImagen(Sprite img){
-//		imagen= img;
-//	}
 
 	public void setCantLadrillos(int lad){
 		cantLadrillos= lad;

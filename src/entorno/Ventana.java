@@ -1,4 +1,5 @@
 package entorno;
+
 /**
  * Clase que representa a una ventana.
  * Puede tener todos los tipos de modificadores (Moldura, maceta, nicelander).
@@ -7,12 +8,12 @@ package entorno;
  *
  */
 public class Ventana {
+		private static final int golpesIniciar= 0;
 		private boolean moldura;
 		private boolean macetero;
 		private boolean rota;
 		private int golpesFix;
 		private int golpesAct;
-		//private Sprite imagen;
 		
 		/**
 		 * Metodo de creacion de ventana.
@@ -23,12 +24,11 @@ public class Ventana {
 		 * @param fix = golpes necesarios para arreglarse.
 		 * @param img = imagen de la ventana.
 		 */
-		public Ventana(boolean mold, boolean mace, boolean rota, int fix/*, Sprite img*/){
+		public Ventana(boolean mold, boolean mace, boolean rota, int fix){
 			setMoldura(mold);
 			setMacetero(mace);
 			setGolpesFix(fix);
-			setGolpesAct(0);
-			//setImagen(img);
+			setGolpesAct(golpesIniciar);
 			setRota(rota);
 		}
 
@@ -64,14 +64,6 @@ public class Ventana {
 			this.golpesFix = golpesFix;
 		}
 
-//		public Sprite getImagen() {
-//			return imagen;
-//		}
-
-//		public void setImagen(Sprite imagen) {
-//			this.imagen = imagen;
-//		}
-
 		public int getGolpesAct() {
 			return golpesAct;
 		}
@@ -87,10 +79,8 @@ public class Ventana {
 		 * 
 		 * @param img = imagen de ventana rota.
 		 */
-		public void romper(/*Sprite img*/){
+		public void romper(){
 			setRota(true);
-			//por ser prueba no se cambia Sprite
-			//setImagen(img);
 		}
 
 		/**
@@ -99,12 +89,11 @@ public class Ventana {
 		 * 
 		 * @param img = imagen de ventana sana
 		 */
-		public void arreglar(/*Sprite img*/){
+		public void arreglar(){
 			setGolpesAct(getGolpesAct()+1);
 		//	System.out.println("GOLPES ACUUTAL "+getGolpes_act());
 			if(getGolpesAct() == getGolpesFix()){
-				//setImagen(img);
-				//al ser pruba se informa
+			//	al ser pruba se informa
 				setRota(false);
 				System.out.println("Ventana Arreglada");
 			}

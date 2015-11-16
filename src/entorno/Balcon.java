@@ -1,4 +1,5 @@
 package entorno;
+
 /**
  * Clase que representa el balcon.
  * No posee modificadores.

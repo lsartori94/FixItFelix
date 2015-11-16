@@ -1,4 +1,5 @@
 package entorno;
+
 /**
  * Clase que simula la puerta del edificio.
  * No posee modificadores.
@@ -18,6 +19,7 @@ public class Puerta extends Semicirculo {
 	 * 
 	 * @param rota = indica si esta rota
 	 * @param paneles = vector de paneles de la puerta
+	 * @param img = imagen de la ventana
 	 */
 	public Puerta(boolean rota/*, Panel [] paneles*/) {
 		super(rota, golpesFix);

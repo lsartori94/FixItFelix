@@ -24,10 +24,9 @@ public class DoblePanel extends Ventana{
 	 * @param mold = indica si tiene moldura.
 	 * @param mace = indica si tiene maceta.
 	 * @param rota = indica si esta rota.
-	 * @param img = imagen de la ventana.
 	 */
-	public DoblePanel(boolean mold, boolean mace, boolean rota/*, Sprite img*/) {
-		super(mold, mace, rota, golpesFix/*, Sprite img*/);
+	public DoblePanel(boolean mold, boolean mace, boolean rota) {
+		super(mold, mace, rota, golpesFix);
 		// TODO Auto-generated constructor stub
 		Panel pR= new Panel(rota, rota);
 		Panel pS= new Panel(rota, rota);
@@ -68,7 +67,7 @@ public class DoblePanel extends Ventana{
 	 * Setea en rotos ambos paneles.
 	 * Setea en 0 los golpes acumulados.
 	 */
-	public void romper(/*Sprite img*/){
+	public void romper(){
 		panelInferior.romper();
 		panelSuperior.romper();
 		super.setGolpesAct(golpesACero);
@@ -81,8 +80,8 @@ public class DoblePanel extends Ventana{
 	 * Si los golpes acumulados >2 arregla panel superior.
 	 */
 	@Override
-	public void arreglar(/*Sprite img*/){
-		super.arreglar(/*img*/);
+	public void arreglar(){
+		super.arreglar();
 		if(super.getGolpesAct() <= 2){
 			panelInferior.arreglar();
 		}else if(super.getGolpesAct() > 2){

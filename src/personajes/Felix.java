@@ -5,8 +5,6 @@ import misc.Posicion;
 public class Felix {
 	private Posicion posicion;
 	private static final Posicion posInicial= new Posicion(2, 1);
-	//se comenta Sprite por ser prueba
-//	private Sprite imagen;
 	private int vidas;
 	private boolean poder;
 	public final int vidasInicio= 3;
@@ -33,14 +31,6 @@ public class Felix {
 		System.out.println("Poder de Felix= "+Poder());
 	}
 
-/*	public Sprite getImagen() {
-		return imagen;
-	}
-
-	public void setImagen(Sprite imagen) {
-		this.imagen = imagen;
-	}
-*/
 	/*
 	 * Estos metodos proporcionan la informacion pertinente del personaje
 	 * como la posicion y las vidas del mismo.
@@ -155,6 +145,7 @@ public class Felix {
 			System.out.println("Direction Error.");
 			break;
 	}
+
 }
 
 }
