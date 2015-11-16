@@ -12,7 +12,6 @@ public class Ladrillo {
 	private Posicion posicionl;
 	private int velocidad;
 	private boolean visible;
-//	private Sprite imagen;
 
 	/**
 	 * Metodo de cracion de Ladrillo.
@@ -51,14 +50,6 @@ public class Ladrillo {
 		return visible;
 	}
 
-//	public setImagen(Sprite img){
-//		imagen= img;
-//	}
-
-//	public Sprite getImagen(){
-//		return imagen;
-//	}
-	
 	public void setVelocidad(int velocidad) {
 		this.velocidad = velocidad;
 	}

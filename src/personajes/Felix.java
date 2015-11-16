@@ -1,15 +1,17 @@
 package personajes;
+import entorno.Seccion;
 import misc.Direccion;
 import misc.Posicion;
 
 public class Felix {
 	private Posicion posicion;
+	private Seccion sec;
 	private static final Posicion posInicial= new Posicion(2, 1);
-	//se comenta Sprite por ser prueba
-//	private Sprite imagen;
 	private int vidas;
 	private boolean poder;
 	public final int vidasInicio= 3;
+	private int limiteSup;
+	private int limiteInf;
 
 	//inicia Default Felix
 	/*
@@ -20,11 +22,12 @@ public class Felix {
 	 * @author Agustín Liébana lsartori
 	 * 
 	 */
-	public void iniciar(){
+	public void iniciar(Seccion sec){
 		//se asume como posicion inicial el piso 0 a la mitad del mapa (fila 3 de 5)
 		Posicion tmpPos= posInicial;
 		setPosicion(tmpPos);
 		setVidas(vidasInicio);
+		setSec(sec);
 		setPoder(false);
 		//aca se define la imagen con setImagen
 		//por ser prueba se informa creacion
@@ -33,14 +36,6 @@ public class Felix {
 		System.out.println("Poder de Felix= "+Poder());
 	}
 
-/*	public Sprite getImagen() {
-		return imagen;
-	}
-
-	public void setImagen(Sprite imagen) {
-		this.imagen = imagen;
-	}
-*/
 	/*
 	 * Estos metodos proporcionan la informacion pertinente del personaje
 	 * como la posicion y las vidas del mismo.
@@ -79,8 +74,9 @@ public class Felix {
 //	}
 
 	//metodo a ejecutar cuando se tenga que arreglar algo
-	public void martillar(/*Sprite img*/){
-		//setImagen(img);
+	public void martillar(){
+		sec.getVentana(posicion).arreglar();
+		sec.setCantRotas(sec.getCantRotas()-1);
 		//se informa por ser prueba
 		System.out.println("Felix martilla ventana");
 	}
@@ -98,6 +94,30 @@ public class Felix {
 	public void victoria(){
 
 	}
+	
+	public int getLimiteSup() {
+		return limiteSup;
+	}
+
+	public void setLimiteSup(int limiteSup) {
+		this.limiteSup = limiteSup;
+	}
+
+	public int getLimteInf() {
+		return limiteInf;
+	}
+
+	public void setLimteInf(int limteInf) {
+		this.limiteInf = limteInf;
+	}
+
+	public Seccion getSec() {
+		return sec;
+	}
+
+	public void setSec(Seccion sec) {
+		this.sec = sec;
+	}
 
 	// suma una vida al total
 	public void sumarVida(){
@@ -110,51 +130,105 @@ public class Felix {
 	 * que compone la seccion de ventanas. Los diferente case se corresponden
 	 * con los valores del enumerativo Direccion. Los condicionales de cada
 	 * movimiento estan ajustados al diseño actual de la seccion.
+	 * A su vez controla que se pueda mover a esa ventana (que no tenga modificadores)
 	 */
 	public void move(Direccion d){
-	Posicion tmp= posicion;
+		Posicion tmp= posicion;
 	
-	switch (d.getValue()) {
-		case 1:
-			tmp.setY(tmp.getY()+1);
-			if (tmp.getY() < 4){
-				setPosicion(tmp);
-				System.out.println("Felix se movio arriba");
-			}else
-				System.out.println("Felix no puede acceder a esa posicion");
-			break;
+		switch (d.getValue()) {
+			case 1:
+				tmp.setY(tmp.getY()+1);
+				if (tmp.getY() < limiteSup){
+					if(!sec.getVentana(tmp).macetero()){
+						if(!sec.getVentana(posicion).moldura()){
+							setPosicion(tmp);
+							System.out.println("Felix se movio arriba");
+						} else{
+							System.out.println("Hay moldura, no puede subir");
+						}
+					}else{
+						System.out.println("Hay macetero arriba, no puede subir");
+					}
+				}else
+					System.out.println("Felix no puede acceder a esa posicion, fuera de mapa");
+				break;
 		
-		case 2:
-			tmp.setY(tmp.getY()-1);
-			if (tmp.getY() > 1){
-				setPosicion(tmp);
-				System.out.println("Felix se movio abajo");
-			}else
-				System.out.println("Felix no puede acceder a esa posicion");
-			break;
+			case 2:
+				tmp.setY(tmp.getY()-1);
+				if (tmp.getY() > limiteInf){
+					if(!sec.getVentana(tmp).moldura()){
+						if(!sec.getVentana(posicion).macetero()){
+							setPosicion(tmp);
+							System.out.println("Felix se movio abajo");
+						} else{
+							System.out.println("Hay macetero, no puede Bajar");
+						}
+					}else{
+						System.out.println("Hay Moldura abajo, no puede bajar");
+					}
+				}else
+					System.out.println("Felix no puede acceder a esa posicion, fuera de mapa");
+				break;
 	
-		case 3:
-			tmp.setX(tmp.getX()-1);
-			if (tmp.getX() >= 0){
-				setPosicion(tmp);
-				System.out.println("Felix se movio a la izquierda.");
+			case 3:
+				tmp.setX(tmp.getX()-1);
+				if (tmp.getX() >= 0){
+					switch (sec.getVentana(tmp).getHoja().getValue()){
+						case 1:
+							System.out.println("Hay ventana con hojas abiertas, no puede moverse");
+							break;
+						
+						default:
+							setPosicion(tmp);
+							System.out.println("Felix se movio a la izquierda.");
+							break;
+						}
+					switch (sec.getVentana(posicion).getHoja().getValue()){
+						case 1:
+							System.out.println("Esta en una Ventana con hojas, no puede avanzar");
+							break;
+						
+						default:
+							setPosicion(tmp);
+							System.out.println("Felix se movio a la izquierda.");
+							break;
+					}
+				}else
+					System.out.println("Felix no puede acceder a esa posicion, fuera de mapa");
+				break;
+		
+			case 4:
+				tmp.setX(tmp.getX()+1);
+				if (tmp.getX() < 5){
+					switch (sec.getVentana(tmp).getHoja().getValue()){
+					case 1:
+						System.out.println("Hay ventana con hojas abiertas, no puede moverse");
+						break;
+					
+					default:
+						setPosicion(tmp);
+						System.out.println("Felix se movio a la derecha.");
+						break;
+					}
+				switch (sec.getVentana(posicion).getHoja().getValue()){
+					case 1:
+						System.out.println("Esta en una Ventana con hojas, no puede avanzar");
+						break;
+					
+					default:
+						setPosicion(tmp);
+						System.out.println("Felix se movio a la derecha.");
+						break;
+				}
 			}else
-				System.out.println("Felix no puede acceder a esa posicion");
+				System.out.println("Felix no puede acceder a esa posicion, fuera de mapa");
 			break;
 		
-		case 4:
-			tmp.setX(tmp.getX()+1);
-			if (tmp.getX() < 5){
-				setPosicion(tmp);
-				System.out.println("Felix se movio a la derecha.");
-			}else
-				System.out.println("Felix no puede acceder a esa posicion");
-			break;
-		
-		default:
-			System.out.println("Direction Error.");
-			break;
+			default:
+				System.out.println("Direction Error.");
+				break;
+		}
 	}
-}
 
+	
 }

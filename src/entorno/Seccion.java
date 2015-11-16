@@ -14,7 +14,6 @@ public class Seccion {
 	private int cantRotas;
 	private int cantModificador;
 	private int id;
-//	private Sprite imagen;
 	private Ventana [][] ventanas;
 
 	/**
@@ -33,7 +32,6 @@ public class Seccion {
 		setCantModificador(cMod);
 		setVentanas(ventanas);
 		setId(iD);
-		//setImagen(img);
 		//por ser prueba se informa creacion
 		System.out.println(" ");
 		System.out.println("Se creo seccion con "+getCantFilas()+" filas, "+getCantColumnas()+" columnas, con ID "+getId());
@@ -71,14 +69,6 @@ public class Seccion {
 	public void setCantModificador(int cantModificador) {
 		this.cantModificador = cantModificador;
 	}
-
-//	public Sprite getImagen() {
-//		return imagen;
-//	}
-
-//	public void setImagen(Sprite imagen) {
-//		this.imagen = imagen;
-//	}
 
 	public Ventana [][] getVentanas() {
 		Ventana [][] tmpV= ventanas.clone();

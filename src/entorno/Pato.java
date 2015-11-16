@@ -1,6 +1,7 @@
 package entorno;
 import misc.Direccion;
 import misc.Posicion;
+
 /**
  * Clase que representa a un Pato.
  * Vuela por una fila.
@@ -11,7 +12,11 @@ import misc.Posicion;
 public class Pato {
 	private Posicion posicion;
 	private int velocidad;
-//	private Sprite imagen;
+
+	public Pato(Posicion pos, int vel){
+		posicion = pos;
+		velocidad = vel;
+	}
 
 	public Posicion getPosicion() {
 		return posicion;
@@ -28,14 +33,6 @@ public class Pato {
 	public void setVelocidad(int velocidad) {
 		this.velocidad = velocidad;
 	}
-
-//	public Sprite getImagen() {
-//		return imagen;
-//	}
-
-//	public void setImagen(Sprite imagen) {
-//		this.imagen = imagen;
-//	}
 
 	/**
 	 * Mueve al pato por la fila.
