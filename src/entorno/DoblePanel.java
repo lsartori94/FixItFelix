@@ -9,10 +9,12 @@ package entorno;
  * Tiene un contador de golpes de martillo acumulados.
  * @author lsartori Agustín Liébana
  */
-public class Doble_panel extends Ventana{
+public class DoblePanel extends Ventana{
+	private static final int golpesFix= 4;
+	private static final int golpesACero= 0;
 	private boolean pie;
-	private Panel panel_inferior;
-	private Panel panel_superior;
+	private Panel panelInferior;
+	private Panel panelSuperior;
 
 	/**
 	 * Constructor de Doble_panel.
@@ -24,13 +26,13 @@ public class Doble_panel extends Ventana{
 	 * @param rota = indica si esta rota.
 	 * @param img = imagen de la ventana.
 	 */
-	public Doble_panel(boolean mold, boolean mace, boolean rota/*, Sprite img*/) {
-		super(mold, mace, rota, 4/*, Sprite img*/);
+	public DoblePanel(boolean mold, boolean mace, boolean rota/*, Sprite img*/) {
+		super(mold, mace, rota, golpesFix/*, Sprite img*/);
 		// TODO Auto-generated constructor stub
-		Panel p_i= new Panel(rota, rota);
-		Panel p_s= new Panel(rota, rota);
-		setPanel_inferior(p_i);
-		setPanel_superior(p_s);
+		Panel pR= new Panel(rota, rota);
+		Panel pS= new Panel(rota, rota);
+		setPanelInferior(pR);
+		setPanelSuperior(pS);
 	}
 
 	public boolean Pie() {
@@ -42,23 +44,23 @@ public class Doble_panel extends Ventana{
 	}
 
 
-	public Panel getPanel_inferior() {
-		return panel_inferior;
+	public Panel getPanelInferior() {
+		return panelInferior;
 	}
 
 
-	public void setPanel_inferior(Panel panel_inferior) {
-		this.panel_inferior = panel_inferior;
+	public void setPanelInferior(Panel panelInferior) {
+		this.panelInferior = panelInferior;
 	}
 
 
-	public Panel getPanel_superior() {
-		return panel_superior;
+	public Panel getPanelSuperior() {
+		return panelSuperior;
 	}
 
 
-	public void setPanel_superior(Panel panel_superrior) {
-		this.panel_superior = panel_superrior;
+	public void setPanelSuperior(Panel panelSuperrior) {
+		this.panelSuperior = panelSuperrior;
 	}
 
 	/**
@@ -67,9 +69,9 @@ public class Doble_panel extends Ventana{
 	 * Setea en 0 los golpes acumulados.
 	 */
 	public void romper(/*Sprite img*/){
-		panel_inferior.romper();
-		panel_superior.romper();
-		super.setGolpes_act(0);
+		panelInferior.romper();
+		panelSuperior.romper();
+		super.setGolpesAct(golpesACero);
 	}
 
 	/**
@@ -81,10 +83,10 @@ public class Doble_panel extends Ventana{
 	@Override
 	public void arreglar(/*Sprite img*/){
 		super.arreglar(/*img*/);
-		if(super.getGolpes_act() <= 2){
-			panel_inferior.arreglar();
-		}else if(super.getGolpes_act() > 2){
-			panel_superior.arreglar();
+		if(super.getGolpesAct() <= 2){
+			panelInferior.arreglar();
+		}else if(super.getGolpesAct() > 2){
+			panelSuperior.arreglar();
 		}
 		
 	}

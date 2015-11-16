@@ -4,6 +4,7 @@ import misc.Posicion;
 
 public class Felix {
 	private Posicion posicion;
+	private static final Posicion posInicial= new Posicion(2, 1);
 	//se comenta Sprite por ser prueba
 //	private Sprite imagen;
 	private int vidas;
@@ -21,8 +22,8 @@ public class Felix {
 	 */
 	public void iniciar(){
 		//se asume como posicion inicial el piso 0 a la mitad del mapa (fila 3 de 5)
-		Posicion tmp_pos= new Posicion(2, 1);
-		setPosicion(tmp_pos);
+		Posicion tmpPos= posInicial;
+		setPosicion(tmpPos);
 		setVidas(vidasInicio);
 		setPoder(false);
 		//aca se define la imagen con setImagen
@@ -86,8 +87,8 @@ public class Felix {
 
 	//metodo a ejecutar cuando se reciba un golpe
 	public void golpe(){
-		int v_temp= getVidas();
-		setVidas((v_temp -1));
+		int vTemp= getVidas();
+		setVidas((vTemp -1));
 		//luego se debe implementar el Sprite correspondiente
 		//por ser prueba se informa
 		System.out.println("Felix perdio una vida. Vidas restantes= "+getVidas());
@@ -100,8 +101,8 @@ public class Felix {
 
 	// suma una vida al total
 	public void sumarVida(){
-		int v_temp= getVidas();
-		setVidas(v_temp ++);
+		int vTemp= getVidas();
+		setVidas(vTemp ++);
 	}
 
 	/*

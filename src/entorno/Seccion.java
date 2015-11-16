@@ -9,10 +9,10 @@ import misc.Posicion;
  * @author lsartori Agustín Liébana
  */
 public class Seccion {
-	private int cant_filas;
-	private int cant_columnas;
-	private int cant_rotas;
-	private int cant_modificador;
+	private int cantFilas;
+	private int cantColumnas;
+	private int cantRotas;
+	private int cantModificador;
 	private int id;
 //	private Sprite imagen;
 	private Ventana [][] ventanas;
@@ -20,55 +20,55 @@ public class Seccion {
 	/**
 	 * Constructor de la seccion.
 	 * 
-	 * @param c_f = cantidad de filas.
-	 * @param c_c = cantidad de columnas.
-	 * @param c_rot = cantidad de ventanas rotas.
-	 * @param c_mod = cantidad de ventanas modificadas.
+	 * @param cF = cantidad de filas.
+	 * @param cC = cantidad de columnas.
+	 * @param cRot = cantidad de ventanas rotas.
+	 * @param cmod = cantidad de ventanas modificadas.
 	 * @param ventanas = matriz de ventanas.
 	 */
-	public Seccion(int c_f, int c_c, int c_rot, int c_mod, Ventana[][] ventanas/*,Sprite img*/){
-		setCant_filas(c_f);
-		setCant_columnas(c_c);
-		setCant_rotas(c_rot);
-		setCant_modificador(c_mod);
+	public Seccion(int cF, int cC, int cRot, int cMod, Ventana[][] ventanas/*,Sprite img*/){
+		setCantFilas(cF);
+		setCantColumnas(cC);
+		setCantRotas(cRot);
+		setCantModificador(cMod);
 		setVentanas(ventanas);
 		//setImagen(img);
 		//por ser prueba se informa creacion
 		System.out.println(" ");
-		System.out.println("Se creo seccion con "+getCant_filas()+" filas, "+getCant_columnas()+" columnas, con ID "+getId());
-		System.out.println("La seccion posee "+ getCant_rotas()+" ventanas rotas y "+getCant_modificador()+" ventanas modificadas");
+		System.out.println("Se creo seccion con "+getCantFilas()+" filas, "+getCantColumnas()+" columnas, con ID "+getId());
+		System.out.println("La seccion posee "+ getCantRotas()+" ventanas rotas y "+getCantModificador()+" ventanas modificadas");
 	}
 
-	public int getCant_filas() {
-		return cant_filas;
+	public int getCantFilas() {
+		return cantFilas;
 	}
 
-	public void setCant_filas(int cant_filas) {
-		this.cant_filas = cant_filas;
+	public void setCantFilas(int cantFilas) {
+		this.cantFilas = cantFilas;
 	}
 
-	public int getCant_columnas() {
-		return cant_columnas;
+	public int getCantColumnas() {
+		return cantColumnas;
 	}
 
-	public void setCant_columnas(int cant_columnas) {
-		this.cant_columnas = cant_columnas;
+	public void setCantColumnas(int cantColumnas) {
+		this.cantColumnas = cantColumnas;
 	}
 
-	public int getCant_rotas() {
-		return cant_rotas;
+	public int getCantRotas() {
+		return cantRotas;
 	}
 
-	public void setCant_rotas(int cant_rotas) {
-		this.cant_rotas = cant_rotas;
+	public void setCantRotas(int cantRotas) {
+		this.cantRotas = cantRotas;
 	}
 
-	public int getCant_modificador() {
-		return cant_modificador;
+	public int getCantModificador() {
+		return cantModificador;
 	}
 
-	public void setCant_modificador(int cant_modificador) {
-		this.cant_modificador = cant_modificador;
+	public void setCantModificador(int cantModificador) {
+		this.cantModificador = cantModificador;
 	}
 
 //	public Sprite getImagen() {
@@ -80,8 +80,8 @@ public class Seccion {
 //	}
 
 	public Ventana [][] getVentanas() {
-		Ventana [][] tmp_v= ventanas.clone();
-		return tmp_v;
+		Ventana [][] tmpV= ventanas.clone();
+		return tmpV;
 	}
 
 	public void setVentanas(Ventana[][] ventanas) {
