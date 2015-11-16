@@ -26,7 +26,7 @@ public class Seccion {
 	 * @param cmod = cantidad de ventanas modificadas.
 	 * @param ventanas = matriz de ventanas.
 	 */
-	public Seccion(int cF, int cC, int cRot, int cMod, Ventana[][] ventanas, int iD/*,Sprite img*/){
+	public Seccion(int cF, int cC, int cRot, int cMod, Ventana[][] ventanas, int iD){
 		setCantFilas(cF);
 		setCantColumnas(cC);
 		setCantRotas(cRot);

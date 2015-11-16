@@ -90,10 +90,11 @@ public final class Juego {
 		Seccion [] sec= new Seccion [3];
 		for(indiceSec = 0; indiceSec < 3; indiceSec++){
 			System.out.println("Seccion "+indiceSec);
-			sec[indiceSec]= new Seccion((filas - 2), colum, cantRota, obstaculos, inicializarVentanas(), indiceSec);
+			Ventana [][] ventanas = inicializarVentanas();
+			sec[indiceSec]= new Seccion((filas - 2), colum, cantRota, obstaculos, ventanas, indiceSec);
 		}
-		Mapa map= new Mapa(sec, 3);
-		mapa= map;
+		mapa= new Mapa(sec, 3);
+		//mapa= map;   //atada con alambre
 				
 		System.out.println("");
 		System.out.println("Se va a inicializar Felix");
