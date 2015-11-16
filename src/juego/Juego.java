@@ -16,6 +16,14 @@ public final class Juego {
 	private Felix felix;
 	private int d = 0;
 	private Mapa mapa;
+	private double factVentRota = 0.2;
+	private double factObsVent = 0.1;
+	private int cantRota;
+	private int indiceSec;
+	private int level = 0;
+	private int obstaculos;
+	int filas= 5;
+	int colum= 5;
 //	private Puntaje puntaje;
 //	private Tiempo tiempo;
 //	private Highscore highscores;
@@ -29,6 +37,7 @@ public final class Juego {
 	 * un movimiento de Felix, un movimiento de Ralph y un chequeo de condiciones.
 	 */
 	public void go() {
+	
 		comenzar();
 		while(ralph.getCantLadrillos() != 0){
 			ralph.shoot();
@@ -71,48 +80,19 @@ public final class Juego {
 	 */
 	private void comenzar(){
 		// codigo a ejecutar para iniciar el juego
-		int filas= 5;
-		int colum= 5;
-		double check;
-		int cantRota =0;
-		Ventana [][] vent = new Ventana[colum][filas];
-		for(int i=1; i<filas-1; i++){
-			for(int j=0; j<colum; j++){
-				check = Math.random();
-				if(check > 0.5){
-					if(j == 2){
-						if(i == 1 ){
-							vent[j][i]= new Puerta(false);
-							System.out.println("Puerta sana creada en "+j+" , "+i);
-						}else if(i == 2){
-							vent[j][i]= new Balcon(false);
-							System.out.println("Balcon sano creado en "+j+" , "+i);
-						}else
-							vent[j][i]= new DoblePanel(false, false, false);
-					}else
-						vent[j][i]= new DoblePanel(false, false, false);
-				}else{
-					if(j == 2){
-						if(i == 1){
-							vent[j][i]= new Puerta(true);
-							System.out.println("Puerta rota creada en "+j+" , "+i);
-						}else if(i == 2){
-							vent[j][i]= new Balcon(true);
-							System.out.println("Balcon roto creado en "+j+" , "+i);
-						}else
-							vent[j][i]= new DoblePanel(false, false, true);
-					}else
-						vent[j][i]= new DoblePanel(false, false, true);
-					cantRota++;
-				}
-			}
-		}
-		System.out.println("Se crearon "+(((filas-2)*colum)-2)+" ventanas sin modificadores");
-		System.out.println("De las cuales "+cantRota+" estan rotas (contando puerta y balcon)");
 		
-		Seccion [] sec= new Seccion [1];
-		sec[0]= new Seccion(3,5,cantRota,0, vent);
-		Mapa map= new Mapa(sec, 1);
+		if( level > 0 && level < 10){
+			factVentRota = factVentRota * Math.pow((1+0.15),level);
+			factObsVent = factObsVent * Math.pow((1+0.15),level);
+		}
+		System.out.println("Factoriales "+factVentRota+" , "+factObsVent);
+		
+		Seccion [] sec= new Seccion [3];
+		for(indiceSec = 0; indiceSec < 3; indiceSec++){
+			System.out.println("Seccion "+indiceSec);
+			sec[indiceSec]= new Seccion((filas - 2), colum, cantRota, obstaculos, inicializarVentanas(), indiceSec);
+		}
+		Mapa map= new Mapa(sec, 3);
 		mapa= map;
 				
 		System.out.println("");
@@ -124,6 +104,92 @@ public final class Juego {
 		Posicion posR= new Posicion(0, 4);
 		ralph= new Ralph(50, 1, 1, 1, posR, sec[0]);
 
+	}
+	
+	private Ventana [][] inicializarVentanas(){
+		double check, check2;
+		cantRota = 0;
+		int maceta = 0;
+		int moldura = 0;
+		int dobleObs = 0;
+		
+		Ventana [][] vent = new Ventana[colum][filas];
+		for(int i=1; i<filas-1; i++){
+				for(int j=0; j<colum; j++){
+					check = Math.random();
+					check2 = Math.random();
+					if(check > factVentRota){
+						if(j == 2){
+							if(i == 1 ){
+								if(indiceSec == 0){
+									vent[j][i]= new Puerta(false);
+									System.out.println("Puerta sana creada en "+j+" , "+i);
+								}
+							}else if(i == 2){
+								if(indiceSec == 0){
+									vent[j][i]= new Balcon(false);
+									System.out.println("Balcon sano creado en "+j+" , "+i);
+								}
+							}else{
+								vent[j][i]= new DoblePanel(check2 <= factObsVent,check >= (1-factObsVent), false);
+								if(check2 <= factObsVent)
+									if(check >= (1-factObsVent))
+										dobleObs++;
+									else
+										moldura++;
+								else if(check >= (1-factObsVent))		
+									maceta++;	
+							}
+						}else{
+							vent[j][i]= new DoblePanel(check2 <= factObsVent,check >= (1-factObsVent), false);
+							if(check2 <= factObsVent)
+								if(check >= (1-factObsVent))
+									dobleObs++;
+								else
+									moldura++;
+							else if(check >= (1-factObsVent))		
+								maceta++;	
+						}
+					}else{
+						if(j == 2){
+							if(i == 1){
+								if(indiceSec == 0){
+									vent[j][i]= new Puerta(true);
+									System.out.println("Puerta rota creada en "+j+" , "+i);
+								}
+							}else if(i == 2){
+								if(indiceSec == 0){
+									vent[j][i]= new Balcon(true);
+									System.out.println("Balcon roto creado en "+j+" , "+i);
+								}
+							}else{
+								vent[j][i]= new DoblePanel(check2 <= factObsVent,check >= (1-factObsVent), false);
+								if(check2 <= factObsVent)
+									if(check >= (1-factObsVent))
+										dobleObs++;
+									else
+										moldura++;
+								else if(check >= (1-factObsVent))		
+									maceta++;	
+							}
+						}else{
+							vent[j][i]= new DoblePanel(check2 <= factObsVent,check >= (1-factObsVent), false);
+							if(check2 <= factObsVent)
+								if(check >= (1-factObsVent))
+									dobleObs++;
+								else
+									moldura++;
+							else if(check >= (1-factObsVent))		
+								maceta++;	
+						}
+						cantRota++;
+					}
+			}
+			obstaculos = moldura + maceta + dobleObs;
+		}
+		System.out.println("Se crearon "+moldura+" ventanas con molduras, "+maceta+" con macetas y "+dobleObs+" con doble obstaculo.");
+		System.out.println("De las cuales "+cantRota+" estan rotas (contando puerta y balcon)");
+		return vent;
 	}
 
 	private final void pasarNivel(){
