@@ -12,10 +12,10 @@ package entorno;
  * @author lsartori Agustín Liébana
  *
  */
-public class Con_hoja extends Ventana{
+public class ConHoja extends Ventana{
 	private boolean abierta;
 	
-	public Con_hoja(boolean abierta){
+	public ConHoja(boolean abierta){
 		super(false, false, false, 0);
 		setAbierta(abierta);
 	}

@@ -11,6 +11,7 @@ package entorno;
 
 public class Balcon extends Semicirculo{
 //	private Panel [] paneles;
+	private static final int golpesFix= 16;
 
 	/**
 	 * Constructor de Balcon.
@@ -20,7 +21,7 @@ public class Balcon extends Semicirculo{
 	 * 
 	 */
 	public Balcon(boolean rota/*, Panel [] paneles*/) {
-		super(rota, 16);
+		super(rota, golpesFix);
 //		setPaneles(paneles);
 	}
 

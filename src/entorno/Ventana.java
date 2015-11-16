@@ -1,7 +1,8 @@
 package entorno;
 /**
  * Clase que representa a una ventana.
- * Puede tener todos los tipos de modificadores.
+ * Puede tener todos los tipos de modificadores (Moldura, maceta, nicelander).
+ *
  * @author lsartori Agustín Liébana
  *
  */
@@ -9,8 +10,8 @@ public class Ventana {
 		private boolean moldura;
 		private boolean macetero;
 		private boolean rota;
-		private int golpes_fix;
-		private int golpes_act;
+		private int golpesFix;
+		private int golpesAct;
 		//private Sprite imagen;
 		
 		/**
@@ -25,8 +26,8 @@ public class Ventana {
 		public Ventana(boolean mold, boolean mace, boolean rota, int fix/*, Sprite img*/){
 			setMoldura(mold);
 			setMacetero(mace);
-			setGolpes_fix(fix);
-			setGolpes_act(0);
+			setGolpesFix(fix);
+			setGolpesAct(0);
 			//setImagen(img);
 			setRota(rota);
 		}
@@ -55,12 +56,12 @@ public class Ventana {
 			this.rota = rota;
 		}
 
-		public int getGolpes_fix() {
-			return golpes_fix;
+		public int getGolpesFix() {
+			return golpesFix;
 		}
 
-		public void setGolpes_fix(int golpes_fix) {
-			this.golpes_fix = golpes_fix;
+		public void setGolpesFix(int golpesFix) {
+			this.golpesFix = golpesFix;
 		}
 
 //		public Sprite getImagen() {
@@ -71,12 +72,12 @@ public class Ventana {
 //			this.imagen = imagen;
 //		}
 
-		public int getGolpes_act() {
-			return golpes_act;
+		public int getGolpesAct() {
+			return golpesAct;
 		}
 
-		public void setGolpes_act(int golpes_act) {
-			this.golpes_act = golpes_act;
+		public void setGolpesAct(int golpesAct) {
+			this.golpesAct = golpesAct;
 		}
 
 		/**
@@ -99,9 +100,9 @@ public class Ventana {
 		 * @param img = imagen de ventana sana
 		 */
 		public void arreglar(/*Sprite img*/){
-			setGolpes_act(getGolpes_act()+1);
+			setGolpesAct(getGolpesAct()+1);
 		//	System.out.println("GOLPES ACUUTAL "+getGolpes_act());
-			if(getGolpes_act() == getGolpes_fix()){
+			if(getGolpesAct() == getGolpesFix()){
 				//setImagen(img);
 				//al ser pruba se informa
 				setRota(false);

@@ -11,6 +11,7 @@ package entorno;
 
 public class Puerta extends Semicirculo {
 	//private Panel[] paneles;
+	private static final int golpesFix= 8;
 
 	/**
 	 * Constructor de Puerta
@@ -19,7 +20,7 @@ public class Puerta extends Semicirculo {
 	 * @param paneles = vector de paneles de la puerta
 	 */
 	public Puerta(boolean rota/*, Panel [] paneles*/) {
-		super(rota, 8);
+		super(rota, golpesFix);
 	//	setPaneles(paneles);
 	}
 

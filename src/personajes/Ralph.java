@@ -5,15 +5,16 @@ import misc.Direccion;
 import misc.Posicion;
 
 public class Ralph {
-
-	private int cant_ladrillos;
-	private int time_ladrillo;
+	
+	private static final int ladrilloInicial= 0;
+	private int cantLadrillos;
+	private int timeLadrillo;
 	//espera entre cambio de posicion
 	private int velocidad;
 	private Ladrillo [] ladrillos;
-	private int ladrillo_act;
+	private int ladrilloAct;
 	//tiempo de espera entre ladrillos
-	private int intervalo_lad;
+	private int intervaloLad;
 	//Sprite se comenta por ser prueba
 	//private Sprite imagen;
 	private Seccion seccion;
@@ -27,13 +28,13 @@ public class Ralph {
 	 * 
 	 * @author Agustín Liébana lsartori
 	 */
-	public Ralph(int cant_lad, int tiempo_lad, int vel_lad, int vel_ralph, Posicion pos, Seccion sec/*, Sprite img*/){
+	public Ralph(int cantLad, int tiempoLad, int velLad, int velRalph, Posicion pos, Seccion sec/*, Sprite img*/){
 		setPosicion(pos);
-		setCantLadrillos(cant_lad);
-		crearLadrillos(cant_lad, vel_lad, getPosicion());
-		setTimeLadrillo(tiempo_lad);
-		setLadrillo_act(0);
-		setVelocidad(vel_ralph);
+		setCantLadrillos(cantLad);
+		crearLadrillos(cantLad, velLad, getPosicion());
+		setTimeLadrillo(tiempoLad);
+		setLadrillo_act(ladrilloInicial);
+		setVelocidad(velRalph);
 		setSeccion(sec);
 		//setImagen(img);
 		//por ser prueba se informa lo realizado
@@ -61,9 +62,9 @@ public class Ralph {
 	public void shoot(){
 		if(getCantLadrillos() != 0){
 			System.out.println("Ralph lanzo un ladrillo");
-			ladrillos[getLadrillo_act()].caer();
+			ladrillos[getLadrilloAct()].caer();
 			setCantLadrillos(getCantLadrillos()-1);
-			setLadrillo_act(getLadrillo_act()+1);
+			setLadrillo_act(getLadrilloAct()+1);
 		}
 	}
 
@@ -76,11 +77,11 @@ public class Ralph {
 //	}
 
 	public int getCantLadrillos(){
-		return cant_ladrillos;
+		return cantLadrillos;
 	}
 
 	public int getTimeLadrillo(){
-		return time_ladrillo;
+		return timeLadrillo;
 	}
 
 	public int getVelocidad(){
@@ -98,11 +99,11 @@ public class Ralph {
 //	}
 
 	public void setCantLadrillos(int lad){
-		cant_ladrillos= lad;
+		cantLadrillos= lad;
 	}
 
 	public void setTimeLadrillo(int tlad){
-		time_ladrillo= tlad;
+		timeLadrillo= tlad;
 	}
 
 	public void setVelocidad(int vel){
@@ -117,12 +118,12 @@ public class Ralph {
 		this.seccion = seccion;
 	}
 
-	public int getIntervalo_lad() {
-		return intervalo_lad;
+	public int getIntervaloLad() {
+		return intervaloLad;
 	}
 
-	public void setIntervalo_lad(int intervalo_lad) {
-		this.intervalo_lad = intervalo_lad;
+	public void setIntervaloLad(int intervaloLad) {
+		this.intervaloLad = intervaloLad;
 	}
 	
 	/*
@@ -160,11 +161,11 @@ public class Ralph {
 	}
 	
 	public void setLadrillo_act(int act){
-		ladrillo_act= act;
+		ladrilloAct= act;
 	}
 
-	public int getLadrillo_act(){
-		return ladrillo_act;
+	public int getLadrilloAct(){
+		return ladrilloAct;
 	}
 	
 	/*

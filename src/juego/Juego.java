@@ -33,11 +33,11 @@ public final class Juego {
 		while(ralph.getCantLadrillos() != 0){
 			ralph.shoot();
 			if(mapa.getSeccion(0).getVentana(felix.getPosicion()).rota()){
-				f_martillar();
+				fMartillar();
 			}else{
-				f_move();
+				fMove();
 			}
-				r_move();
+				rMove();
 			if(checkGameFin())
 				break;
 			System.out.println("");
@@ -88,9 +88,9 @@ public final class Juego {
 							vent[j][i]= new Balcon(false);
 							System.out.println("Balcon sano creado en "+j+" , "+i);
 						}else
-							vent[j][i]= new Doble_panel(false, false, false);
+							vent[j][i]= new DoblePanel(false, false, false);
 					}else
-						vent[j][i]= new Doble_panel(false, false, false);
+						vent[j][i]= new DoblePanel(false, false, false);
 				}else{
 					if(j == 2){
 						if(i == 1){
@@ -100,9 +100,9 @@ public final class Juego {
 							vent[j][i]= new Balcon(true);
 							System.out.println("Balcon roto creado en "+j+" , "+i);
 						}else
-							vent[j][i]= new Doble_panel(false, false, true);
+							vent[j][i]= new DoblePanel(false, false, true);
 					}else
-						vent[j][i]= new Doble_panel(false, false, true);
+						vent[j][i]= new DoblePanel(false, false, true);
 					cantRota++;
 				}
 			}
@@ -147,7 +147,7 @@ public final class Juego {
 	 * @return devuelve si se debe finalizar la simulacion (felix muere)
 	 */
 	private boolean checkGameFin(){
-		int l_act= ralph.getLadrillo_act();
+		int l_act= ralph.getLadrilloAct();
 		//evalua los ladrillos tirados para ver si golpearona felix
 		for(int i= 0; i < l_act; i++){
 			Ladrillo lad= ralph.getLadrillo(i);
@@ -171,7 +171,7 @@ public final class Juego {
 	 * y se avisa por consola. Igualmente la simulacion termina cuando Felix muera
 	 * o cuando Ralph no tenga mas ladrillos.
 	 */
-	private void f_move(){
+	private void fMove(){
 		if(felix.getPosicion().getY() < 4 ){
 			if(felix.getPosicion().getY() % 2 != 0){
 				if(felix.getPosicion().getX()<4){
@@ -198,7 +198,7 @@ public final class Juego {
 	 * Metodo que realiza los movimientos de Ralph.
 	 * Recorre toda la fila 4 (exclusiva de Ralph)
 	 */
-	private void r_move(){
+	private void rMove(){
 	switch( d ){
 		case 0:
 			if(ralph.getPosicion().getX()<3){
@@ -221,7 +221,7 @@ public final class Juego {
 	/**
 	 * Metodo que realiza el martilleo de felix y el arreglo de ventana
 	 */
-	private void f_martillar(){
+	private void fMartillar(){
 		felix.martillar();
 		mapa.getSeccion(0).getVentana(felix.getPosicion()).arreglar();
 	}

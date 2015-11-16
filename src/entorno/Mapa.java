@@ -7,7 +7,7 @@ package entorno;
  * @author lsartori Agustín Liébana
  */
 public class Mapa {
-	private int cant_secciones;
+	private int cantSecciones;
 	private Seccion [] secciones;
 
 	/**
@@ -17,18 +17,18 @@ public class Mapa {
 	 * @param tamanio = cantidad de secciones.
 	 */
 	public Mapa(Seccion [] secc, int tamanio){
-		setCant_secciones(tamanio);
+		setCantSecciones(tamanio);
 		setSecciones(secc);
 		//por ser prueba se informa creacion
-		System.out.println("Se creo mapa con "+getCant_secciones()+" secciones");
+		System.out.println("Se creo mapa con "+getCantSecciones()+" secciones");
 	}
 
-	public int getCant_secciones() {
-		return cant_secciones;
+	public int getCantSecciones() {
+		return cantSecciones;
 	}
 
-	public void setCant_secciones(int cant_secciones) {
-		this.cant_secciones = cant_secciones;
+	public void setCantSecciones(int cantSecciones) {
+		this.cantSecciones = cantSecciones;
 	}
 
 	public Seccion getSeccion(int i) {
