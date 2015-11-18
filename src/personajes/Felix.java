@@ -1,4 +1,8 @@
 package personajes;
+import java.awt.image.BufferedImage;
+import java.io.*;
+import java.util.Map;
+import javax.imageio.ImageIO;
 import entorno.Seccion;
 import misc.Direccion;
 import misc.Posicion;
@@ -12,6 +16,8 @@ public class Felix {
 	public final int vidasInicio= 3;
 	private int limiteSup;
 	private int limiteInf;
+	private boolean derecha;
+	private Map<String, BufferedImage> imagenes;
 
 	//inicia Default Felix
 	/*
@@ -34,6 +40,8 @@ public class Felix {
 		System.out.println(" ");
 		System.out.println("Felix se creo en la posicion "+getPosicion().getX()+", "+getPosicion().getY()+" con "+getVidas()+" vidas");
 		System.out.println("Poder de Felix= "+Poder());
+		//carga de todas las imagenes de Felix
+		cargarImagenes();
 	}
 
 	/*
@@ -67,25 +75,21 @@ public class Felix {
 		this.poder = poder;
 	}
 
-	//metodo a ejecutar para mover a Felix en una direccion
-	//direccion no se utiliza por ser prueba
-//	public void mover(Direccion dir){
-//		
-//	}
-
 	//metodo a ejecutar cuando se tenga que arreglar algo
-	public void martillar(){
+	public int martillar(){
 		sec.getVentana(posicion).arreglar();
 		sec.setCantRotas(sec.getCantRotas()-1);
 		//se informa por ser prueba
 		System.out.println("Felix martilla ventana");
+		// devuelve el puntaje de martillar un panel
+		return sec.getVentana(posicion).getPuntaje();
 	}
+
 
 	//metodo a ejecutar cuando se reciba un golpe
 	public void golpe(){
 		int vTemp= getVidas();
 		setVidas((vTemp -1));
-		//luego se debe implementar el Sprite correspondiente
 		//por ser prueba se informa
 		System.out.println("Felix perdio una vida. Vidas restantes= "+getVidas());
 	}
@@ -115,6 +119,14 @@ public class Felix {
 		return sec;
 	}
 
+	public boolean derecha() {
+		return derecha;
+	}
+
+	public void setDerecha(boolean derecha) {
+		this.derecha = derecha;
+	}
+
 	public void setSec(Seccion sec) {
 		this.sec = sec;
 	}
@@ -142,6 +154,7 @@ public class Felix {
 					if(!sec.getVentana(tmp).macetero()){
 						if(!sec.getVentana(posicion).moldura()){
 							setPosicion(tmp);
+							refreshImagenPosicion(d);
 							System.out.println("Felix se movio arriba");
 						} else{
 							System.out.println("Hay moldura, no puede subir");
@@ -159,6 +172,7 @@ public class Felix {
 					if(!sec.getVentana(tmp).moldura()){
 						if(!sec.getVentana(posicion).macetero()){
 							setPosicion(tmp);
+							refreshImagenPosicion(d);
 							System.out.println("Felix se movio abajo");
 						} else{
 							System.out.println("Hay macetero, no puede Bajar");
@@ -180,6 +194,8 @@ public class Felix {
 						
 						default:
 							setPosicion(tmp);
+							setDerecha(false);
+							refreshImagenPosicion(d);
 							System.out.println("Felix se movio a la izquierda.");
 							break;
 						}
@@ -190,6 +206,8 @@ public class Felix {
 						
 						default:
 							setPosicion(tmp);
+							setDerecha(false);
+							refreshImagenPosicion(d);
 							System.out.println("Felix se movio a la izquierda.");
 							break;
 					}
@@ -207,6 +225,8 @@ public class Felix {
 					
 					default:
 						setPosicion(tmp);
+						setDerecha(true);
+						refreshImagenPosicion(d);
 						System.out.println("Felix se movio a la derecha.");
 						break;
 					}
@@ -217,6 +237,8 @@ public class Felix {
 					
 					default:
 						setPosicion(tmp);
+						setDerecha(true);
+						refreshImagenPosicion(d);
 						System.out.println("Felix se movio a la derecha.");
 						break;
 				}
@@ -230,5 +252,103 @@ public class Felix {
 		}
 	}
 
-	
+	/**
+	 * Carga todas las imagenes que puede usar Felix
+	 */
+	private void cargarImagenes(){
+		try{
+			if(imagenes.isEmpty()){
+				imagenes.put("paradoDerecha", ImageIO.read(new File("felix_parado_derecha.png")));
+				imagenes.put("paradoIzquierda", ImageIO.read(new File("felix_parado_izquierda.png")));
+				imagenes.put("moverDerecha", ImageIO.read(new File("felix_mover_derecha.png")));
+				imagenes.put("moverIzquierda", ImageIO.read(new File("felix_mover_izquierda.png")));
+				imagenes.put("saltarDerecha", ImageIO.read(new File("felix_saltar_derecha.png")));
+				imagenes.put("saltarIzquierda", ImageIO.read(new File("felix_saltar_izquierda.png")));
+				imagenes.put("golpe", ImageIO.read(new File("felix_golpe.png")));
+				imagenes.put("martilloDerecha1", ImageIO.read(new File("felix_martillo_derecha_1.png")));
+				imagenes.put("martilloDerecha2", ImageIO.read(new File("felix_martillo_derecha_2.png")));
+				imagenes.put("martilloIzquierda1", ImageIO.read(new File("felix_martillo_izquierda_1.png")));
+				imagenes.put("martilloIzquierda2", ImageIO.read(new File("felix_martillo_izquierda_2.png")));
+				imagenes.put("pieDerecha1", ImageIO.read(new File("felix_pie_derecha_1.png")));
+				imagenes.put("pieDerecha2", ImageIO.read(new File("felix_pie_derecha_2.png")));
+				imagenes.put("pieIzquierda1", ImageIO.read(new File("felix_pie_izquierda_1.png")));
+				imagenes.put("pieIzquierda2", ImageIO.read(new File("felix_pie_izquierda_2.png")));
+				imagenes.put("victoria1", ImageIO.read(new File("felix_victoria_1.png")));
+				imagenes.put("victoria2", ImageIO.read(new File("felix_victoria_2.png")));
+				imagenes.put("victoria3", ImageIO.read(new File("felix_victoria_3.png")));
+				imagenes.put("muerte1", ImageIO.read(new File("felix_muerte_1.png")));
+				imagenes.put("muerte2", ImageIO.read(new File("felix_muerte_2.png")));
+				imagenes.put("muerte3", ImageIO.read(new File("felix_muerte_3.png")));
+				imagenes.put("muerte4", ImageIO.read(new File("felix_muerte_4.png")));
+				imagenes.put("muerte5", ImageIO.read(new File("felix_muerte_5.png")));
+				imagenes.put("muerte6", ImageIO.read(new File("felix_muerte_6.png")));
+			}
+			
+		} catch(IOException e){
+			System.out.println("Error interno en Felix" + e.getMessage());
+		}
+	}
+
+	/**
+	 * FALTA HACER LAS ESPERAS DE LOS REFRESCOS
+	 * Refresca las imagenes de movimiento de felix
+	 * @param d = direccion de movimiento
+	 */
+	private void refreshImagenPosicion(Direccion d){
+		if(derecha){
+			switch(d.getValue()){
+			case 1:
+				pintar(imagenes.get("saltarDerecha"));
+				//WAIT
+				pintar(imagenes.get("paradoDerecha"));
+				break;
+			case 2:
+				pintar(imagenes.get("saltarDerecha"));
+				//WAIT
+				pintar(imagenes.get("paradoDerecha"));
+				break;
+			case 3:
+				pintar(imagenes.get("moverIzquierda"));
+				//WAIT
+				pintar(imagenes.get("paradoIzquierda"));
+				break;
+			case 4:
+				pintar(imagenes.get("moverDerecha"));
+				//WAIT
+				pintar(imagenes.get("paradoDerecha"));
+				break;
+			}
+		} else{
+			switch(d.getValue()){
+			case 1:
+				pintar(imagenes.get("saltarIzquierda"));
+				//WAIT
+				pintar(imagenes.get("paradoIzquierda"));
+				break;
+			case 2:
+				pintar(imagenes.get("saltarIzquierda"));
+				//WAIT
+				pintar(imagenes.get("paradoIzquierda"));
+				break;
+			case 3:
+				pintar(imagenes.get("moverIzquierda"));
+				//WAIT
+				pintar(imagenes.get("paradoIzquierda"));
+				break;
+			case 4:
+				pintar(imagenes.get("moverDerecha"));
+				//WAIT
+				pintar(imagenes.get("paradoDerecha"));
+				break;
+			}
+		}
+	}
+
+	/**
+	 * Borra la imagen anterior y pinta la nueva
+	 * @param img = imagen a pintar
+	 */
+	private void pintar(BufferedImage img){
+		
+	}
 }

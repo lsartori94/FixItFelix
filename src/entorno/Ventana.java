@@ -1,22 +1,26 @@
 package entorno;
 
+import java.awt.image.BufferedImage;
+import java.util.Map;
+
 import misc.Hoja;
 
 /**
  * Clase que representa a una ventana.
  * Puede tener todos los tipos de modificadores (Moldura, maceta, nicelander).
- *
+ * Todas las ventanas dan 100 puntos por panel, excepto las qu poseen hoja.
  * @author lsartori Agustín Liébana
- *
  */
 public class Ventana {
 		private static final int golpesIniciar= 0;
 		private boolean moldura;
 		private boolean macetero;
 		private boolean rota;
+		private int puntaje= 100;
 		private Hoja hoja;
 		private int golpesFix;
 		private int golpesAct;
+		private Map <String, BufferedImage> imagenes;
 		
 		/**
 		 * Metodo de creacion de ventana.
@@ -34,6 +38,14 @@ public class Ventana {
 			setHoja(hoja);
 			setGolpesAct(golpesIniciar);
 			setRota(rota);
+		}
+
+		public Map<String, BufferedImage> getImagenes() {
+			return imagenes;
+		}
+
+		public void setImagenes(Map<String, BufferedImage> imagenes) {
+			this.imagenes = imagenes;
 		}
 
 		public boolean moldura() {
@@ -76,7 +88,14 @@ public class Ventana {
 			this.golpesAct = golpesAct;
 		}
 
-		
+		public int getPuntaje() {
+			return puntaje;
+		}
+
+		public void setPuntaje(int puntaje) {
+			this.puntaje = puntaje;
+		}
+
 		public Hoja getHoja() {
 			return hoja;
 		}

@@ -1,5 +1,6 @@
 package entorno;
-
+import java.awt.image.BufferedImage;
+import java.util.Map;
 import misc.Hoja;
 
 /**
@@ -12,11 +13,12 @@ import misc.Hoja;
  * @param macae = si posee maceta
  * @param rota = si esta rota
  * @param goplesFix = golpes necesarios para arreglarla
- * @param img = imagen de la ventana
+ * @param imgamenes = imagenes de la ventana
  *
  * @author Agustín Liébana lsartori
  */
 public abstract class Semicirculo extends Ventana{
+	
 
 	public Semicirculo(boolean rota, int golpesFix) {
 		/**
@@ -25,4 +27,8 @@ public abstract class Semicirculo extends Ventana{
 		super(false, false, rota, Hoja.NO, golpesFix);
 	}
 
+	public void setImagenes(Map<String, BufferedImage> imagenes){
+		super.setImagenes(imagenes);
+	}
+	
 }
