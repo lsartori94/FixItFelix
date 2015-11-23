@@ -87,11 +87,13 @@ public class Felix {
 
 
 	//metodo a ejecutar cuando se reciba un golpe
-	public void golpe(){
+	public boolean golpe(){
 		int vTemp= getVidas();
 		setVidas((vTemp -1));
+		boolean muerto= (getVidas() == 0)? true : false;
 		//por ser prueba se informa
 		System.out.println("Felix perdio una vida. Vidas restantes= "+getVidas());
+		return muerto;
 	}
 
 	// metodo a ejecutar cuando se gane el nivel

@@ -9,6 +9,7 @@ package entorno;
 public class Mapa {
 	private int level;
 	private Seccion [] secciones;
+	private int rotas;
 
 	/**
 	 * Metodo para iniciar el mapa en un nivel.
@@ -19,6 +20,7 @@ public class Mapa {
 	public Mapa(Seccion [] secc, int lvl){
 		setLevel(lvl);
 		setSecciones(secc);
+		setRotas(secciones[0].getCantRotas()+secciones[1].getCantRotas()+secciones[2].getCantRotas());
 		//por ser prueba se informa creacion
 		System.out.println("Se creo mapa del level "+getLevel());
 	}
@@ -39,4 +41,11 @@ public class Mapa {
 		this.secciones = secciones;
 	}
 
+	public int getRotas(){
+		return rotas;
+	}
+	
+	public void setRotas(int rot){
+		rotas= rot;
+	}
 }

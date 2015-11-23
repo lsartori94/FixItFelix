@@ -1,4 +1,5 @@
 package juego;
+import java.util.Timer;
 import misc.*;
 import personajes.Felix;
 import personajes.Ralph;
@@ -26,6 +27,7 @@ public final class Juego {
 	int colum= 5;
 	private int puntaje= 0;
 	private double vel = 1;
+	private long levelRate;
 //	private Tiempo tiempo;
 	private HighScores highscores;
 
@@ -53,6 +55,10 @@ public final class Juego {
 			ralph= new Ralph(mapa.getSeccion(iSec));
 			ralph.setPosicion(posR);
 			ralph.setVelocidad(vel);
+			
+			Timer tim= new Timer();
+			LogicaDeMovimientos timer= new LogicaDeMovimientos(tim);
+			tim.schedule(timer, 0, levelRate);
 		
 		
 			while(ralph.getCantLadrillos() != 0 || felix.getVidas() != 0 ){
@@ -62,8 +68,6 @@ public final class Juego {
 				}else{
 					fMove();
 				}
-				rMove();
-				checkColisiones();
 				//if(felix.getVidas() == 0)
 				//	break;
 				//System.out.println("");
@@ -210,30 +214,12 @@ public final class Juego {
 
 	private final void gameover(){
 		//codigo a ejecutar al perder
+		pintar();
 	}
 
 	private final void win(){
 		//codigo a ejecutar al ganar el juego
-	}
-
-	/**
-	 * Metodo que chequea los golpes a felix, y hace que los ladrillos caigan
-	 * de a 1 piso.
-	 * Si se descomenta la linea 150 se puede obtener en consola un log de caida
-	 * de los ladrillos.
-	 * 
-	 * @return devuelve si se debe finalizar la simulacion (felix muere)
-	 */
-	private void checkColisiones(){
-		int l_act= ralph.getLadrilloAct();
-		//evalua los ladrillos tirados para ver si golpearona felix
-		for(int i= 0; i < l_act; i++){
-			Ladrillo lad= ralph.getLadrillo(i);
-			//System.out.println("Posicion del ladrillo "+i+" "+lad.getPosicionl().getX()+" "+lad.getPosicionl().getY());
-			if(lad.getPosicionl().compareTo(felix.getPosicion())==0)
-				felix.golpe();
-			lad.caer();
-		}
+		pintar();
 	}
 
 	/**
@@ -269,34 +255,14 @@ public final class Juego {
 	}
 
 	/**
-	 * Metodo que realiza los movimientos de Ralph.
-	 * Recorre toda la fila 4 (exclusiva de Ralph)
-	 */
-	private void rMove(){
-		switch( d ){
-		case 0:
-			if(ralph.getPosicion().getX()<3){
-				ralph.move(Direccion.RIGHT);
-			}else if((ralph.getPosicion().getX()) == 3){
-				ralph.move(Direccion.RIGHT);
-				d = 1;
-			}
-		break;
-		case 1:
-			if(ralph.getPosicion().getX()>1){
-				ralph.move(Direccion.LEFT);
-			}else if(ralph.getPosicion().getX()==1){
-				ralph.move(Direccion.LEFT);
-				d = 0;
-			}
-		}
-	}
-
-	/**
 	 * Metodo que realiza el martilleo de felix y el arreglo de ventana
 	 * Suma al puntaje el puntaje de arreglar la ventana
 	 */
 	private void fMartillar(){
 		puntaje=puntaje + felix.martillar();
+	}
+	
+	public void pintar(){
+		
 	}
 }

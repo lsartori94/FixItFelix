@@ -43,7 +43,7 @@ public class Ralph {
 		//por ser prueba se informa lo realizado
 		System.out.println(" ");
 		System.out.println("Ralph se inicio en la Seccion " +seccion.getId()+ " en la posicion "+getPosicion().getX()+ ", "+getPosicion().getY());
-		System.out.println("Ralph tiene "+getCantLadrillos()+ " ladrillos, con un espacio de lanzamiento de "+getTimeLadrillo()+" segundos");
+		System.out.println("Ralph tiene "+getCantLadrillos()+ " ladrillos, con un espacio de lanzamiento de segundos");
 		//System.out.println("Ralph se mueve de lugar cada "+getVelocidad()+" segundos");
 	}
 
@@ -119,7 +119,7 @@ public class Ralph {
 		}
 		ladrillos= tmp;
 		System.out.println("");
-		System.out.println("Se crearon "+cant+" ladrillos de posicion ["+pos.getX()+" , "+pos.getY()+"] con velocidad de caida "+vel);
+		System.out.println("Se crearon "+cant+" ladrillos de posicion ["+pos.getX()+" , "+pos.getY()+"] con velocidad de caida ");
 	}
 
 	public Ladrillo getLadrillo(int i){
