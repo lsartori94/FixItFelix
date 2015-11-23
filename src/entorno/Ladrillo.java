@@ -1,10 +1,4 @@
 package entorno;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
-
 import misc.Posicion;
 
 /**
@@ -18,7 +12,6 @@ public class Ladrillo {
 	private Posicion posicionl;
 	private double velocidad;
 	private boolean visible;
-	private BufferedImage imagen;
 
 	/**
 	 * Metodo de cracion de Ladrillo.
@@ -28,7 +21,6 @@ public class Ladrillo {
 	 * @param vel = velocidad de caida del ladrillo (pisos/seg).
 	 */
 	public Ladrillo(Posicion posl, double vel){
-		cargarImagen();
 		setPosicionl(posl);
 		setVelocidad(vel);
 		setVisible(false);
@@ -67,7 +59,6 @@ public class Ladrillo {
 	 * Metodo a ejecutar para que el ladrillo caiga 1 piso.
 	 * Chequea si la posicion actual es mayor que 0 y si lo es
 	 * realiza la caida.
-	 * Luego de setear la posicion realiza el cambio de imagen.
 	 */
 	public void caer(){
 		if(posicionl.getY() > 0){
@@ -76,20 +67,8 @@ public class Ladrillo {
 		}else{
 			destruir();
 		}
-//		setImagen(posicion);
 	}
 
-	private void cargarImagen(){
-		try{
-			if(imagen == null){
-				imagen = ImageIO.read(new File("ladrillo.png"));
-			}
-			
-		} catch(IOException e){
-			System.out.println("Error interno en Ladrillo" + e.getMessage());
-		}
-	}
-	
 	private void destruir(){
 		
 	}

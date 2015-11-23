@@ -1,8 +1,4 @@
 package entorno;
-
-import java.awt.image.BufferedImage;
-import java.util.Map;
-
 import misc.Hoja;
 
 /**
@@ -20,7 +16,6 @@ public class Ventana {
 		private Hoja hoja;
 		private int golpesFix;
 		private int golpesAct;
-		private Map <String, BufferedImage> imagenes;
 		
 		/**
 		 * Metodo de creacion de ventana.
@@ -38,14 +33,6 @@ public class Ventana {
 			setHoja(hoja);
 			setGolpesAct(golpesIniciar);
 			setRota(rota);
-		}
-
-		public Map<String, BufferedImage> getImagenes() {
-			return imagenes;
-		}
-
-		public void setImagenes(Map<String, BufferedImage> imagenes) {
-			this.imagenes = imagenes;
 		}
 
 		public boolean moldura() {
