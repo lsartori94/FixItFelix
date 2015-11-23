@@ -39,18 +39,21 @@ public final class Juego {
 	public void go() {
 	
 		comenzar();
-		while(ralph.getCantLadrillos() != 0){
-			ralph.shoot();
-			if(mapa.getSeccion(0).getVentana(felix.getPosicion()).rota()){
-				fMartillar();
-			}else{
-				fMove();
-			}
+		for( int g = 0; g <= indiceSec; g++){
+			while(ralph.getCantLadrillos() != 0 || felix.getVidas() != 0 ){
+				ralph.shoot();
+				if(mapa.getSeccion(0).getVentana(felix.getPosicion()).rota()){
+					fMartillar();
+				}else{
+					fMove();
+				}
 				rMove();
-			if(checkGameFin())
-				break;
-			System.out.println("");
-		}
+				checkColisiones();
+				//if(felix.getVidas() == 0)
+				//	break;
+				//System.out.println("");
+			}
+		
 		int vfinal= felix.vidasInicio-felix.getVidas();
 		System.out.println("Ralph acerto "+vfinal+ " ladrillos luego de lanzar "+(50-ralph.getCantLadrillos()));
 		System.out.println("Fin de simulacion.");
@@ -213,20 +216,16 @@ public final class Juego {
 	 * 
 	 * @return devuelve si se debe finalizar la simulacion (felix muere)
 	 */
-	private boolean checkGameFin(){
+	private void checkColisiones(){
 		int l_act= ralph.getLadrilloAct();
 		//evalua los ladrillos tirados para ver si golpearona felix
 		for(int i= 0; i < l_act; i++){
 			Ladrillo lad= ralph.getLadrillo(i);
 			//System.out.println("Posicion del ladrillo "+i+" "+lad.getPosicionl().getX()+" "+lad.getPosicionl().getY());
-			if(lad.getPosicionl().compareTo(felix.getPosicion())==0){
+			if(lad.getPosicionl().compareTo(felix.getPosicion())==0)
 				felix.golpe();
-			}
-			if(felix.getVidas() == 0)
-				return true;
 			lad.caer();
 		}
-		return false;
 	}
 
 	/**
