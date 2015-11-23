@@ -1,7 +1,6 @@
 package juego;
 import java.util.Timer;
 import java.util.TimerTask;
-
 import misc.Direccion;
 import entorno.Ladrillo;
 import entorno.Mapa;
@@ -92,7 +91,6 @@ public class LogicaDeMovimientos extends TimerTask {
 			Ladrillo lad= ralph.getLadrillo(i);
 			if(lad.getPosicionl().compareTo(felix.getPosicion())==0)
 				stop= felix.golpe();
-			lad.caer();
 		}
 	}
 }

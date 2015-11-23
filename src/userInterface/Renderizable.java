@@ -6,7 +6,7 @@ import java.util.Map;
 import javax.imageio.ImageIO;
 import misc.Direccion;
 
-public class Rederizable {
+public class Renderizable {
 
 	private Map <String, BufferedImage> balcon;
 	private boolean romperBalcon= false;

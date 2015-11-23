@@ -12,6 +12,7 @@ public class Ladrillo {
 	private Posicion posicionl;
 	private double velocidad;
 	private boolean visible;
+	private boolean destruir= false;
 
 	/**
 	 * Metodo de cracion de Ladrillo.
@@ -26,6 +27,14 @@ public class Ladrillo {
 		setVisible(false);
 	}
 
+	public void setDestruir(boolean destroy){
+		destruir= destroy;
+	}
+	
+	public boolean getDestruir(){
+		return destruir;
+	}
+	
 	public Posicion getPosicionl() {
 		return posicionl;
 	}
@@ -65,11 +74,8 @@ public class Ladrillo {
 			Posicion tmp = new Posicion(posicionl.getX(),posicionl.getY()-1);
 			setPosicionl(tmp);
 		}else{
-			destruir();
+			destruir= true;
 		}
 	}
 
-	private void destruir(){
-		
-	}
 }
