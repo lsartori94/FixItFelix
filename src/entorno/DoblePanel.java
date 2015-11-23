@@ -78,9 +78,11 @@ public class DoblePanel extends Ventana{
 	 * Setea en 0 los golpes acumulados.
 	 */
 	public void romper(){
+		super.romper();
 		panelInferior.romper();
 		panelSuperior.romper();
 		super.setGolpesAct(golpesACero);
+		pintar(super.rota());
 	}
 
 	/**
@@ -112,5 +114,26 @@ public class DoblePanel extends Ventana{
 		} catch(IOException e){
 			System.out.println("Error interno en Ventana de Doble Panel" + e.getMessage());
 		}
+	}
+	
+	private void pintar(boolean rota){
+		if(rota){
+			double ran= Math.random();
+			if(ran < 0.33){
+				render("rota1");
+			}else if(ran > 0.33){
+				if(ran < 0.66){
+					render("rota2");
+				}else{
+					render("rota3");
+				}
+			}
+		}else{
+			render("sana");
+		}
+	}
+
+	private void render(String estado){
+		
 	}
 }

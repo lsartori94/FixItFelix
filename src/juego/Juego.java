@@ -265,7 +265,7 @@ public final class Juego {
 	 * Recorre toda la fila 4 (exclusiva de Ralph)
 	 */
 	private void rMove(){
-	switch( d ){
+		switch( d ){
 		case 0:
 			if(ralph.getPosicion().getX()<3){
 				ralph.move(Direccion.RIGHT);
@@ -273,7 +273,7 @@ public final class Juego {
 				ralph.move(Direccion.RIGHT);
 				d = 1;
 			}
-			break;
+		break;
 		case 1:
 			if(ralph.getPosicion().getX()>1){
 				ralph.move(Direccion.LEFT);
@@ -281,7 +281,7 @@ public final class Juego {
 				ralph.move(Direccion.LEFT);
 				d = 0;
 			}
-	}
+		}
 	}
 
 	/**

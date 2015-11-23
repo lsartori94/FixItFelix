@@ -152,10 +152,8 @@ public class Ralph {
 	 * no es utilizado ya que las ventanas y sus estados se inicializan
 	 * de manera aleatoria.
 	 */
-	public void romper(/*Sprite img*/){
-		seccion.getVentana(posicion).setRota(true);
-		//al ser prueba no se modifica imagen
-		//seccion.getVentana(posicion).setImagen(img);
+	public void romper(){
+		seccion.getVentana(posicion).romper();
 		System.out.println("Ralph rompio la Ventana ["+posicion.getX()+" , "+posicion.getY()+"]");
 	}
 	
