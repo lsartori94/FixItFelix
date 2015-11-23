@@ -37,9 +37,6 @@ public class Felix {
 		setPoder(false);
 		//aca se define la imagen con setImagen
 		//por ser prueba se informa creacion
-		System.out.println(" ");
-		System.out.println("Felix se creo en la posicion "+getPosicion().getX()+", "+getPosicion().getY()+" con "+getVidas()+" vidas");
-		System.out.println("Poder de Felix= "+Poder());
 		//carga de todas las imagenes de Felix
 		cargarImagenes();
 	}

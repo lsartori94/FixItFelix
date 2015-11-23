@@ -34,17 +34,12 @@ public class Ralph {
 	 * 
 	 * @author Agustín Liébana lsartori
 	 */
-	public Ralph(Seccion sec){
+	public Ralph(){
 		setCantLadrillos(50);
 		crearLadrillos(getCantLadrillos(), getPosicion());
 		setLadrillo_act(ladrilloInicial);
-		setSeccion(sec);
 		cargarImagenes();
 		//por ser prueba se informa lo realizado
-		System.out.println(" ");
-		System.out.println("Ralph se inicio en la Seccion " +seccion.getId()+ " en la posicion "+getPosicion().getX()+ ", "+getPosicion().getY());
-		System.out.println("Ralph tiene "+getCantLadrillos()+ " ladrillos, con un espacio de lanzamiento de "+getTimeLadrillo()+" segundos");
-		//System.out.println("Ralph se mueve de lugar cada "+getVelocidad()+" segundos");
 	}
 
 	//metodo a ejecutar para que Ralph tire un ladrillo
@@ -119,7 +114,7 @@ public class Ralph {
 		}
 		ladrillos= tmp;
 		System.out.println("");
-		System.out.println("Se crearon "+cant+" ladrillos de posicion ["+pos.getX()+" , "+pos.getY()+"] con velocidad de caida "+vel);
+		System.out.println("Se crearon "+cant+" ladrillos de posicion ["+pos.getX()+" , "+pos.getY()+"] con velocidad de caida "+getVelocidad());
 	}
 
 	public Ladrillo getLadrillo(int i){

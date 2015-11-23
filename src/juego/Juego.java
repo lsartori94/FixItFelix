@@ -49,12 +49,18 @@ public final class Juego {
 			System.out.println("Level "+level);
 			System.out.println("Se van a inicializar Felix y Ralph");
 			felix.iniciar(mapa.getSeccion(iSec));
+			System.out.println(" ");
+			System.out.println("Felix se creo en la posicion "+felix.getPosicion().getX()+", "+felix.getPosicion().getY()+" con "+felix.getVidas()+" vidas");
+			System.out.println("Poder de Felix= "+felix.Poder());
 			Posicion posR= new Posicion(0, 4);
-			ralph= new Ralph(mapa.getSeccion(iSec));
+			ralph.setSeccion(mapa.getSeccion(iSec));
 			ralph.setPosicion(posR);
 			ralph.setVelocidad(vel);
-		
-		
+			System.out.println(" ");
+			System.out.println("Ralph se inicio en la Seccion " +ralph.getSeccion().getId()+ " en la posicion "+ralph.getPosicion().getX()+ ", "+ralph.getPosicion().getY());
+			System.out.println("Ralph tiene "+ralph.getCantLadrillos()+ " ladrillos, con una velocidad de lanzamiento de "+ralph.getVelocidad());
+			System.out.println("Ralph se mueve on velocidad "+ralph.getVelocidad());
+			
 			while(ralph.getCantLadrillos() != 0 || felix.getVidas() != 0 ){
 				ralph.shoot();
 				if(mapa.getSeccion(0).getVentana(felix.getPosicion()).rota()){
@@ -116,6 +122,7 @@ public final class Juego {
 		//mapa= map;   //atada con alambre
 
 		felix= new Felix();
+		ralph= new Ralph();
 	}
 	
 	private Ventana [][] inicializarVentanas(){
