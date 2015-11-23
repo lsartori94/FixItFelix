@@ -16,7 +16,7 @@ import misc.Posicion;
  */
 public class Ladrillo {
 	private Posicion posicionl;
-	private int velocidad;
+	private double velocidad;
 	private boolean visible;
 	private BufferedImage imagen;
 
@@ -27,7 +27,7 @@ public class Ladrillo {
 	 * @param posl = posicion inicial del ladrillo.
 	 * @param vel = velocidad de caida del ladrillo (pisos/seg).
 	 */
-	public Ladrillo(Posicion posl, int vel){
+	public Ladrillo(Posicion posl, double vel){
 		cargarImagen();
 		setPosicionl(posl);
 		setVelocidad(vel);
@@ -46,7 +46,7 @@ public class Ladrillo {
 		posicionl = posi;
 	}
 
-	public int getVelocidad() {
+	public double getVelocidad() {
 		return velocidad;
 	}
 
@@ -58,7 +58,7 @@ public class Ladrillo {
 		return visible;
 	}
 
-	public void setVelocidad(int velocidad) {
+	public void setVelocidad(double velocidad) {
 		this.velocidad = velocidad;
 	}
 

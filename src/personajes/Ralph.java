@@ -15,13 +15,11 @@ public class Ralph {
 	
 	private static final int ladrilloInicial= 0;
 	private int cantLadrillos;
-	private int timeLadrillo;
 	//espera entre cambio de posicion
-	private int velocidad;
+	private double velocidad;
 	private Ladrillo [] ladrillos;
 	private int ladrilloAct;
 	//tiempo de espera entre ladrillos
-	private int intervaloLad;
 	private Seccion seccion;
 	//boleano de control de sentido de movimiento
 	private boolean derecha;
@@ -36,20 +34,17 @@ public class Ralph {
 	 * 
 	 * @author Agustín Liébana lsartori
 	 */
-	public Ralph(int cantLad, int tiempoLad, int velLad, int velRalph, Posicion pos, Seccion sec){
-		setPosicion(pos);
-		setCantLadrillos(cantLad);
-		crearLadrillos(cantLad, velLad, getPosicion());
-		setTimeLadrillo(tiempoLad);
+	public Ralph(Seccion sec){
+		setCantLadrillos(50);
+		crearLadrillos(getCantLadrillos(), getPosicion());
 		setLadrillo_act(ladrilloInicial);
-		setVelocidad(velRalph);
 		setSeccion(sec);
 		cargarImagenes();
 		//por ser prueba se informa lo realizado
 		System.out.println(" ");
 		System.out.println("Ralph se inicio en la Seccion " +seccion.getId()+ " en la posicion "+getPosicion().getX()+ ", "+getPosicion().getY());
 		System.out.println("Ralph tiene "+getCantLadrillos()+ " ladrillos, con un espacio de lanzamiento de "+getTimeLadrillo()+" segundos");
-		System.out.println("Ralph se mueve de lugar cada "+getVelocidad()+" segundos");
+		//System.out.println("Ralph se mueve de lugar cada "+getVelocidad()+" segundos");
 	}
 
 	//metodo a ejecutar para que Ralph tire un ladrillo
@@ -78,11 +73,7 @@ public class Ralph {
 		return cantLadrillos;
 	}
 
-	public int getTimeLadrillo(){
-		return timeLadrillo;
-	}
-
-	public int getVelocidad(){
+	public double getVelocidad(){
 		return velocidad;
 	}
 
@@ -94,11 +85,7 @@ public class Ralph {
 		cantLadrillos= lad;
 	}
 
-	public void setTimeLadrillo(int tlad){
-		timeLadrillo= tlad;
-	}
-
-	public void setVelocidad(int vel){
+	public void setVelocidad(double vel){
 		velocidad= vel;
 	}
 
@@ -110,14 +97,6 @@ public class Ralph {
 		this.seccion = seccion;
 	}
 
-	public int getIntervaloLad() {
-		return intervaloLad;
-	}
-
-	public void setIntervaloLad(int intervaloLad) {
-		this.intervaloLad = intervaloLad;
-	}
-	
 	public boolean Derecha() {
 		return derecha;
 	}
@@ -133,10 +112,10 @@ public class Ralph {
 	 * y estados particulares. Para el caso del ejemplo son todos
 	 * iguales en cuanto a sus caracteristicas.
 	 */
-	private void crearLadrillos(int cant, int vel, Posicion pos){
+	private void crearLadrillos(int cant, Posicion pos){
 		Ladrillo [] tmp= new Ladrillo[cant];
 		for(int i= 0; i<cant; i++){
-			tmp[i]= new Ladrillo(pos, vel);
+			tmp[i]= new Ladrillo(pos, getVelocidad());
 		}
 		ladrillos= tmp;
 		System.out.println("");

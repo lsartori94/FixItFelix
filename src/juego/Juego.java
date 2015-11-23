@@ -25,6 +25,7 @@ public final class Juego {
 	int filas= 5;
 	int colum= 5;
 	private int puntaje= 0;
+	private double vel = 1;
 //	private Tiempo tiempo;
 	private HighScores highscores;
 
@@ -37,9 +38,23 @@ public final class Juego {
 	 * un movimiento de Felix, un movimiento de Ralph y un chequeo de condiciones.
 	 */
 	public void go() {
-	
-		comenzar();
-		for( int g = 0; g <= indiceSec; g++){
+		
+		int iSec = 0;
+		boolean gameon = true;
+		
+		comenzar(level);
+		
+		while ( gameon ){
+			
+			System.out.println("Level "+level);
+			System.out.println("Se van a inicializar Felix y Ralph");
+			felix.iniciar(mapa.getSeccion(iSec));
+			Posicion posR= new Posicion(0, 4);
+			ralph= new Ralph(mapa.getSeccion(iSec));
+			ralph.setPosicion(posR);
+			ralph.setVelocidad(vel);
+		
+		
 			while(ralph.getCantLadrillos() != 0 || felix.getVidas() != 0 ){
 				ralph.shoot();
 				if(mapa.getSeccion(0).getVentana(felix.getPosicion()).rota()){
@@ -53,7 +68,7 @@ public final class Juego {
 				//	break;
 				//System.out.println("");
 			}
-		
+		}
 		int vfinal= felix.vidasInicio-felix.getVidas();
 		System.out.println("Ralph acerto "+vfinal+ " ladrillos luego de lanzar "+(50-ralph.getCantLadrillos()));
 		System.out.println("Fin de simulacion.");
@@ -81,12 +96,13 @@ public final class Juego {
 	 * Se crea una seccion unica con esa matriz , luego con eso el mapa.
 	 * Finalmente se instancian felix y ralph.
 	 */
-	private void comenzar(){
+	private void comenzar(int lvl){
 		// codigo a ejecutar para iniciar el juego
 		
-		if( level > 0 && level < 10){
-			factVentRota = factVentRota * Math.pow((1+0.15),level);
-			factObsVent = factObsVent * Math.pow((1+0.15),level);
+		if( lvl > 0 && lvl < 10){
+			factVentRota = factVentRota * Math.pow((1+0.15),lvl);
+			factObsVent = factObsVent * Math.pow((1+0.15),lvl);
+			vel = vel * Math.pow((1+0.15),lvl);
 		}
 		System.out.println("Factoriales "+factVentRota+" , "+factObsVent);
 		
@@ -96,18 +112,10 @@ public final class Juego {
 			Ventana [][] ventanas = inicializarVentanas();
 			sec[indiceSec]= new Seccion((filas - 2), colum, cantRota, obstaculos, ventanas, indiceSec);
 		}
-		mapa= new Mapa(sec, 3);
+		mapa= new Mapa(sec, lvl);
 		//mapa= map;   //atada con alambre
-				
-		System.out.println("");
-		System.out.println("Se va a inicializar Felix");
-		
-		felix= new Felix();
-		felix.iniciar();
-		
-		Posicion posR= new Posicion(0, 4);
-		ralph= new Ralph(50, 1, 1, 1, posR, sec[0]);
 
+		felix= new Felix();
 	}
 	
 	private Ventana [][] inicializarVentanas(){
