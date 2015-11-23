@@ -24,9 +24,9 @@ public final class Juego {
 	private int obstaculos;
 	int filas= 5;
 	int colum= 5;
-//	private Puntaje puntaje;
+	private int puntaje= 0;
 //	private Tiempo tiempo;
-//	private Highscore highscores;
+	private HighScores highscores;
 
 	/**
 	 * Es el metodo que da el esqueleto a la prueba.
@@ -286,9 +286,9 @@ public final class Juego {
 
 	/**
 	 * Metodo que realiza el martilleo de felix y el arreglo de ventana
+	 * Suma al puntaje el puntaje de arreglar la ventana
 	 */
 	private void fMartillar(){
-		felix.martillar();
-		mapa.getSeccion(0).getVentana(felix.getPosicion()).arreglar();
+		puntaje=puntaje + felix.martillar();
 	}
 }

@@ -1,4 +1,10 @@
 package entorno;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.Map;
+
+import javax.imageio.ImageIO;
 
 /**
  * Clase que representa el balcon.
@@ -11,27 +17,28 @@ package entorno;
  */
 
 public class Balcon extends Semicirculo{
-//	private Panel [] paneles;
 	private static final int golpesFix= 16;
+	private Map <String, BufferedImage> imagenes;
 
 	/**
 	 * Constructor de Balcon.
-	 * 
 	 * @param rota = indica si esta roto
-	 * @param paneles = array de paneles
-	 * 
 	 */
-	public Balcon(boolean rota/*, Panel [] paneles*/) {
+	public Balcon(boolean rota) {
 		super(rota, golpesFix);
-//		setPaneles(paneles);
+		cargarImagenes();
+		super.setImagenes(imagenes);
 	}
 
-//	public Panel[] getPaneles() {
-//		return paneles;
-//	}
-
-//	public void setPaneles(Panel[] paneles) {
-//		this.paneles = paneles;
-//	}
-
+	private void cargarImagenes(){
+		try{
+			if(imagenes.isEmpty()){
+				imagenes.put("rota", ImageIO.read(new File("balcon_roto.png")));
+				imagenes.put("sana", ImageIO.read(new File("balcon_sano.png")));
+			}
+			
+		} catch(IOException e){
+			System.out.println("Error interno en Balcon" + e.getMessage());
+		}
+	}
 }
