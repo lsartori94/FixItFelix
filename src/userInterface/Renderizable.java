@@ -5,38 +5,44 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.TreeMap;
 
 import javax.imageio.ImageIO;
 
+import entorno.Seccion;
+import entorno.Ventana;
 import misc.Direccion;
+import misc.Hoja;
+import misc.Posicion;
 
 public class Renderizable extends TimerTask {
 
 	private Timer timer;
 	private static final long periodoTimer= 100;
-	private Map <String, BufferedImage> balcon;
-	private boolean romperBalcon= false;
-	private Map <String, BufferedImage> conHoja;
-	private Map <String, BufferedImage> doblePanel;
-	private boolean romperDoblePanel= false;
-	private String panelDobleRender;
-	private Map <String, BufferedImage> ladrillo;
-	private boolean destruirLadrillo= false;
-	private Map <String, BufferedImage> nicelander;
-	private boolean hayNicelander= false;
-	private Map <String, BufferedImage> pato;
-	private boolean destruirPato= false;
-	private Map <String, BufferedImage> puerta;
-	private boolean romperPuerta= false;
-	private Map <String, BufferedImage> felix;
-	private boolean felixDerecha= false;
-	private Map <String, BufferedImage> ralph;
-	private boolean ralphDerecha= false;
-	private Map <String, BufferedImage> misc;
-	private Map <String, BufferedImage> edificio;	
-	private Map <String, Map<String, BufferedImage>> imagenes;
+	private Map <String, BufferedImage> balcon= new TreeMap<String, BufferedImage>();
+	private Map <String, BufferedImage> conHoja= new TreeMap<String, BufferedImage>();
+	private Map <String, BufferedImage> doblePanel= new TreeMap<String, BufferedImage>();
+	private Map <String, BufferedImage> ladrillo= new TreeMap<String, BufferedImage>();
+	private Map <String, BufferedImage> nicelander= new TreeMap<String, BufferedImage>();
+	private Map <String, BufferedImage> pato= new TreeMap<String, BufferedImage>();
+	private Map <String, BufferedImage> puerta= new TreeMap<String, BufferedImage>();
+	private Map <String, BufferedImage> felix= new TreeMap<String, BufferedImage>();
+	private Map <String, BufferedImage> ralph= new TreeMap<String, BufferedImage>();
+	private Map <String, BufferedImage> misc= new TreeMap<String, BufferedImage>();
+	private Map <String, BufferedImage> edificio= new TreeMap<String, BufferedImage>();	
+	private Map <String, BufferedImage> imagenes= new TreeMap<String, BufferedImage>();
+	private BufferedImage[][] imagenesVentanas;
+	private Seccion seccion;
+	private Ventana[][] ventanas;
+	private MapScreen screen= new MapScreen();
+	private Posicion posRalph;
+	private Posicion posFelix;
+	private int numSeccion;
+	private Posicion posLadrillo;
+	private Posicion posNicelander;
+	private Posicion posPato;
 
-	public Renderizable(Timer tim){
+	public Renderizable(){
 		cargarImagenesEdificio();
 		cargarImagenesMisc();
 		cargarImagenesBalcon();
@@ -50,80 +56,83 @@ public class Renderizable extends TimerTask {
 		cargarImagenesRalph();
 		cargarTodo();
 		
-		timer= tim;
+		//timer= tim;
 	}
+	
 	
 	@Override
 	public void run(){
 		
 	}
-	
+
 	public void finRender() {
 		timer.cancel();
 	}
 	
-	public boolean isRomperBalcon() {
-		return romperBalcon;
+	public Seccion getSeccion() {
+		return seccion;
 	}
 
-	public void setRomperBalcon(boolean romperBalcon) {
-		this.romperBalcon = romperBalcon;
+	public void setSeccion(Seccion seccion) {
+		this.seccion = seccion;
+		setNumSeccion(seccion.getId());
+		setVentanas(seccion.getVentanas());
 	}
 
-	public boolean isRomperDoblePanel() {
-		return romperDoblePanel;
+	public Ventana[][] getVentanas() {
+		return ventanas;
 	}
 
-	public void setRomperDoblePanel(boolean romperDoblePanel) {
-		this.romperDoblePanel = romperDoblePanel;
+	public void setVentanas(Ventana[][] ventanas) {
+		this.ventanas = ventanas;
 	}
 
-	public boolean isDestruirLadrillo() {
-		return destruirLadrillo;
+	public Posicion getPosRalph() {
+		return posRalph;
 	}
 
-	public void setDestruirLadrillo(boolean destruirLadrillo) {
-		this.destruirLadrillo = destruirLadrillo;
+	public void setPosRalph(Posicion posRalph) {
+		this.posRalph = posRalph;
 	}
 
-	public boolean isHayNicelander() {
-		return hayNicelander;
+	public Posicion getPosFelix() {
+		return posFelix;
 	}
 
-	public void setHayNicelander(boolean hayNicelander) {
-		this.hayNicelander = hayNicelander;
+	public void setPosFelix(Posicion posFelix) {
+		this.posFelix = posFelix;
 	}
 
-	public boolean isDestruirPato() {
-		return destruirPato;
+	public int getNumSeccion() {
+		return numSeccion;
 	}
 
-	public void setDestruirPato(boolean destruirPato) {
-		this.destruirPato = destruirPato;
+	public void setNumSeccion(int numSeccion) {
+		this.numSeccion = numSeccion;
+	}
+	
+	public Posicion getPosLadrillo() {
+		return posLadrillo;
 	}
 
-	public boolean isRomperPuerta() {
-		return romperPuerta;
+	public void setPosLadrillo(Posicion posLadrillo) {
+		this.posLadrillo = posLadrillo;
 	}
 
-	public void setRomperPuerta(boolean romperPuerta) {
-		this.romperPuerta = romperPuerta;
+	public Posicion getPosNicelander() {
+		return posNicelander;
 	}
 
-	public boolean isFelixDerecha() {
-		return felixDerecha;
+	public void setPosNicelander(Posicion posNicelander) {
+		this.posNicelander = posNicelander;
 	}
 
-	public void setFelixDerecha(boolean felixDerecha) {
-		this.felixDerecha = felixDerecha;
+	public Posicion getPosPato() {
+		return posPato;
 	}
 
-	public boolean isRalphDerecha() {
-		return ralphDerecha;
-	}
-
-	public void setRalphDerecha(boolean ralphDerecha) {
-		this.ralphDerecha = ralphDerecha;
+	public void setPosPato(Posicion posPato) {
+		this.posPato = posPato;
 	}
 
 	private void cargarImagenesEdificio(){
@@ -144,7 +153,9 @@ public class Renderizable extends TimerTask {
 			if(misc.isEmpty()){
 				misc.put("titulo", ImageIO.read(new File("src/imagenes/titulo.png")));
 				misc.put("gameOver", ImageIO.read(new File("src/imagenes/gameover.png")));
-				misc.put("levelWin", ImageIO.read(new File("src/imagenes/win.png")));
+				misc.put("levelWin", ImageIO.read(new File("src/imagenes/win.gif")));
+				misc.put("fondo", ImageIO.read(new File("src/imagenes/fondo.png")));
+				misc.put("instrucciones", ImageIO.read(new File("src/imagenes/instrucciones.png")));
 			}
 		} catch(IOException e){
 			System.out.println("Error interno en Misc" + e.getMessage());
@@ -154,8 +165,8 @@ public class Renderizable extends TimerTask {
 	private void cargarImagenesBalcon(){
 		try{
 			if(balcon.isEmpty()){
-				balcon.put("rota", ImageIO.read(new File("src/imagenes/balcon_roto.png")));
-				balcon.put("sana", ImageIO.read(new File("src/imagenes/balcon_sano.png")));
+				balcon.put("roto", ImageIO.read(new File("src/imagenes/balcon_roto.png")));
+				balcon.put("sano", ImageIO.read(new File("src/imagenes/balcon_sano.png")));
 			}
 			
 		} catch(IOException e){
@@ -182,8 +193,8 @@ public class Renderizable extends TimerTask {
 				doblePanel.put("rota2", ImageIO.read(new File("src/imagenes/ventana_doble_rota_2.png")));
 				doblePanel.put("rota3", ImageIO.read(new File("src/imagenes/ventana_doble_rota_3.png")));
 				doblePanel.put("sana", ImageIO.read(new File("src/imagenes/ventana_doble_sana.png")));
-				doblePanel.put("conMaceta", ImageIO.read(new File("src/imagenes/ventana_doble_macetero")));
-				doblePanel.put("conMoldura", ImageIO.read(new File("src/imagenes/ventana_doble_moldura")));
+				doblePanel.put("conMaceta", ImageIO.read(new File("src/imagenes/ventana_doble_macetero.png")));
+				doblePanel.put("conMoldura", ImageIO.read(new File("src/imagenes/ventana_doble_moldura.png")));
 			}
 			
 		} catch(IOException e){
@@ -191,8 +202,14 @@ public class Renderizable extends TimerTask {
 		}
 	}
 	
-	private void randomDoblePanel(){
-		if(romperDoblePanel){
+	/**
+	 * Si la ventana esta rota hace un random para seleccionar la imagen, sino devuele que esta sana
+	 * @param vent ventana a analizar
+	 * @return devuelve el hash que representa la imagen del estado de la ventana
+	 */
+	private String randomDoblePanel(Ventana vent){
+		String panelDobleRender= "sana";
+		if(vent.rota()){
 			double ran= Math.random();
 			if(ran < 0.33){
 				panelDobleRender= "rota1";
@@ -203,9 +220,13 @@ public class Renderizable extends TimerTask {
 					panelDobleRender= "rota3";
 				}
 			}
-		}else{
-			panelDobleRender= "sana";
 		}
+		if(vent.macetero())
+			panelDobleRender= "conMaceta";
+		if(vent.moldura())
+			panelDobleRender="conMoldura";
+			
+		return panelDobleRender;
 	}	
 
 	private void cargarImagenLadrillo(){
@@ -314,159 +335,404 @@ public class Renderizable extends TimerTask {
 			}
 	}	
 	
-	private void cargarTodo(){
-		imagenes.put("edificio", edificio);
-		imagenes.put("misc", misc);
-		imagenes.put("balcon", balcon);
-		imagenes.put("conHoja", conHoja);
-		imagenes.put("doblePanel", doblePanel);
-		imagenes.put("ladrillo", ladrillo);
-		imagenes.put("nicelander", nicelander);
-		imagenes.put("pato", pato);
-		imagenes.put("puerta", puerta);
-		imagenes.put("felix", felix);
-		imagenes.put("ralph", ralph);
+	private void cargarVentanas(){
+		for(int x=0; x<5; x++){
+			for(int y=1; y<4; y++){
+				Ventana auxV= ventanas[x][y];
+				switch(auxV.getClass().getSimpleName()){
+				case "DoblePanel":
+						imagenesVentanas[x][y]= doblePanel.get(randomDoblePanel(auxV));
+					break;
+					
+				case "ConHoja":
+					try {
+						if(auxV.getClass().getMethod("getAbierta").equals(Hoja.ABIERTA)){
+							imagenesVentanas[x][y]= conHoja.get("abierta");
+						}else{
+							imagenesVentanas[x][y]= conHoja.get("cerrada");
+						}
+					} catch (NoSuchMethodException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (SecurityException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					break;
+					
+				case "Puerta":
+					if(auxV.rota()){
+						imagenesVentanas[x][y]= puerta.get("rota");
+					}else{
+						imagenesVentanas[x][y]= puerta.get("sana");
+					}
+					break;
+				
+				case "Balcon":
+					if(auxV.rota()){
+						imagenesVentanas[x][y]= balcon.get("roto");
+					}else{
+						imagenesVentanas[x][y]= balcon.get("sano");
+					}
+					break;
+				}
+			}
+		}
 	}
-	
+
+	private void cargarSeccion(){
+		switch(getSeccion().getId()){
+		case 0:
+			imagenes.put("seccion", edificio.get("seccion1"));
+			break;
+		
+		case 1:
+			imagenes.put("seccion", edificio.get("seccion2"));
+			break;
+			
+		case 2:
+			imagenes.put("seccion", edificio.get("seccion3"));
+			break;
+		}
+	}
+
+	public void cargarTodo(){
+		cargarVentanas();
+		cargarSeccion();
+		imagenes.put("instrucciones", misc.get("instrucciones"));
+		imagenes.put("fondo", misc.get("fondo"));
+		imagenes.put("titulo", misc.get("titulo"));
+		imagenes.put("win", misc.get("levelWin"));
+		imagenes.put("gameOver", misc.get("gameOver"));
+		imagenes.put("ladrillo", ladrillo.get("ladrillo"));
+		imagenes.put("nicelander", nicelander.get("sinPie"));
+		imagenes.put("pato", pato.get("aleteoDerecha1"));
+		imagenes.put("felix", felix.get("paradoDerecha"));
+		imagenes.put("ralph", ralph.get("parado"));
+	}
+
 	/**
-	 * Refresca las imagenes de movimiento de felix
+	 * Refresca las imagenes de movimiento de felix. Deja una espera de 500ms entre cada cambio de imagen
 	 * @param d = direccion de movimiento
+	 * @param felixDerecha = si felix mira a derecha o no
 	 */
-	private void refreshImagenPosicionFelix(Direccion d){
+	public void refreshImagenPosicionFelix(Direccion d, Boolean felixDerecha){
 		if(felixDerecha){
 			switch(d.getValue()){
 			case 1:
-				pintar(felix.get("saltarDerecha"));
-				Thread.sleep(500);
-				pintar(felix.get("paradoDerecha"));
+				imagenes.put("felix", felix.get("saltarDerecha"));
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				imagenes.put("felix", felix.get("paradoDerecha"));
 				break;
 			case 2:
-				pintar(felix.get("saltarDerecha"));
-				Thread.sleep(500);
-				pintar(felix.get("paradoDerecha"));
+				imagenes.put("felix", felix.get("saltarDerecha"));
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				imagenes.put("felix", felix.get("paradoDerecha"));
 				break;
 			case 3:
-				pintar(felix.get("moverIzquierda"));
-				Thread.sleep(500);
-				pintar(felix.get("paradoIzquierda"));
+				imagenes.put("felix", felix.get("moverIzquierda"));
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				imagenes.put("felix", felix.get("paradoIzquierda"));
 				break;
 			case 4:
-				pintar(felix.get("moverDerecha"));
-				Thread.sleep(500);
-				pintar(felix.get("paradoDerecha"));
+				imagenes.put("felix", felix.get("moverDerecha"));
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				imagenes.put("felix", felix.get("paradoDerecha"));
 				break;
 			}
 		} else{
 			switch(d.getValue()){
 			case 1:
-				pintar(felix.get("saltarIzquierda"));
-				Thread.sleep(500);
-				pintar(felix.get("paradoIzquierda"));
+				imagenes.put("felix", felix.get("saltarIzquierda"));
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				imagenes.put("felix", felix.get("paradoIzquierda"));
 				break;
 			case 2:
-				pintar(felix.get("saltarIzquierda"));
-				Thread.sleep(500);
-				pintar(felix.get("paradoIzquierda"));
+				imagenes.put("felix", felix.get("saltarIzquierda"));
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				imagenes.put("felix", felix.get("paradoIzquierda"));
 				break;
 			case 3:
-				pintar(felix.get("moverIzquierda"));
-				Thread.sleep(500);
-				pintar(felix.get("paradoIzquierda"));
+				imagenes.put("felix", felix.get("moverIzquierda"));
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				imagenes.put("felix", felix.get("paradoIzquierda"));
 				break;
 			case 4:
-				pintar(felix.get("moverDerecha"));
-				Thread.sleep(500);
-				pintar(felix.get("paradoDerecha"));
+				imagenes.put("felix", felix.get("moverDerecha"));
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				imagenes.put("felix", felix.get("paradoDerecha"));
 				break;
 			}
-		}	
+		}
+	}
 	
 	/**
-	 * Refresca las imagenes de movimiento de Ralph
+	 * Refresca las imagenes de movimiento del pato. Deja una espera de 500ms entre cada cambio de imagen
 	 * @param d direccion del movimiento
 	 */
-	private void refreshImagenPosicionRalph(Direccion d){
+	public void refreshImagenPosicionPato(Direccion d){
+		switch(d.getValue()){
+		case 3:
+			imagenes.put("pato", pato.get("aleteoIzquierda1"));
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			imagenes.put("pato",pato.get("aleteoizquierda2"));
+			break;
+		case 4:
+			imagenes.put("pato",pato.get("aleteoDerecha1"));
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			imagenes.put("pato",pato.get("aleteoDerecha2"));
+			break;
+		}
+	}
+
+	/**
+	 * Refresca las imagenes de movimiento de Ralph. Deja una espera de 500ms entre cada cambio de imagen
+	 * @param d = direccion del movimiento
+	 * @param ralphDerecha = si ralph mira a derecha
+	 */
+	public void refreshImagenPosicionRalph(Direccion d, boolean ralphDerecha){
 		if(ralphDerecha){
 			switch(d.getValue()){
 			case 1:
-				pintar(ralph.get("subir1"));
-				//WAIT
-				pintar(ralph.get("subir2"));
-				//WAIT
-				pintar(ralph.get("parado"));
+				imagenes.put("ralph", ralph.get("subir1"));
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				imagenes.put("ralph", ralph.get("subir2"));
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				imagenes.put("ralph", ralph.get("parado"));
 				break;
 			case 2:
-				pintar(ralph.get("subir1"));
-				//WAIT
-				pintar(ralph.get("subir2"));
-				//WAIT
-				pintar(ralph.get("parado"));
+				imagenes.put("ralph", ralph.get("subir1"));
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				imagenes.put("ralph", ralph.get("subir2"));
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				imagenes.put("ralph", ralph.get("parado"));
 				break;
 			case 3:
-				pintar(ralph.get("moverIzquierda1"));
-				//WAIT
-				pintar(ralph.get("moverIzquierda2"));
-				//WAIT
-				pintar(ralph.get("parado"));
+				imagenes.put("ralph", ralph.get("moverIzquierda1"));
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				imagenes.put("ralph", ralph.get("moverIzquierda2"));
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				imagenes.put("ralph", ralph.get("parado"));
 				break;
 			case 4:
-				pintar(ralph.get("moverDerecha1"));
-				//WAIT
-				pintar(ralph.get("moverDerecha2"));
-				//WAIT
-				pintar(ralph.get("parado"));
+				imagenes.put("ralph", ralph.get("moverDerecha1"));
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				imagenes.put("ralph", ralph.get("moverDerecha2"));
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				imagenes.put("ralph", ralph.get("parado"));
 				break;
 			}
 		} else{
 			switch(d.getValue()){
 			case 1:
-				pintar(ralph.get("subir1"));
-				//WAIT
-				pintar(ralph.get("subir2"));
-				//WAIT
-				pintar(ralph.get("parado"));
+				imagenes.put("ralph", ralph.get("subir1"));
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				imagenes.put("ralph", ralph.get("subir2"));
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				imagenes.put("ralph", ralph.get("parado"));
 				break;
 			case 2:
-				pintar(ralph.get("subir1"));
-				//WAIT
-				pintar(ralph.get("subir2"));
-				//WAIT
-				pintar(ralph.get("parado"));
+				imagenes.put("ralph", ralph.get("subir1"));
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				imagenes.put("ralph", ralph.get("subir2"));
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				imagenes.put("ralph", ralph.get("parado"));
 				break;
 			case 3:
-				pintar(ralph.get("moverDerecha1"));
-				//WAIT
-				pintar(ralph.get("moverDerecha2"));
-				//WAIT
-				pintar(ralph.get("parado"));
+				imagenes.put("ralph", ralph.get("moverDerecha1"));
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				imagenes.put("ralph", ralph.get("moverDerecha2"));
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				imagenes.put("ralph", ralph.get("parado"));
 				break;
 			case 4:
-				pintar(ralph.get("moverIzquierda1"));
-				//WAIT
-				pintar(ralph.get("moverIzquierda2"));
-				//WAIT
-				pintar(ralph.get("parado"));
+				imagenes.put("ralph", ralph.get("moverIzquierda1"));
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				imagenes.put("ralph", ralph.get("moverIzquierda2"));
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				imagenes.put("ralph", ralph.get("parado"));
 				break;
 			}
 		}
-	}	
-	
+	}
+
 	/**
-	 * Refresca las imagenes de movimiento del pato
-	 * @param d direccion del movimiento
+	 * Refresca las imagenes de tiro de Ralph. Deja una espera de 500ms entre cada cambio de imagen
 	 */
-	private void refreshImagenPosicionPato(Direccion d){
-		switch(d.getValue()){
-		case 3:
-			pintar(pato.get("aleteoIzquierda1"));
-			//WAIT
-			pintar(pato.get("aleteoizquierda2"));
-			break;
-		case 4:
-			pintar(pato.get("aleteoDerecha1"));
-			//WAIT
-			pintar(pato.get("aleteoDerecha2"));
-			break;
+	public void refreshTiroRalph(){
+		imagenes.put("ralph", ralph.get("tirar1"));
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-	}	
+		imagenes.put("ralph", ralph.get("tirar2"));
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		imagenes.put("ralph", ralph.get("tirar3"));
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		imagenes.put("ralph", ralph.get("tirar4"));
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		imagenes.put("ralph", ralph.get("tirar5"));
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		imagenes.put("ralph", ralph.get("tirar6"));
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		imagenes.put("ralph", ralph.get("parado"));
+	}
+	
 }
