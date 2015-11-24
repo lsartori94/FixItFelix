@@ -15,7 +15,6 @@ import entorno.*;
 public final class Juego {
 	private Ralph ralph;
 	private Felix felix;
-	private int d = 0;
 	private Mapa mapa;
 	private double factVentRota = 0.2;
 	private double factObsVent = 0.1;
@@ -27,9 +26,13 @@ public final class Juego {
 	int colum= 5;
 	private int puntaje= 0;
 	private double vel = 1;
-	private long levelRate;
-//	private Tiempo tiempo;
 	private HighScores highscores;
+	boolean gameon = true;
+	private EstadoJuego estado;
+	int iSec = 0;
+	int vidaTot;
+	private final int vidaInicial = 3;
+	Posicion tmp;
 
 	/**
 	 * Es el metodo que da el esqueleto a la prueba.
@@ -39,45 +42,74 @@ public final class Juego {
 	 * Cada iteracion es un lanzamiento de ladrillo de Ralph, un martilleo de Felix (si la ventana esta rota)
 	 * un movimiento de Felix, un movimiento de Ralph y un chequeo de condiciones.
 	 */
+	
+	private void checkColisiones(){
+		int l_act= ralph.getLadrilloAct();
+		//evalua los ladrillos tirados para ver si golpearona felix
+		for(int i= 0; i < l_act; i++){
+			Ladrillo lad= ralph.getLadrillo(i);
+			lad.caer();
+			if(lad.getPosicionl().compareTo(felix.getPosicion())==0){
+				felix.golpe();
+				System.out.println("Ladrillazo en "+felix.getPosicion().getX()+" * "+felix.getPosicion().getY());
+			}
+		}
+	}
+	
 	public void go() {
-		
-		int iSec = 0;
-		boolean gameon = true;
+			
+		tmp = new Posicion(0,1);
+		//Timer tim= new Timer();
+		//LogicaDeMovimientos timer= new LogicaDeMovimientos(tim);
+		//tim.schedule(timer, 0, levelRate);
+		vidaTot = vidaInicial;
+		felix= new Felix();
+		felix.setVidas(vidaInicial);
+		Posicion posR= new Posicion(0, 4);
+		ralph= new Ralph( posR );
 		
 		comenzar(level);
 		
 		while ( gameon ){
 			
-			System.out.println("Level "+level);
-			System.out.println("Se van a inicializar Felix y Ralph");
-			felix.iniciar(mapa.getSeccion(iSec));
-			Posicion posR= new Posicion(0, 4);
-			ralph= new Ralph(mapa.getSeccion(iSec));
-			ralph.setPosicion(posR);
-			ralph.setVelocidad(vel);
-			
-			Timer tim= new Timer();
-			LogicaDeMovimientos timer= new LogicaDeMovimientos(tim);
-			tim.schedule(timer, 0, levelRate);
-			
-		
-		
-			while(ralph.getCantLadrillos() != 0 || felix.getVidas() != 0 ){
+			iniPersonajes(iSec);
+					
+			while( gameon && (felix.getVidas() > 0) && (mapa.getSeccion(iSec).getCantRotas() > 0) ){
 				ralph.shoot();
 				if(mapa.getSeccion(0).getVentana(felix.getPosicion()).rota()){
 					fMartillar();
 				}else{
 					fMove();
 				}
-				//if(felix.getVidas() == 0)
-				//	break;
-				//System.out.println("");
+				checkColisiones();
 			}
+			
+			if( felix.getVidas() > 0 ){
+				if( iSec < 2 ){
+					iSec++;
+				}else if( level < 9 ){
+					pasarNivel();
+				}else
+					win();
+			}else 
+				gameover();
 		}
-		int vfinal= felix.vidasInicio-felix.getVidas();
-		System.out.println("Ralph acerto "+vfinal+ " ladrillos luego de lanzar "+(50-ralph.getCantLadrillos()));
-		System.out.println("Fin de simulacion.");
 	}
+	
+	public void iniPersonajes(int secc){
+		System.out.println("Level "+level+", seccion "+iSec);
+		System.out.println("Se van a inicializar Felix y Ralph");
+		felix.iniciar(mapa.getSeccion(secc));
+		System.out.println(" ");
+		System.out.println("Felix se creo en la posicion "+felix.getPosicion().getX()+", "+felix.getPosicion().getY()+" con "+felix.getVidas()+" vidas");
+		System.out.println("Poder de Felix= "+felix.Poder());
+		ralph.newLevel( vel, mapa.getSeccion(secc) );
+		System.out.println(" ");
+		System.out.println("Ralph se inicio en la Seccion " +ralph.getSeccion().getId()+ " en la posicion "+ralph.getPosicion().getX()+ ", "+ralph.getPosicion().getY());
+		System.out.println("Ralph tiene "+ralph.getCantLadrillos()+ " ladrillos, con una velocidad de lanzamiento de "+ralph.getVelocidad());
+		System.out.println("Ralph se mueve on velocidad "+ralph.getVelocidad());
+	}
+	
 
 	/**
 	 *Inicia el mapa y los personajes.
@@ -101,8 +133,11 @@ public final class Juego {
 	 * Se crea una seccion unica con esa matriz , luego con eso el mapa.
 	 * Finalmente se instancian felix y ralph.
 	 */
+	
 	private void comenzar(int lvl){
 		// codigo a ejecutar para iniciar el juego
+		
+		estado = EstadoJuego.INGAME;
 		
 		if( lvl > 0 && lvl < 10){
 			factVentRota = factVentRota * Math.pow((1+0.15),lvl);
@@ -119,8 +154,6 @@ public final class Juego {
 		}
 		mapa= new Mapa(sec, lvl);
 		//mapa= map;   //atada con alambre
-
-		felix= new Felix();
 	}
 	
 	private Ventana [][] inicializarVentanas(){
@@ -128,13 +161,17 @@ public final class Juego {
 		cantRota = 0;
 		int maceta = 0;
 		int moldura = 0;
-		int dobleObs = 0;
+		int hoja = 0;
+		Coin luck;
+		Hoja oja;
+		
 		
 		Ventana [][] vent = new Ventana[colum][filas];
 		for(int i=1; i<filas-1; i++){
 				for(int j=0; j<colum; j++){
 					check = Math.random();
 					check2 = Math.random();
+					luck = Coin.getRandom();
 					if(check > factVentRota){
 						if(j == 2){
 							if(i == 1 ){
@@ -147,26 +184,56 @@ public final class Juego {
 									vent[j][i]= new Balcon(false);
 									System.out.println("Balcon sano creado en "+j+" , "+i);
 								}
-							}else{
-								vent[j][i]= new DoblePanel(check2 <= factObsVent,check >= (1-factObsVent), false);
-								if(check2 <= factObsVent)
-									if(check >= (1-factObsVent))
-										dobleObs++;
-									else
+							}else if( check2 <= factObsVent ){
+								switch( luck ){
+									case MOLDURA:
+										vent[j][i]= new DoblePanel( true, false, false);
 										moldura++;
-								else if(check >= (1-factObsVent))		
-									maceta++;	
-							}
-						}else{
-							vent[j][i]= new DoblePanel(check2 <= factObsVent,check >= (1-factObsVent), false);
-							if(check2 <= factObsVent)
-								if(check >= (1-factObsVent))
-									dobleObs++;
-								else
+										break;
+									
+									case MACETA:
+										vent[j][i]= new DoblePanel( false, true, false);
+										maceta++;
+										break;
+									
+									case HOJA:
+										oja = Hoja.getRandom();
+										vent[j][i]= new DoblePanel( false, false, false);
+										vent[j][i].setHoja(oja);
+										if( oja != Hoja.NO )
+											hoja++;
+										break;
+									
+									default:
+										System.out.println("Error en el tipo de HOJA al crear.");
+									}
+							}else
+								vent[j][i]= new DoblePanel( false, false, false);
+						}else if( check2 <= factObsVent ){
+							switch( luck ){
+								case MOLDURA:
+									vent[j][i]= new DoblePanel( true, false, false);
 									moldura++;
-							else if(check >= (1-factObsVent))		
-								maceta++;	
-						}
+									break;
+							
+								case MACETA:
+									vent[j][i]= new DoblePanel( false, true, false);
+									maceta++;
+									break;
+							
+								case HOJA:
+									oja = Hoja.getRandom();
+									vent[j][i]= new DoblePanel( false, false, false);
+									vent[j][i].setHoja(oja);
+									if( oja != Hoja.NO )
+										hoja++;
+									break;
+							
+								default:
+									System.out.println("Error en el tipo de HOJA al crear.");
+								}
+						}else
+							vent[j][i]= new DoblePanel( false, false, false);							
 					}else{
 						if(j == 2){
 							if(i == 1){
@@ -179,48 +246,84 @@ public final class Juego {
 									vent[j][i]= new Balcon(true);
 									System.out.println("Balcon roto creado en "+j+" , "+i);
 								}
-							}else{
-								vent[j][i]= new DoblePanel(check2 <= factObsVent,check >= (1-factObsVent), false);
-								if(check2 <= factObsVent)
-									if(check >= (1-factObsVent))
-										dobleObs++;
-									else
+							}else if( check2 <= factObsVent ){
+								switch( luck ){
+									case MOLDURA:
+										vent[j][i]= new DoblePanel( true, false, true );
 										moldura++;
-								else if(check >= (1-factObsVent))		
-									maceta++;	
-							}
-						}else{
-							vent[j][i]= new DoblePanel(check2 <= factObsVent,check >= (1-factObsVent), false);
-							if(check2 <= factObsVent)
-								if(check >= (1-factObsVent))
-									dobleObs++;
-								else
+										break;
+								
+									case MACETA:
+										vent[j][i]= new DoblePanel( false, true, true );
+										maceta++;
+										break;
+								
+									case HOJA:
+										vent[j][i]= new DoblePanel( false, false, true );
+										vent[j][i].setHoja(Hoja.NO);
+										break;
+								
+									default:
+										System.out.println("Error en el tipo de HOJA al crear.");
+									}
+							}else
+								vent[j][i]= new DoblePanel( false, false, true);
+							
+						}else if( check2 <= factObsVent ){
+							switch( luck ){
+								case MOLDURA:
+									vent[j][i]= new DoblePanel( true, false, true );
 									moldura++;
-							else if(check >= (1-factObsVent))		
-								maceta++;	
-						}
+									break;
+							
+								case MACETA:
+									vent[j][i]= new DoblePanel( false, true, true );
+									maceta++;
+									break;
+							
+								case HOJA:
+									vent[j][i]= new DoblePanel( false, false, true );
+									vent[j][i].setHoja(Hoja.NO);
+									break;
+							
+								default:
+									System.out.println("Error en el tipo de HOJA al crear.");
+								}
+						}else
+							vent[j][i]= new DoblePanel( false, false, true);
 						cantRota++;
 					}
 			}
-			obstaculos = moldura + maceta + dobleObs;
+			obstaculos = moldura + maceta + hoja;
 		}
-		System.out.println("Se crearon "+moldura+" ventanas con molduras, "+maceta+" con macetas y "+dobleObs+" con doble obstaculo.");
+		System.out.println("Se crearon "+moldura+" ventanas con molduras, "+maceta+" con macetas y "+hoja+" con hojas.");
 		System.out.println("De las cuales "+cantRota+" estan rotas (contando puerta y balcon)");
 		return vent;
 	}
-
+	
 	private final void pasarNivel(){
 		// codigo a ejecutar para pasar de nivel
+		level++;
+		iSec = 0;
+		felix.setVidas(felix.getVidas()+1);
+		comenzar(level);
 	}
 
 	private final void gameover(){
 		//codigo a ejecutar al perder
-		pintar();
+		gameon = false;
+		estado = EstadoJuego.GAMEOVER;
+		int vfinal= vidaTot - felix.getVidas();
+		System.out.println("Ralph acerto "+vfinal+ " ladrillos luego de lanzar "+(50-ralph.getCantLadrillos()));
+		System.out.println("Fin de simulacion.");
+//		ejecutar grafica de fin de juego perdedor
 	}
 
 	private final void win(){
+		estado = EstadoJuego.WIN;
+		gameon = false;
 		//codigo a ejecutar al ganar el juego
-		pintar();
+//		ejecutar grafica de fin de juego ganador
 	}
 
 	/**
@@ -239,7 +342,12 @@ public final class Juego {
 					felix.move(Direccion.RIGHT);
 				}else if(felix.getPosicion().getX()==4){
 					if(felix.getPosicion().getY()==3){
-						System.out.println("Felix llego al final de su recorrido.");
+						if(mapa.getSeccion(iSec).getCantRotas() > 0){
+							felix.setPosicion(tmp);
+							System.out.println("Felix regreso a 0 * 1.");
+						}
+						//gameon = false;
+						//System.out.println("Felix llego al final de su recorrido.");
 					}else{
 						felix.move(Direccion.UP);
 					}
@@ -262,8 +370,12 @@ public final class Juego {
 	private void fMartillar(){
 		puntaje=puntaje + felix.martillar();
 	}
-	
-	public void pintar(){
 		
+	public void setEstado( EstadoJuego status){
+		estado = status;
+	}
+	
+	public EstadoJuego getEstado(){
+		return estado;
 	}
 }

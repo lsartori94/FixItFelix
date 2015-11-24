@@ -9,9 +9,8 @@ public class Felix {
 	private static final Posicion posInicial= new Posicion(2, 1);
 	private int vidas;
 	private boolean poder;
-	public final int vidasInicio= 3;
-	private int limiteSup;
-	private int limiteInf;
+	private int limiteSup = 4;
+	private int limiteInf = 0;
 	private boolean derecha;
 
 	//inicia Default Felix
@@ -25,15 +24,11 @@ public class Felix {
 	 */
 	public void iniciar(Seccion sec){
 		//se asume como posicion inicial el piso 0 a la mitad del mapa (fila 3 de 5)
-		Posicion tmpPos= posInicial;
+		Posicion tmpPos = posInicial;
 		setPosicion(tmpPos);
-		setVidas(vidasInicio);
 		setSec(sec);
 		setPoder(false);
 		//por ser prueba se informa creacion
-		System.out.println(" ");
-		System.out.println("Felix se creo en la posicion "+getPosicion().getX()+", "+getPosicion().getY()+" con "+getVidas()+" vidas");
-		System.out.println("Poder de Felix= "+Poder());
 	}
 
 	/*
@@ -55,8 +50,8 @@ public class Felix {
 		return vidas;
 	}
 
-	public void setVidas(int vidas) {
-		this.vidas = vidas;
+	public void setVidas(int life) {
+		vidas = life;
 	}
 
 	public boolean Poder() {
@@ -69,8 +64,8 @@ public class Felix {
 
 	//metodo a ejecutar cuando se tenga que arreglar algo
 	public int martillar(){
-		sec.getVentana(posicion).arreglar();
-		sec.setCantRotas(sec.getCantRotas()-1);
+		getSec().getVentana(getPosicion()).arreglar();
+		getSec().setCantRotas(getSec().getCantRotas()-1);
 		//se informa por ser prueba
 		System.out.println("Felix martilla ventana");
 		// devuelve el puntaje de martillar un panel
@@ -144,8 +139,8 @@ public class Felix {
 			case 1:
 				tmp.setY(tmp.getY()+1);
 				if (tmp.getY() < limiteSup){
-					if(!sec.getVentana(tmp).macetero()){
-						if(!sec.getVentana(posicion).moldura()){
+					if(!getSec().getVentana(tmp).macetero()){
+						if(!getSec().getVentana(posicion).moldura()){
 							setPosicion(tmp);
 							System.out.println("Felix se movio arriba");
 						} else{
@@ -161,8 +156,8 @@ public class Felix {
 			case 2:
 				tmp.setY(tmp.getY()-1);
 				if (tmp.getY() > limiteInf){
-					if(!sec.getVentana(tmp).moldura()){
-						if(!sec.getVentana(posicion).macetero()){
+					if(!getSec().getVentana(tmp).moldura()){
+						if(!getSec().getVentana(posicion).macetero()){
 							setPosicion(tmp);
 							System.out.println("Felix se movio abajo");
 						} else{
@@ -178,27 +173,20 @@ public class Felix {
 			case 3:
 				tmp.setX(tmp.getX()-1);
 				if (tmp.getX() >= 0){
-					switch (sec.getVentana(tmp).getHoja().getValue()){
-						case 1:
-							System.out.println("Hay ventana con hojas abiertas, no puede moverse");
-							break;
+					if(getSec().getVentana(tmp).getHoja().getValue() == 1){
+							System.out.println("Hay ventana con hojas abiertas en destino, no puede moverse en esa direccion");
+					}else{
+						switch (getSec().getVentana(posicion).getHoja().getValue()){
+							case 1:
+								System.out.println("Esta en una Ventana con hojas, no puede avanzar");
+								break;
 						
-						default:
-							setPosicion(tmp);
-							setDerecha(false);
-							System.out.println("Felix se movio a la izquierda.");
-							break;
+							default:
+								setPosicion(tmp);
+								setDerecha(false);
+								System.out.println("Felix se movio a la izquierda.");
+								break;
 						}
-					switch (sec.getVentana(posicion).getHoja().getValue()){
-						case 1:
-							System.out.println("Esta en una Ventana con hojas, no puede avanzar");
-							break;
-						
-						default:
-							setPosicion(tmp);
-							setDerecha(false);
-							System.out.println("Felix se movio a la izquierda.");
-							break;
 					}
 				}else
 					System.out.println("Felix no puede acceder a esa posicion, fuera de mapa");
@@ -207,28 +195,21 @@ public class Felix {
 			case 4:
 				tmp.setX(tmp.getX()+1);
 				if (tmp.getX() < 5){
-					switch (sec.getVentana(tmp).getHoja().getValue()){
-					case 1:
-						System.out.println("Hay ventana con hojas abiertas, no puede moverse");
-						break;
+					if(getSec().getVentana(tmp).getHoja().getValue() == 1){
+						System.out.println("Hay ventana con hojas abiertas en destino, no puede moverse en esa direccion");
+					}else{
+						switch (getSec().getVentana(posicion).getHoja().getValue()){
+							case 1:
+								System.out.println("Esta en una Ventana con hojas, no puede avanzar");
+								break;
 					
-					default:
-						setPosicion(tmp);
-						setDerecha(true);
-						System.out.println("Felix se movio a la derecha.");
-						break;
+							default:
+								setPosicion(tmp);
+								setDerecha(true);
+								System.out.println("Felix se movio a la derecha.");
+								break;
+						}
 					}
-				switch (sec.getVentana(posicion).getHoja().getValue()){
-					case 1:
-						System.out.println("Esta en una Ventana con hojas, no puede avanzar");
-						break;
-					
-					default:
-						setPosicion(tmp);
-						setDerecha(true);
-						System.out.println("Felix se movio a la derecha.");
-						break;
-				}
 			}else
 				System.out.println("Felix no puede acceder a esa posicion, fuera de mapa");
 			break;
@@ -237,5 +218,6 @@ public class Felix {
 				System.out.println("Direction Error.");
 				break;
 		}
-}
+		System.out.println("Posicion de Felix "+getPosicion().getX()+" * "+getPosicion().getY());
+	}
 }

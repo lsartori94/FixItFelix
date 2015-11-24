@@ -9,7 +9,7 @@ public class Ralph {
 	private static final int ladrilloInicial= 0;
 	private int cantLadrillos;
 	//espera entre cambio de posicion
-	private double velocidad;
+	private double velocidad = 1;
 	private Ladrillo [] ladrillos;
 	private int ladrilloAct;
 	//tiempo de espera entre ladrillos
@@ -26,15 +26,9 @@ public class Ralph {
 	 * 
 	 * @author Agustín Liébana lsartori
 	 */
-	public Ralph(Seccion sec){
-		setCantLadrillos(50);
-		crearLadrillos(getCantLadrillos(), getPosicion());
-		setLadrillo_act(ladrilloInicial);
-		setSeccion(sec);
+	public Ralph( Posicion pos ){
+		setPosicion( pos );
 		//por ser prueba se informa lo realizado
-		System.out.println(" ");
-		System.out.println("Ralph se inicio en la Seccion " +seccion.getId()+ " en la posicion "+getPosicion().getX()+ ", "+getPosicion().getY());
-		System.out.println("Ralph tiene "+getCantLadrillos()+ " ladrillos, con un espacio de lanzamiento de segundos");
 	}
 
 	//metodo a ejecutar para que Ralph tire un ladrillo
@@ -48,7 +42,7 @@ public class Ralph {
 	 */
 	public void shoot(){
 		if(getCantLadrillos() != 0){
-			System.out.println("Ralph lanzo un ladrillo");
+			System.out.println("Ralph lanzo un ladrillo en "+getPosicion().getX()+" * "+getPosicion().getY());
 			ladrillos[getLadrilloAct()].caer();
 			setCantLadrillos(getCantLadrillos()-1);
 			setLadrillo_act(getLadrilloAct()+1);
@@ -95,6 +89,14 @@ public class Ralph {
 		this.derecha = derecha;
 	}
 	
+	public void newLevel( double velocidad, Seccion secc){
+		setVelocidad(velocidad);
+		setSeccion(secc);
+		setCantLadrillos( 50 );
+		setLadrillo_act(ladrilloInicial);
+		crearLadrillos(getCantLadrillos(), getPosicion());
+	}
+	
 	/*
 	 * Con el metodo crearLadrillos inicializamos el arreglo de
 	 * ladrillos que posee Ralph. Este contiene todos los ladrillos
@@ -109,7 +111,7 @@ public class Ralph {
 		}
 		ladrillos= tmp;
 		System.out.println("");
-		System.out.println("Se crearon "+cant+" ladrillos de posicion ["+pos.getX()+" , "+pos.getY()+"] con velocidad de caida ");
+		System.out.println("Se crearon "+cant+" ladrillos de posicion ["+pos.getX()+" , "+pos.getY()+"] con velocidad de caida "+getVelocidad());
 	}
 
 	public Ladrillo getLadrillo(int i){

@@ -15,6 +15,10 @@ public enum Hoja{
 		public int getValue(){
 			return value;
 		}
+	
+		public static Hoja getRandom() {
+	        return values()[(int) (Math.random() * values().length)];
+	    }
 		
 		private Hoja(int v){
 			this.value = v;
