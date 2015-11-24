@@ -79,7 +79,7 @@ public class MapScreen extends Frame {
 								
 						}else{
 							this.getGraphics().drawImage(ventana, auxAncho, auxAlto, null);
-							// Pinta Ralph si coincide con su posicion
+							 //Pinta Ralph si coincide con su posicion
 							if((pos.getY() == y)&(pos.getX() == x)){
 								this.getGraphics().drawImage(ralphie, auxAncho-15, auxAlto-20, null);
 							}
