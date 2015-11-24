@@ -59,6 +59,7 @@ public final class Juego {
 			Timer tim= new Timer();
 			LogicaDeMovimientos timer= new LogicaDeMovimientos(tim);
 			tim.schedule(timer, 0, levelRate);
+			
 		
 		
 			while(ralph.getCantLadrillos() != 0 || felix.getVidas() != 0 ){
