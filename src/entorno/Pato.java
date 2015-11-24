@@ -18,14 +18,14 @@ import misc.Posicion;
  */
 public class Pato {
 	private Posicion posicion;
-	private int velocidad;
 	private boolean derecha;
 	private Map <String, BufferedImage> imagenes;
 
 	public Pato(Posicion pos, int vel){
 		cargarImagenes();
 		posicion = pos;
-		velocidad = vel;
+		double ran= Math.random();
+		derecha= (ran < 0.5) ? true : false;
 	}
 
 	public Posicion getPosicion() {
@@ -40,16 +40,14 @@ public class Pato {
 		derecha= bol;
 	}
 	
-	public void setPosicion(Posicion posicion) {
-		this.posicion = posicion;
-	}
-
-	public int getVelocidad() {
-		return velocidad;
-	}
-
-	public void setVelocidad(int velocidad) {
-		this.velocidad = velocidad;
+	public boolean setPosicion(Posicion pos) {
+		if((pos.getX() > 0)||(pos.getX() < 4)){
+			this.posicion = pos;
+			return true;
+		}else{
+			destruir();
+			return false;
+		}
 	}
 
 	/**
@@ -57,14 +55,14 @@ public class Pato {
 	 * 
 	 * @param dir = direccion a la cual se movera el pato.
 	 */
-	public void mover(Direccion dir){
+	public boolean mover(Direccion dir){
 		Posicion tmp= posicion;
+		boolean bol= false;
 		switch(dir.getValue()){
 		case 3:
 			tmp.setX(tmp.getX()-1);
 			if (tmp.getX() >= 0){
-				setPosicion(tmp);
-				setDerecha(false);
+				bol= setPosicion(tmp);
 				refreshImagenPosicion(dir);
 				System.out.println("Pato se movio a la izquierda.");
 			}else
@@ -74,8 +72,7 @@ public class Pato {
 		case 4:
 			tmp.setX(tmp.getX()+1);
 			if (tmp.getX() < 5){
-				setPosicion(tmp);
-				setDerecha(true);
+				bol= setPosicion(tmp);
 				refreshImagenPosicion(dir);
 				System.out.println("Pato se movio a la derecha.");
 			}else
@@ -86,37 +83,24 @@ public class Pato {
 			System.out.println("Direction Error PATO.");
 			break;
 		}
+		return bol;
 	}
 	
 	private void refreshImagenPosicion(Direccion d){
-		if(derecha){
-			switch(d.getValue()){
-			case 3:
-				pintar(imagenes.get("aleteoIzquierda1"));
-				//WAIT
-				pintar(imagenes.get("aleteoizquierda2"));
-				break;
-			case 4:
-				pintar(imagenes.get("aleteoDerecha1"));
-				//WAIT
-				pintar(imagenes.get("aleteoDerecha2"));
-				break;
-			}
-		} else{
-			switch(d.getValue()){
-			case 3:
-				pintar(imagenes.get("aleteoIzquierda1"));
-				//WAIT
-				pintar(imagenes.get("aleteoIzquierda2"));
-				break;
-			case 4:
-				pintar(imagenes.get("aleteoDerecha1"));
-				//WAIT
-				pintar(imagenes.get("aleteoDerecha2"));
-				break;
-			}
+		switch(d.getValue()){
+		case 3:
+			pintar(imagenes.get("aleteoIzquierda1"));
+			//WAIT
+			pintar(imagenes.get("aleteoizquierda2"));
+			break;
+		case 4:
+			pintar(imagenes.get("aleteoDerecha1"));
+			//WAIT
+			pintar(imagenes.get("aleteoDerecha2"));
+			break;
 		}
 	}
+
 	
 	private void cargarImagenes(){
 		try{
@@ -133,6 +117,13 @@ public class Pato {
 	}
 
 	private void pintar(BufferedImage imagen){
+		
+	}
+	
+	/**
+	 * Metodo que saca de pantalla al pato
+	 */
+	private void destruir(){
 		
 	}
 

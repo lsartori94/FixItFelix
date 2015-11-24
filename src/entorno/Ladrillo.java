@@ -70,13 +70,11 @@ public class Ladrillo {
 	 * Luego de setear la posicion realiza el cambio de imagen.
 	 */
 	public void caer(){
-//		if(!visible){
-//			setVisible(true);
-//			setImagen(posicion);
-//		}
 		if(posicionl.getY() > 0){
 			Posicion tmp = new Posicion(posicionl.getX(),posicionl.getY()-1);
 			setPosicionl(tmp);
+		}else{
+			destruir();
 		}
 //		setImagen(posicion);
 	}
@@ -90,5 +88,9 @@ public class Ladrillo {
 		} catch(IOException e){
 			System.out.println("Error interno en Ladrillo" + e.getMessage());
 		}
+	}
+	
+	private void destruir(){
+		
 	}
 }

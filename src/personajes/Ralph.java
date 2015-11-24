@@ -40,6 +40,13 @@ public class Ralph {
 		setLadrillo_act(ladrilloInicial);
 		cargarImagenes();
 		//por ser prueba se informa lo realizado
+<<<<<<< HEAD
+=======
+		System.out.println(" ");
+		System.out.println("Ralph se inicio en la Seccion " +seccion.getId()+ " en la posicion "+getPosicion().getX()+ ", "+getPosicion().getY());
+		System.out.println("Ralph tiene "+getCantLadrillos()+ " ladrillos, con un espacio de lanzamiento de segundos");
+		//System.out.println("Ralph se mueve de lugar cada "+getVelocidad()+" segundos");
+>>>>>>> fdc6db05542000f91fa6e4310196e2248b9d01ce
 	}
 
 	//metodo a ejecutar para que Ralph tire un ladrillo
@@ -114,7 +121,11 @@ public class Ralph {
 		}
 		ladrillos= tmp;
 		System.out.println("");
+<<<<<<< HEAD
 		System.out.println("Se crearon "+cant+" ladrillos de posicion ["+pos.getX()+" , "+pos.getY()+"] con velocidad de caida "+getVelocidad());
+=======
+		System.out.println("Se crearon "+cant+" ladrillos de posicion ["+pos.getX()+" , "+pos.getY()+"] con velocidad de caida ");
+>>>>>>> fdc6db05542000f91fa6e4310196e2248b9d01ce
 	}
 
 	public Ladrillo getLadrillo(int i){
@@ -126,10 +137,8 @@ public class Ralph {
 	 * no es utilizado ya que las ventanas y sus estados se inicializan
 	 * de manera aleatoria.
 	 */
-	public void romper(/*Sprite img*/){
-		seccion.getVentana(posicion).setRota(true);
-		//al ser prueba no se modifica imagen
-		//seccion.getVentana(posicion).setImagen(img);
+	public void romper(){
+		seccion.getVentana(posicion).romper();
 		System.out.println("Ralph rompio la Ventana ["+posicion.getX()+" , "+posicion.getY()+"]");
 	}
 	
