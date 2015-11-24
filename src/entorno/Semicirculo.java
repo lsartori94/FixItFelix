@@ -1,6 +1,4 @@
 package entorno;
-import java.awt.image.BufferedImage;
-import java.util.Map;
 import misc.Hoja;
 
 /**
@@ -26,9 +24,4 @@ public abstract class Semicirculo extends Ventana{
 		 */
 		super(false, false, rota, Hoja.NO, golpesFix);
 	}
-
-	public void setImagenes(Map<String, BufferedImage> imagenes){
-		super.setImagenes(imagenes);
-	}
-	
 }

@@ -1,11 +1,4 @@
 package entorno;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.Map;
-
-import javax.imageio.ImageIO;
-
 import misc.Hoja;
 
 /**
@@ -23,7 +16,6 @@ public class DoblePanel extends Ventana{
 	private boolean pie;
 	private Panel panelInferior;
 	private Panel panelSuperior;
-	private Map <String, BufferedImage> imagenes;
 
 	/**
 	 * Constructor de Doble_panel.
@@ -36,8 +28,6 @@ public class DoblePanel extends Ventana{
 	 */
 	public DoblePanel(boolean mold, boolean mace, boolean rota) {
 		super(mold, mace, rota, Hoja.NO, golpesFix);
-		cargarImagenes();
-		super.setImagenes(imagenes);
 		Panel pR= new Panel(rota, rota);
 		Panel pS= new Panel(rota, rota);
 		setPanelInferior(pR);
@@ -82,7 +72,6 @@ public class DoblePanel extends Ventana{
 		panelInferior.romper();
 		panelSuperior.romper();
 		super.setGolpesAct(golpesACero);
-		pintar(super.rota());
 	}
 
 	/**
@@ -99,41 +88,6 @@ public class DoblePanel extends Ventana{
 		}else if(super.getGolpesAct() > 2){
 			panelSuperior.arreglar();
 		}
-		
-	}
-
-	private void cargarImagenes(){
-		try{
-			if(imagenes.isEmpty()){
-				imagenes.put("rota1", ImageIO.read(new File("ventana_doble_rota_1.png")));
-				imagenes.put("rota2", ImageIO.read(new File("ventana_doble_rota_2.png")));
-				imagenes.put("rota3", ImageIO.read(new File("ventana_doble_rota_3.png")));
-				imagenes.put("sana", ImageIO.read(new File("ventana_doble_sana.png")));
-			}
-			
-		} catch(IOException e){
-			System.out.println("Error interno en Ventana de Doble Panel" + e.getMessage());
-		}
-	}
-	
-	private void pintar(boolean rota){
-		if(rota){
-			double ran= Math.random();
-			if(ran < 0.33){
-				render("rota1");
-			}else if(ran > 0.33){
-				if(ran < 0.66){
-					render("rota2");
-				}else{
-					render("rota3");
-				}
-			}
-		}else{
-			render("sana");
-		}
-	}
-
-	private void render(String estado){
 		
 	}
 }

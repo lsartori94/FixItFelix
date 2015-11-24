@@ -58,20 +58,17 @@ public final class Juego {
 			ralph.setSeccion(mapa.getSeccion(iSec));
 			ralph.setPosicion(posR);
 			ralph.setVelocidad(vel);
-<<<<<<< HEAD
 			System.out.println(" ");
 			System.out.println("Ralph se inicio en la Seccion " +ralph.getSeccion().getId()+ " en la posicion "+ralph.getPosicion().getX()+ ", "+ralph.getPosicion().getY());
 			System.out.println("Ralph tiene "+ralph.getCantLadrillos()+ " ladrillos, con una velocidad de lanzamiento de "+ralph.getVelocidad());
 			System.out.println("Ralph se mueve on velocidad "+ralph.getVelocidad());
 			
-=======
-			
 			Timer tim= new Timer();
 			LogicaDeMovimientos timer= new LogicaDeMovimientos(tim);
 			tim.schedule(timer, 0, levelRate);
+			
 		
 		
->>>>>>> fdc6db05542000f91fa6e4310196e2248b9d01ce
 			while(ralph.getCantLadrillos() != 0 || felix.getVidas() != 0 ){
 				ralph.shoot();
 				if(mapa.getSeccion(0).getVentana(felix.getPosicion()).rota()){
