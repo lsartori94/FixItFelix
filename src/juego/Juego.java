@@ -32,7 +32,7 @@ public final class Juego {
 	int iSec = 0;
 	int vidaTot;
 	private final int vidaInicial = 3000;
-	Posicion tmp, posR;
+	Posicion tmp, posR, ini;
 //	private Seccion [] sec;
 
 	/**
@@ -60,6 +60,7 @@ public final class Juego {
 	public void go() {
 			
 		tmp = new Posicion(0,1);
+		ini = new Posicion(2,1);
 		//Timer tim= new Timer();
 		//LogicaDeMovimientos timer= new LogicaDeMovimientos(tim);
 		//tim.schedule(timer, 0, levelRate);
@@ -101,7 +102,7 @@ public final class Juego {
 		System.out.println("Level "+level+", seccion "+iSec);
 		System.out.println("Se van a inicializar Felix y Ralph");
 		felix.iniciar(mapa.getSeccion(secc));
-		//felix.setPosicion(posR);
+//		felix.setPosicion(ini);
 		System.out.println(" ");
 		System.out.println("Felix se creo en la posicion "+felix.getPosicion().getX()+", "+felix.getPosicion().getY()+" con "+felix.getVidas()+" vidas");
 		System.out.println("Poder de Felix= "+felix.Poder());
@@ -176,17 +177,13 @@ public final class Juego {
 					check2 = Math.random();
 					luck = Coin.getRandom();
 					if(check > factVentRota){
-						if(j == 2){
-							if(i == 1 ){
-								if(indiceSec == 0){
+						if( j == 2 && (i == 1 || i == 2) ){
+							if(i == 1 && indiceSec == 0){
 									vent[j][i]= new Puerta(false);
 									System.out.println("Puerta sana creada en "+j+" , "+i);
-								}
-							}else if(i == 2){
-								if(indiceSec == 0){
+							}else if(i == 2 && indiceSec == 0){
 									vent[j][i]= new Balcon(false);
 									System.out.println("Balcon sano creado en "+j+" , "+i);
-								}
 							}else if( check2 <= factObsVent ){
 								switch( luck ){
 									case MOLDURA:
@@ -238,17 +235,13 @@ public final class Juego {
 						}else
 							vent[j][i]= new DoblePanel( false, false, false);							
 					}else{
-						if(j == 2){
-							if(i == 1){
-								if(indiceSec == 0){
+						if( j == 2 && (i == 1 || i == 2) ){
+							if(i == 1 && indiceSec == 0){
 									vent[j][i]= new Puerta(true);
 									System.out.println("Puerta rota creada en "+j+" , "+i);
-								}
-							}else if(i == 2){
-								if(indiceSec == 0){
+							}else if(i == 2 && indiceSec == 0){
 									vent[j][i]= new Balcon(true);
 									System.out.println("Balcon roto creado en "+j+" , "+i);
-								}
 							}else if( check2 <= factObsVent ){
 								switch( luck ){
 									case MOLDURA:

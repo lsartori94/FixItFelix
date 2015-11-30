@@ -40,8 +40,8 @@ public class Felix {
 		return posicion;
 	}
 
-	public void setPosicion(Posicion posicion) {
-		this.posicion = posicion;
+	public void setPosicion(Posicion pos) {
+		posicion = pos;
 		//al ser prueba se informa del movimiento
 		//System.out.println("Felix se movio a ["+posicion.getX()+" , "+posicion.getY()+"]");
 
@@ -65,10 +65,10 @@ public class Felix {
 
 	//metodo a ejecutar cuando se tenga que arreglar algo
 	public int martillar(){
-		getSec().getVentana(getPosicion()).arreglar();
-		getSec().setCantRotas(getSec().getCantRotas()-1);
-		//se informa por ser prueba
 		System.out.println("Felix martilla ventana");
+		if(getSec().getVentana(getPosicion()).arreglar())
+			getSec().setCantRotas(getSec().getCantRotas()-1);
+		//se informa por ser prueba
 		// devuelve el puntaje de martillar un panel
 		return sec.getVentana(posicion).getPuntaje();
 	}
