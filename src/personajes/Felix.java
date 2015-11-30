@@ -1,6 +1,7 @@
 package personajes;
 import entorno.Seccion;
 import misc.Direccion;
+import misc.Hoja;
 import misc.Posicion;
 
 public class Felix {
@@ -173,7 +174,7 @@ public class Felix {
 			case 3:
 				tmp.setX(tmp.getX()-1);
 				if (tmp.getX() >= 0){
-					if(getSec().getVentana(tmp).getHoja().getValue() == 1){
+					if(getSec().getVentana(tmp).getHoja() == Hoja.ABIERTA){
 							System.out.println("Hay ventana con hojas abiertas en destino, no puede moverse en esa direccion");
 					}else{
 						switch (getSec().getVentana(posicion).getHoja().getValue()){
@@ -195,7 +196,7 @@ public class Felix {
 			case 4:
 				tmp.setX(tmp.getX()+1);
 				if (tmp.getX() < 5){
-					if(getSec().getVentana(tmp).getHoja().getValue() == 1){
+					if(getSec().getVentana(tmp).getHoja() == Hoja.ABIERTA){
 						System.out.println("Hay ventana con hojas abiertas en destino, no puede moverse en esa direccion");
 					}else{
 						switch (getSec().getVentana(posicion).getHoja().getValue()){

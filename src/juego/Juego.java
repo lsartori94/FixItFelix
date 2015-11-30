@@ -31,8 +31,9 @@ public final class Juego {
 	private EstadoJuego estado;
 	int iSec = 0;
 	int vidaTot;
-	private final int vidaInicial = 3;
-	Posicion tmp;
+	private final int vidaInicial = 3000;
+	Posicion tmp, posR;
+//	private Seccion [] sec;
 
 	/**
 	 * Es el metodo que da el esqueleto a la prueba.
@@ -65,7 +66,7 @@ public final class Juego {
 		vidaTot = vidaInicial;
 		felix= new Felix();
 		felix.setVidas(vidaInicial);
-		Posicion posR= new Posicion(0, 4);
+		posR= new Posicion(0, 4);
 		ralph= new Ralph( posR );
 		
 		comenzar(level);
@@ -76,7 +77,7 @@ public final class Juego {
 					
 			while( gameon && (felix.getVidas() > 0) && (mapa.getSeccion(iSec).getCantRotas() > 0) ){
 				ralph.shoot();
-				if(mapa.getSeccion(0).getVentana(felix.getPosicion()).rota()){
+				if(mapa.getSeccion(iSec).getVentana(felix.getPosicion()).rota()){
 					fMartillar();
 				}else{
 					fMove();
@@ -100,6 +101,7 @@ public final class Juego {
 		System.out.println("Level "+level+", seccion "+iSec);
 		System.out.println("Se van a inicializar Felix y Ralph");
 		felix.iniciar(mapa.getSeccion(secc));
+		//felix.setPosicion(posR);
 		System.out.println(" ");
 		System.out.println("Felix se creo en la posicion "+felix.getPosicion().getX()+", "+felix.getPosicion().getY()+" con "+felix.getVidas()+" vidas");
 		System.out.println("Poder de Felix= "+felix.Poder());
@@ -147,13 +149,14 @@ public final class Juego {
 		System.out.println("Factoriales "+factVentRota+" , "+factObsVent);
 		
 		Seccion [] sec= new Seccion [3];
+		//sec = sec2;
 		for(indiceSec = 0; indiceSec < 3; indiceSec++){
 			System.out.println("Seccion "+indiceSec);
 			Ventana [][] ventanas = inicializarVentanas();
 			sec[indiceSec]= new Seccion((filas - 2), colum, cantRota, obstaculos, ventanas, indiceSec);
 		}
-		mapa= new Mapa(sec, lvl);
-		//mapa= map;   //atada con alambre
+		Mapa map = new Mapa(sec, lvl);
+		mapa = map;   //atada con alambre
 	}
 	
 	private Ventana [][] inicializarVentanas(){
@@ -367,8 +370,9 @@ public final class Juego {
 	 * Metodo que realiza el martilleo de felix y el arreglo de ventana
 	 * Suma al puntaje el puntaje de arreglar la ventana
 	 */
-	private void fMartillar(){
-		puntaje=puntaje + felix.martillar();
+	private void fMartillar(){ 
+		felix.martillar();
+		felix.getSec().getVentana(felix.getPosicion()).setPuntaje(puntaje+1);
 	}
 		
 	public void setEstado( EstadoJuego status){
