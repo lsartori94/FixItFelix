@@ -32,7 +32,8 @@ public final class Juego {
 	int iSec = 0;
 	int vidaTot;
 	private final int vidaInicial = 3000;
-	Posicion tmp, posR, ini;
+	Posicion tmp, posR;
+	private static final Posicion ini = new Posicion(2,1);
 //	private Seccion [] sec;
 
 	/**
@@ -59,8 +60,8 @@ public final class Juego {
 	
 	public void go() {
 			
-		tmp = new Posicion(0,1);
-		ini = new Posicion(2,1);
+		tmp = new Posicion(1,1);
+		//ini = new Posicion(2,1);
 		//Timer tim= new Timer();
 		//LogicaDeMovimientos timer= new LogicaDeMovimientos(tim);
 		//tim.schedule(timer, 0, levelRate);
@@ -102,7 +103,7 @@ public final class Juego {
 		System.out.println("Level "+level+", seccion "+iSec);
 		System.out.println("Se van a inicializar Felix y Ralph");
 		felix.iniciar(mapa.getSeccion(secc));
-//		felix.setPosicion(ini);
+		felix.setPosicion(ini);
 		System.out.println(" ");
 		System.out.println("Felix se creo en la posicion "+felix.getPosicion().getX()+", "+felix.getPosicion().getY()+" con "+felix.getVidas()+" vidas");
 		System.out.println("Poder de Felix= "+felix.Poder());
@@ -340,7 +341,7 @@ public final class Juego {
 					if(felix.getPosicion().getY()==3){
 						if(mapa.getSeccion(iSec).getCantRotas() > 0){
 							felix.setPosicion(tmp);
-							System.out.println("Felix regreso a 0 * 1.");
+							System.out.println("Felix regreso a "+felix.getPosicion().getX()+" * "+felix.getPosicion().getY());
 						}
 						//gameon = false;
 						//System.out.println("Felix llego al final de su recorrido.");
@@ -348,7 +349,7 @@ public final class Juego {
 						felix.move(Direccion.UP);
 					}
 				}
-				}else{
+			}else{
 				if(felix.getPosicion().getX()>0 ){
 					felix.move(Direccion.LEFT);
 				}

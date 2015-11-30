@@ -7,7 +7,7 @@ import misc.Posicion;
 public class Felix {
 	private Posicion posicion;
 	private Seccion sec;
-	private static final Posicion posInicial= new Posicion(2, 1);
+	private static final Posicion posInicial = new Posicion(2,1);
 	private int vidas;
 	private boolean poder;
 	private int limiteSup = 4;
@@ -25,8 +25,8 @@ public class Felix {
 	 */
 	public void iniciar(Seccion sec){
 		//se asume como posicion inicial el piso 0 a la mitad del mapa (fila 3 de 5)
-		Posicion tmpPos = posInicial;
-		setPosicion(tmpPos);
+		posicion = new Posicion(1,2);
+	//	setPosicion(tmpPos);
 		setSec(sec);
 		setPoder(false);
 		//por ser prueba se informa creacion
@@ -41,7 +41,9 @@ public class Felix {
 	}
 
 	public void setPosicion(Posicion pos) {
-		posicion = pos;
+		//Posicion posTmp = getPosicion();
+		posicion.setX(pos.getX());
+		posicion.setY(pos.getY());
 		//al ser prueba se informa del movimiento
 		//System.out.println("Felix se movio a ["+posicion.getX()+" , "+posicion.getY()+"]");
 
@@ -134,14 +136,14 @@ public class Felix {
 	 * A su vez controla que se pueda mover a esa ventana (que no tenga modificadores)
 	 */
 	public void move(Direccion d){
-		Posicion tmp= posicion;
+		Posicion tmp= getPosicion();
 	
 		switch (d.getValue()) {
 			case 1:
 				tmp.setY(tmp.getY()+1);
 				if (tmp.getY() < limiteSup){
 					if(!getSec().getVentana(tmp).macetero()){
-						if(!getSec().getVentana(posicion).moldura()){
+						if(!getSec().getVentana(getPosicion()).moldura()){
 							setPosicion(tmp);
 							System.out.println("Felix se movio arriba");
 						} else{
@@ -158,7 +160,7 @@ public class Felix {
 				tmp.setY(tmp.getY()-1);
 				if (tmp.getY() > limiteInf){
 					if(!getSec().getVentana(tmp).moldura()){
-						if(!getSec().getVentana(posicion).macetero()){
+						if(!getSec().getVentana(getPosicion()).macetero()){
 							setPosicion(tmp);
 							System.out.println("Felix se movio abajo");
 						} else{
@@ -177,7 +179,7 @@ public class Felix {
 					if(getSec().getVentana(tmp).getHoja() == Hoja.ABIERTA){
 							System.out.println("Hay ventana con hojas abiertas en destino, no puede moverse en esa direccion");
 					}else{
-						switch (getSec().getVentana(posicion).getHoja().getValue()){
+						switch (getSec().getVentana(getPosicion()).getHoja().getValue()){
 							case 1:
 								System.out.println("Esta en una Ventana con hojas, no puede avanzar");
 								break;
@@ -199,7 +201,7 @@ public class Felix {
 					if(getSec().getVentana(tmp).getHoja() == Hoja.ABIERTA){
 						System.out.println("Hay ventana con hojas abiertas en destino, no puede moverse en esa direccion");
 					}else{
-						switch (getSec().getVentana(posicion).getHoja().getValue()){
+						switch (getSec().getVentana(getPosicion()).getHoja().getValue()){
 							case 1:
 								System.out.println("Esta en una Ventana con hojas, no puede avanzar");
 								break;

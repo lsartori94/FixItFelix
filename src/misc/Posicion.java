@@ -24,8 +24,8 @@ public class Posicion implements Comparable<Posicion>{
 
 
 	//setea posicion horizontal
-	public void setX(int x) {
-		this.x = x;
+	public void setX(int x2) {
+		x = x2;
 	}
 
 	//devuelve posicion vertical
@@ -34,8 +34,8 @@ public class Posicion implements Comparable<Posicion>{
 	}
 
 	//setea posicion vertical
-	public void setY(int y) {
-		this.y = y;
+	public void setY(int y2) {
+		y = y2;
 	}
 
 	//si son iguales devuelve 0, caso contrario es indistinto
