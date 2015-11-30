@@ -12,10 +12,11 @@ import javax.imageio.ImageIO;
 import entorno.Seccion;
 import entorno.Ventana;
 import misc.Direccion;
+import misc.EstadosJuego;
 import misc.Hoja;
 import misc.Posicion;
 
-public class Renderizable extends TimerTask {
+public class Renderizable{ //extends TimerTask {
 
 	private Timer timer;
 	private static final long periodoTimer= 100;
@@ -33,16 +34,20 @@ public class Renderizable extends TimerTask {
 	private Map <String, BufferedImage> imagenes= new TreeMap<String, BufferedImage>();
 	private BufferedImage[][] imagenesVentanas;
 	private Seccion seccion;
-	private Ventana[][] ventanas;
+	private Ventana[][] ventanas= new Ventana[5][5];
 	private MapScreen screen= new MapScreen();
-	private Posicion posRalph;
-	private Posicion posFelix;
-	private int numSeccion;
+	private Posicion posRalph= new Posicion(2,1);
+	private Posicion posFelix= new Posicion(3,4);
+	private int numSeccion=0;
 	private Posicion posLadrillo;
 	private Posicion posNicelander;
 	private Posicion posPato;
+	private EstadosJuego estado;
 
-	public Renderizable(){
+	public Renderizable(Ventana [][] vent){
+		//necesitamos parametros del juego
+		
+		setVentanas(vent);
 		cargarImagenesEdificio();
 		cargarImagenesMisc();
 		cargarImagenesBalcon();
@@ -55,14 +60,21 @@ public class Renderizable extends TimerTask {
 		cargarImagenesFelix();
 		cargarImagenesRalph();
 		cargarTodo();
-		
+		screen.setEstado(estado);
+		screen.setImagenes(imagenes);
+		screen.setImagenesVentanas(imagenesVentanas);
+		screen.setPosFelix(posFelix);
+		screen.setPosLadrillo(posLadrillo);
+		screen.setPosNicelander(posNicelander);
+		screen.setPosPato(posPato);
+		screen.setPosRalph(posRalph);
 		//timer= tim;
 	}
 	
 	
-	@Override
+	//@Override
 	public void run(){
-		
+		screen.render();
 	}
 
 	public void finRender() {
@@ -84,7 +96,8 @@ public class Renderizable extends TimerTask {
 	}
 
 	public void setVentanas(Ventana[][] ventanas) {
-		this.ventanas = ventanas;
+		Ventana [][] vent= ventanas;
+		this.ventanas = vent;
 	}
 
 	public Posicion getPosRalph() {
@@ -734,5 +747,14 @@ public class Renderizable extends TimerTask {
 		}
 		imagenes.put("ralph", ralph.get("parado"));
 	}
+
+	public EstadosJuego getEstado() {
+		return estado;
+	}
+
+	public void setEstado(EstadosJuego estado) {
+		this.estado = estado;
+	}
+	
 	
 }

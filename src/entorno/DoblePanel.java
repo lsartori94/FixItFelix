@@ -81,13 +81,13 @@ public class DoblePanel extends Ventana{
 	 * Si los golpes acumulados >2 arregla panel superior.
 	 */
 	@Override
-	public void arreglar(){
-		super.arreglar();
+	public boolean arreglar(){
+		boolean bol= super.arreglar();
 		if(super.getGolpesAct() <= 2){
 			panelInferior.arreglar();
 		}else if(super.getGolpesAct() > 2){
 			panelSuperior.arreglar();
 		}
-		
+		return bol;
 	}
 }

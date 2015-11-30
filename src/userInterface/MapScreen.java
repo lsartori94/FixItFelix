@@ -65,26 +65,7 @@ public class MapScreen extends Frame {
 		setTitle("FixIt Felix Jr.");
 		setSize(anchoPanel, altoPanel);
 		setVisible(true);
-		switch(estado.getValue()){
-		case 0:
-			dibujarMenu();
-			break;
-		case 1:
-			dibujarInstrucciones();
-			break;
-		case 2:
-			dibujarHighscore();
-			break;
-		case 3:
-			dibujarMapa();
-			break;
-		case 4:
-			dibujarWin();
-			break;
-		case 5:
-			dibujarLose();
-			break;
-		}
+		dibujarMapa();
 	}
 	
 	@Override
@@ -234,80 +215,11 @@ public class MapScreen extends Frame {
 		this.posPato = posPato;
 	}
 
-	
 	public EstadosJuego getEstado() {
 		return estado;
 	}
-	
 
 	public void setEstado(EstadosJuego estado) {
 		this.estado = estado;
-	}
-
-	
-	private void dibujarMenu(){
-		int anchoVentana= 512;
-		int altoVentana= 400;
-		String title= "FixIt Felix Jr.";
-		JPanel total= new JPanel();
-		JLabel titulo = new JLabel();
-		JPanel superior = new JPanel();
-		JPanel inferior = new JPanel();
-		GridLayout botonesGrid = new GridLayout(3, 3);
-		JPanel botones = new JPanel(botonesGrid);
-		JButton start = new JButton("Comenzar");
-		JButton howTo = new JButton("Como Jugar?");
-		JButton highS = new JButton("Puntajes Altos");
-		ImageIcon image = new ImageIcon("src/imagenes/titulo.png");
-		// Setea el titulo
-		total.setLayout(new BorderLayout());
-		titulo.setIcon(image);
-		superior.setLayout(new BorderLayout());
-		superior.add(titulo, BorderLayout.CENTER);
-		inferior.setLayout(new BorderLayout());
-		total.add(superior, BorderLayout.NORTH);
-
-		// Agrego botones
-		start.addMouseListener(new MouseOnClickListener(){
-			public void actionPerformed(ActionEvent e){
-				estado= EstadosJuego.ONGAME;
-				setVisible(false);
-			}
-		});
-		howTo.addMouseListener(new MouseOnClickListener(){
-			public void actionPerformed(ActionEvent e){
-				estado= EstadosJuego.INSTRUCCIONES;
-				setVisible(false);
-			}
-			
-		});
-		highS.addMouseListener(new MouseOnClickListener(){
-			public void actionPerformed(ActionEvent e){
-				estado= EstadosJuego.HIGHSCORE;
-				setVisible(false);
-			}
-		});
-		botones.add(start);
-		botones.add(howTo);
-		botones.add(highS);
-		botones.setSize(100, 100);
-		
-		// Agrego Layout de Botones
-		inferior.add(botones, BorderLayout.CENTER);
-		total.add(inferior, BorderLayout.CENTER);
-
-		add(total);
-		this.setTitle(title);
-		this.setSize(anchoVentana, altoVentana);
-		
-		setVisible(true);
-	}
-
-	private void dibujarInstrucciones(){
-		
-	}
-	
-	private void dibujarHighscore(){
-		
 	}
 }
