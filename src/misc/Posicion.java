@@ -47,5 +47,10 @@ public class Posicion implements Comparable<Posicion>{
 		}
 		return -1;
 	}
+	
+	public void clone( Posicion clon ){
+		clon = new Posicion(x,y);
+		//clon = temp;
+	}
 
 }
