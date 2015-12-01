@@ -14,14 +14,16 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
-import java.awt.image.BufferedImage;
-import java.util.Map;
-import java.util.TreeMap;
 import javax.swing.JLabel;
 import java.awt.Toolkit;
 import javax.swing.JTextPane;
 import java.awt.CardLayout;
 import org.eclipse.wb.swing.FocusTraversalOnArray;
+import entorno.Balcon;
+import entorno.DoblePanel;
+import entorno.Puerta;
+import entorno.Seccion;
+import entorno.Ventana;
 import java.awt.Component;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -31,21 +33,23 @@ import javax.swing.JList;
 import javax.swing.AbstractListModel;
 import javax.swing.ListSelectionModel;
 
+/**
+ * Clase que gestiona la intefaz gráfica e inicia el juego
+ * La clase fue generada por una herramienta de graficación, por lo tanto no se comentan los métodos
+ * @author Luca Sartori, Agustín Liébana
+ *
+ */
+@SuppressWarnings("serial")
 public class Game extends JFrame {
 
 	private JLayeredPane contentPane;
-	private int numSeccion;
+	@SuppressWarnings("unused")
 	private EstadosJuego estado;
-	private BufferedImage [][] imagenesVentanas= new BufferedImage [5][5];
-	private Map <String, BufferedImage> imagenes= new TreeMap<String, BufferedImage>();
+	@SuppressWarnings("unused")
 	private HighScores hgs;
-	private static Persona auxper= new Persona("FORRO", 25548787);
+	private static Persona auxper= new Persona("ASDF", 25548787);
 	private static Persona[] per= new Persona[5];
-	private Posicion posRalph;
-	private Posicion posFelix;
-	private Posicion posLadrillo;
-	private Posicion posNicelander;
-	private Posicion posPato;
+	private static Renderizable ren;
 	/**
 	 * Launch the application.
 	 */
@@ -56,9 +60,10 @@ public class Game extends JFrame {
 					for(int i=0; i<5; i++)
 						per[i]= auxper;
 					HighScores hig= new HighScores(per);
-
 					Game frame = new Game(hig);
 					frame.setVisible(true);
+
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -69,6 +74,7 @@ public class Game extends JFrame {
 	/**
 	 * Create the frame.
 	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public Game(HighScores hig) {
 		hgs= hig;
 		setBackground(Color.BLACK);
@@ -76,7 +82,7 @@ public class Game extends JFrame {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Game.class.getResource("/imagenes/felix_martillo_derecha_1.png")));
 		setTitle("FixIt Felix Jr.");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 618, 431);
+		setBounds(100, 100, 800, 600);
 		contentPane = new JLayeredPane();
 		contentPane.setBackground(Color.BLACK);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -99,9 +105,42 @@ public class Game extends JFrame {
 		JButton btnComenzar = new JButton("Comenzar");
 		btnComenzar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				CardLayout card = (CardLayout)contentPane.getLayout();
-			    card.show(contentPane, "Mapa");
-			    estado= EstadosJuego.ONGAME;
+			    estado= EstadosJuego.INGAME;
+			    
+			    //ACA VA LA INTANCIA DE JUEGO PARA USAR PAPAAAAAAAAAA
+				Ventana [][]vent= new Ventana[5][5];
+				int secId= 0;
+				for(int i= 0; i<5; i++){
+					for(int i2=0; i2<5; i2++){
+						if(i == 2){
+							if(secId == 0){
+								if(i2 == 1){
+									vent[i][i2]= new Puerta(false);
+								}else if(i2 == 2){
+									vent[i][i2]= new Balcon(false);
+								}else
+									vent[i][i2]= new DoblePanel(false, false, false);
+							} else{
+								vent[i][i2]= new DoblePanel(false, false, false);
+							}
+						} else{
+							vent[i][i2]= new DoblePanel(false, false, false);
+						}
+					}
+				}
+				Seccion sec= new Seccion(5, 3, 0, 0, vent, secId);
+				Renderizable renAux= new Renderizable(sec);
+				ren= renAux;
+				ren.setPosFelix(new Posicion(2,1));
+				ren.setPosRalph(new Posicion(3,4));
+				ren.setPosLadrillo(new Posicion(1,1));
+				ren.setPosNicelander(new Posicion(1,3));
+				ren.setPosPato(new Posicion(1,2));
+				ren.run();
+				Menu.setVisible(false);
+				ren.getScreen().render();
+				
+				//ACA TERMINA EL BLOQUE PARA EL GAME
 			}
 		});
 		
@@ -126,33 +165,33 @@ public class Game extends JFrame {
 		gl_Menu.setHorizontalGroup(
 			gl_Menu.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_Menu.createSequentialGroup()
-					.addGroup(gl_Menu.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_Menu.createSequentialGroup()
-							.addGap(239)
-							.addGroup(gl_Menu.createParallelGroup(Alignment.TRAILING, false)
-								.addComponent(btnPuntajesAltos, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(btnInstrucciones, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-								.addComponent(btnComenzar, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-						.addGroup(gl_Menu.createSequentialGroup()
-							.addGap(35)
-							.addComponent(lblNewLabel))
-						.addGroup(gl_Menu.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(txtpnByLucaY, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap(53, Short.MAX_VALUE))
+					.addContainerGap()
+					.addComponent(txtpnByLucaY, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(235, Short.MAX_VALUE))
+				.addGroup(Alignment.TRAILING, gl_Menu.createSequentialGroup()
+					.addContainerGap(144, Short.MAX_VALUE)
+					.addComponent(lblNewLabel)
+					.addGap(126))
+				.addGroup(Alignment.TRAILING, gl_Menu.createSequentialGroup()
+					.addContainerGap(225, Short.MAX_VALUE)
+					.addGroup(gl_Menu.createParallelGroup(Alignment.TRAILING, false)
+						.addComponent(btnInstrucciones, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(btnPuntajesAltos, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(btnComenzar, GroupLayout.PREFERRED_SIZE, 338, GroupLayout.PREFERRED_SIZE))
+					.addGap(221))
 		);
 		gl_Menu.setVerticalGroup(
 			gl_Menu.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_Menu.createSequentialGroup()
-					.addGap(20)
+					.addGap(31)
 					.addComponent(lblNewLabel)
-					.addGap(27)
+					.addGap(105)
 					.addComponent(btnComenzar)
-					.addGap(18)
+					.addGap(50)
 					.addComponent(btnInstrucciones)
-					.addGap(18)
+					.addGap(47)
 					.addComponent(btnPuntajesAltos)
-					.addGap(21)
+					.addGap(40)
 					.addComponent(txtpnByLucaY, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap())
 		);
@@ -178,18 +217,20 @@ public class Game extends JFrame {
 		gl_Instrucciones.setHorizontalGroup(
 			gl_Instrucciones.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_Instrucciones.createSequentialGroup()
-					.addGroup(gl_Instrucciones.createParallelGroup(Alignment.LEADING)
-						.addComponent(label, GroupLayout.PREFERRED_SIZE, 576, GroupLayout.PREFERRED_SIZE)
-						.addGroup(gl_Instrucciones.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(btnMenu)))
-					.addContainerGap(16, Short.MAX_VALUE))
+					.addContainerGap()
+					.addComponent(btnMenu)
+					.addContainerGap(675, Short.MAX_VALUE))
+				.addGroup(Alignment.TRAILING, gl_Instrucciones.createSequentialGroup()
+					.addContainerGap(100, Short.MAX_VALUE)
+					.addComponent(label, GroupLayout.PREFERRED_SIZE, 649, GroupLayout.PREFERRED_SIZE)
+					.addGap(35))
 		);
 		gl_Instrucciones.setVerticalGroup(
 			gl_Instrucciones.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_Instrucciones.createSequentialGroup()
-					.addComponent(label, GroupLayout.PREFERRED_SIZE, 337, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+				.addGroup(Alignment.TRAILING, gl_Instrucciones.createSequentialGroup()
+					.addContainerGap(12, Short.MAX_VALUE)
+					.addComponent(label, GroupLayout.PREFERRED_SIZE, 481, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
 					.addComponent(btnMenu)
 					.addContainerGap())
 		);
@@ -211,9 +252,10 @@ public class Game extends JFrame {
 		
 		JLabel lblPuntajesAltos = new JLabel("Puntajes Altos");
 		lblPuntajesAltos.setForeground(Color.RED);
-		lblPuntajesAltos.setFont(new Font("Tahoma", Font.BOLD, 25));
+		lblPuntajesAltos.setFont(new Font("Tahoma", Font.BOLD, 30));
 		
 		JList list = new JList();
+		list.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		list.setForeground(Color.RED);
 		list.setBackground(Color.BLACK);
@@ -230,31 +272,33 @@ public class Game extends JFrame {
 		list.setVisibleRowCount(5);
 		GroupLayout gl_PuntajesAltos = new GroupLayout(PuntajesAltos);
 		gl_PuntajesAltos.setHorizontalGroup(
-			gl_PuntajesAltos.createParallelGroup(Alignment.LEADING)
+			gl_PuntajesAltos.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_PuntajesAltos.createSequentialGroup()
-					.addGroup(gl_PuntajesAltos.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_PuntajesAltos.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(btnNewButton))
-						.addGroup(gl_PuntajesAltos.createSequentialGroup()
-							.addGap(199)
-							.addGroup(gl_PuntajesAltos.createParallelGroup(Alignment.TRAILING)
-								.addComponent(list, GroupLayout.PREFERRED_SIZE, 164, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblPuntajesAltos))))
-					.addContainerGap(167, Short.MAX_VALUE))
+					.addContainerGap()
+					.addComponent(btnNewButton)
+					.addContainerGap(675, Short.MAX_VALUE))
+				.addGroup(gl_PuntajesAltos.createSequentialGroup()
+					.addGap(279)
+					.addComponent(lblPuntajesAltos, GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
+					.addGap(245))
+				.addGroup(gl_PuntajesAltos.createSequentialGroup()
+					.addContainerGap(294, Short.MAX_VALUE)
+					.addComponent(list, GroupLayout.PREFERRED_SIZE, 298, GroupLayout.PREFERRED_SIZE)
+					.addGap(192))
 		);
 		gl_PuntajesAltos.setVerticalGroup(
 			gl_PuntajesAltos.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_PuntajesAltos.createSequentialGroup()
-					.addGap(29)
-					.addComponent(lblPuntajesAltos)
-					.addGap(84)
-					.addComponent(list, GroupLayout.PREFERRED_SIZE, 114, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
+					.addGap(40)
+					.addComponent(lblPuntajesAltos, GroupLayout.PREFERRED_SIZE, 85, GroupLayout.PREFERRED_SIZE)
+					.addGap(106)
+					.addComponent(list, GroupLayout.PREFERRED_SIZE, 171, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED, 109, Short.MAX_VALUE)
 					.addComponent(btnNewButton)
 					.addContainerGap())
 		);
 		PuntajesAltos.setLayout(gl_PuntajesAltos);
+
 		contentPane.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{Menu, txtpnByLucaY, btnPuntajesAltos, btnComenzar, btnInstrucciones, lblNewLabel, Instrucciones, label, btnMenu}));
 
 	}

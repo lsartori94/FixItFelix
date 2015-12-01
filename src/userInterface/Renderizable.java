@@ -32,22 +32,21 @@ public class Renderizable{ //extends TimerTask {
 	private Map <String, BufferedImage> misc= new TreeMap<String, BufferedImage>();
 	private Map <String, BufferedImage> edificio= new TreeMap<String, BufferedImage>();	
 	private Map <String, BufferedImage> imagenes= new TreeMap<String, BufferedImage>();
-	private BufferedImage[][] imagenesVentanas;
+	private BufferedImage[][] imagenesVentanas= new BufferedImage[5][5];
 	private Seccion seccion;
 	private Ventana[][] ventanas= new Ventana[5][5];
 	private MapScreen screen= new MapScreen();
-	private Posicion posRalph= new Posicion(2,1);
-	private Posicion posFelix= new Posicion(3,4);
-	private int numSeccion=0;
+	private Posicion posRalph;
+	private Posicion posFelix;
 	private Posicion posLadrillo;
 	private Posicion posNicelander;
 	private Posicion posPato;
 	private EstadosJuego estado;
 
-	public Renderizable(Ventana [][] vent){
+	public Renderizable(Seccion sec){
 		//necesitamos parametros del juego
 		
-		setVentanas(vent);
+		setSeccion(sec);
 		cargarImagenesEdificio();
 		cargarImagenesMisc();
 		cargarImagenesBalcon();
@@ -60,21 +59,24 @@ public class Renderizable{ //extends TimerTask {
 		cargarImagenesFelix();
 		cargarImagenesRalph();
 		cargarTodo();
+		screen.setNumSeccion(sec.getId());
 		screen.setEstado(estado);
 		screen.setImagenes(imagenes);
-		screen.setImagenesVentanas(imagenesVentanas);
-		screen.setPosFelix(posFelix);
-		screen.setPosLadrillo(posLadrillo);
-		screen.setPosNicelander(posNicelander);
-		screen.setPosPato(posPato);
-		screen.setPosRalph(posRalph);
+
 		//timer= tim;
 	}
 	
 	
 	//@Override
 	public void run(){
-		screen.render();
+		screen.setImagenesVentanas(imagenesVentanas);
+		screen.setPosFelix(posFelix);
+		screen.setPosLadrillo(posLadrillo);
+		screen.setPosNicelander(posNicelander);
+		screen.setPosPato(posPato);
+		screen.setPosRalph(posRalph);
+		screen.repaint();
+		//screen.render();
 	}
 
 	public void finRender() {
@@ -87,7 +89,6 @@ public class Renderizable{ //extends TimerTask {
 
 	public void setSeccion(Seccion seccion) {
 		this.seccion = seccion;
-		setNumSeccion(seccion.getId());
 		setVentanas(seccion.getVentanas());
 	}
 
@@ -116,14 +117,6 @@ public class Renderizable{ //extends TimerTask {
 		this.posFelix = posFelix;
 	}
 
-	public int getNumSeccion() {
-		return numSeccion;
-	}
-
-	public void setNumSeccion(int numSeccion) {
-		this.numSeccion = numSeccion;
-	}
-	
 	public Posicion getPosLadrillo() {
 		return posLadrillo;
 	}
@@ -256,8 +249,8 @@ public class Renderizable{ //extends TimerTask {
 	private void cargarImagenNicelander(){
 		try{
 			if(nicelander.isEmpty()){
-				nicelander.put("sinPie", ImageIO.read(new File("src/imagenes/nicelander_conPie.png")));
-				nicelander.put("conPie", ImageIO.read(new File("src/imagenes/nicelander_sinPie.png")));
+				nicelander.put("sinPie", ImageIO.read(new File("src/imagenes/nicelander_sinPie.png")));
+				nicelander.put("conPie", ImageIO.read(new File("src/imagenes/nicelander_conPie.png")));
 			}
 			
 		} catch(IOException e){
@@ -755,6 +748,17 @@ public class Renderizable{ //extends TimerTask {
 	public void setEstado(EstadosJuego estado) {
 		this.estado = estado;
 	}
+
+
 	
+	public MapScreen getScreen() {
+		return screen;
+	}
 	
+
+
+	public void setScreen(MapScreen screen) {
+		this.screen = screen;
+	}
+		
 }

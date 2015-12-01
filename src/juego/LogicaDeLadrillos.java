@@ -21,7 +21,7 @@ public class LogicaDeLadrillos extends TimerTask {
 			for(int i=0; i<ralphie.getCantLadrillos(); i++){
 				ralphie.getLadrillo(i).caer();
 				if(ralphie.getLadrillo(i).getDestruir() == true)
-					render.setDestruirLadrillo(true);
+					//render.setDestruirLadrillo(true);
 				if(ralphie.getLadrilloAct() == ralphie.getCantLadrillos()-1)
 					stop= true;
 			}

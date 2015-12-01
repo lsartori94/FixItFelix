@@ -8,9 +8,9 @@ public enum EstadosJuego {
 	ONMENU(0),
 	INSTRUCCIONES(1),
 	HIGHSCORE(2),
-	ONGAME(3),
+	INGAME(3),
 	WIN(4),
-	LOSE(5);
+	GAMEOVER(5);
 	
 	private int value;
 	

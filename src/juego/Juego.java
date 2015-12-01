@@ -28,7 +28,7 @@ public final class Juego {
 	private double vel = 1;
 	private HighScores highscores;
 	boolean gameon = true;
-	private EstadoJuego estado;
+	private EstadosJuego estado;
 	int iSec = 0;
 	int vidaTot;
 	private final int vidaInicial = 3000;
@@ -140,7 +140,7 @@ public final class Juego {
 	private void comenzar(int lvl){
 		// codigo a ejecutar para iniciar el juego
 		
-		estado = EstadoJuego.INGAME;
+		estado = EstadosJuego.INGAME;
 		
 		if( lvl > 0 && lvl < 10){
 			factVentRota = factVentRota * Math.pow((1+0.15),lvl);
@@ -308,7 +308,7 @@ public final class Juego {
 	private final void gameover(){
 		//codigo a ejecutar al perder
 		gameon = false;
-		estado = EstadoJuego.GAMEOVER;
+		estado = EstadosJuego.GAMEOVER;
 		int vfinal= vidaTot - felix.getVidas();
 		System.out.println("Ralph acerto "+vfinal+ " ladrillos luego de lanzar "+(50-ralph.getCantLadrillos()));
 		System.out.println("Fin de simulacion.");
@@ -316,7 +316,7 @@ public final class Juego {
 	}
 
 	private final void win(){
-		estado = EstadoJuego.WIN;
+		estado = EstadosJuego.WIN;
 		gameon = false;
 		//codigo a ejecutar al ganar el juego
 //		ejecutar grafica de fin de juego ganador
@@ -368,11 +368,11 @@ public final class Juego {
 		felix.getSec().getVentana(felix.getPosicion()).setPuntaje(puntaje+1);
 	}
 		
-	public void setEstado( EstadoJuego status){
+	public void setEstado( EstadosJuego status){
 		estado = status;
 	}
 	
-	public EstadoJuego getEstado(){
+	public EstadosJuego getEstado(){
 		return estado;
 	}
 }
