@@ -5,7 +5,7 @@ import misc.Hoja;
 import misc.Posicion;
 
 public class Felix {
-	private Posicion posicion;
+	private Posicion posicion, tmp;
 	private Seccion sec;
 	private static final Posicion posInicial= new Posicion(2, 1);
 	private int vidas;
@@ -134,7 +134,7 @@ public class Felix {
 	 * A su vez controla que se pueda mover a esa ventana (que no tenga modificadores)
 	 */
 	public void move(Direccion d){
-		Posicion tmp= posicion;
+		tmp = new Posicion(posicion.getX(),posicion.getY());
 	
 		switch (d.getValue()) {
 			case 1:
