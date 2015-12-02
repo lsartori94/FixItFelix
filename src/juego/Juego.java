@@ -66,6 +66,62 @@ public final class Juego implements KeyListener {
 		}
 	}
 	
+	public class MyKeyListener implements KeyListener {
+		@Override
+		public void keyTyped(KeyEvent e) {
+		}
+
+		@Override
+		public void keyPressed(KeyEvent e) {
+			System.out.println("keyPressed="+KeyEvent.getKeyText(e.getKeyCode()));
+		}
+
+		@Override
+		public void keyReleased(KeyEvent e) {
+			int key = e.getKeyCode();
+			 Direccion dir= null;
+			 
+			 	if (key == KeyEvent.VK_LEFT) {
+			 		try {
+						Thread.sleep(1500);
+					} catch (InterruptedException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+			        dir = Direccion.LEFT;
+			 		getFelix().move(dir);
+			 		ren.setPosFelix(getFelix().getPosicion());
+			 		ren.refreshImagenPosicionFelix(dir, false);
+			    }
+
+			    if (key == KeyEvent.VK_RIGHT) {
+			        dir = Direccion.RIGHT;
+			 		getFelix().move(dir);
+			 		ren.setPosFelix(getFelix().getPosicion());
+			 		ren.refreshImagenPosicionFelix(dir, true);
+			    }
+
+			    if (key == KeyEvent.VK_UP) {
+			        dir = Direccion.UP;
+			 		getFelix().move(dir);
+			 		ren.setPosFelix(getFelix().getPosicion());
+			 		ren.refreshImagenPosicionFelix(dir, true);
+			    }
+
+			    if (key == KeyEvent.VK_DOWN) {
+			        dir = Direccion.DOWN;
+			 		getFelix().move(dir);
+			 		ren.setPosFelix(getFelix().getPosicion());
+			 		ren.refreshImagenPosicionFelix(dir, true);
+			    }
+			    
+			    if (key == KeyEvent.VK_SPACE) {
+			    	getFelix().martillar();
+			    	felix.getSec().getVentana(felix.getPosicion()).setPuntaje(puntaje+1);
+			    }
+		}
+	}
+	
 	public void go() {
 			
 		tmp = new Posicion(0,1);
@@ -84,64 +140,9 @@ public final class Juego implements KeyListener {
 		comenzar(level);
 		
 		ren= new Renderizable(mapa.getSeccion(iSec), timer, sleep);
-		ren.getScreen().getContentPane().addKeyListener(new KeyListener() {
-			public void keyTyped(KeyEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-
-			public void keyPressed(KeyEvent e) {
-				// TODO Auto-generated method stub
-					 int key = e.getKeyCode();
-					 Direccion dir= null;
-					 
-					 	if (key == KeyEvent.VK_LEFT) {
-					 		System.out.println("dsgk;sdnflk;sdjflksd;jfdslkf");
-					 		try {
-								Thread.sleep(1500);
-							} catch (InterruptedException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							}
-					        dir = Direccion.LEFT;
-					 		getFelix().move(dir);
-					 		ren.setPosFelix(getFelix().getPosicion());
-					 		ren.refreshImagenPosicionFelix(dir, false);
-					    }
-
-					    if (key == KeyEvent.VK_RIGHT) {
-					        dir = Direccion.RIGHT;
-					 		getFelix().move(dir);
-					 		ren.setPosFelix(getFelix().getPosicion());
-					 		ren.refreshImagenPosicionFelix(dir, true);
-					    }
-
-					    if (key == KeyEvent.VK_UP) {
-					        dir = Direccion.UP;
-					 		getFelix().move(dir);
-					 		ren.setPosFelix(getFelix().getPosicion());
-					 		ren.refreshImagenPosicionFelix(dir, true);
-					    }
-
-					    if (key == KeyEvent.VK_DOWN) {
-					        dir = Direccion.DOWN;
-					 		getFelix().move(dir);
-					 		ren.setPosFelix(getFelix().getPosicion());
-					 		ren.refreshImagenPosicionFelix(dir, true);
-					    }
-					    
-					    if (key == KeyEvent.VK_SPACE) {
-					    	getFelix().martillar();
-					    	felix.getSec().getVentana(felix.getPosicion()).setPuntaje(puntaje+1);
-					    }
-				}
-
-			public void keyReleased(KeyEvent e) {
-				// TODO Auto-generated method stub
-				
-			}
-		});;
-		ren.getScreen().setFocusable(true);
+		KeyListener keylogger = new MyKeyListener();
+		ren.getScreen().addKeyListener(keylogger);
+		//ren.getScreen().setFocusable(true);
 		timer.schedule(ren, 0, sleep);
 		
 		
@@ -159,19 +160,19 @@ public final class Juego implements KeyListener {
 					ren.refreshTiroRalph();
 				}
 				try {
-					Thread.sleep(250);
+					Thread.sleep(2050);
 				} catch (InterruptedException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				if(mapa.getSeccion(iSec).getVentana(felix.getPosicion()).rota()){
-					fMartillar();
-					if(!mapa.getSeccion(iSec).getVentana(felix.getPosicion()).rota())
-						mapa.getSeccion(iSec).setCantRotas(mapa.getSeccion(iSec).getCantRotas()-1);
-						ren.setAreglarImagenVentana(felix.getPosicion());
-				}else{
-					fMove();
-				}
+				//if(mapa.getSeccion(iSec).getVentana(felix.getPosicion()).rota()){
+				//	fMartillar();
+				//	if(!mapa.getSeccion(iSec).getVentana(felix.getPosicion()).rota())
+				//		mapa.getSeccion(iSec).setCantRotas(mapa.getSeccion(iSec).getCantRotas()-1);
+				//		ren.setAreglarImagenVentana(felix.getPosicion());
+				//}else{
+				//	fMove();
+				//}
 				
 				checkColisiones();
 			}
