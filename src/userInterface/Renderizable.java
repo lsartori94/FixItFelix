@@ -12,13 +12,14 @@ import javax.imageio.ImageIO;
 import entorno.Seccion;
 import entorno.Ventana;
 import misc.Direccion;
+import misc.EstadosJuego;
 import misc.Hoja;
 import misc.Posicion;
 
 public class Renderizable extends TimerTask {
 
 	private Timer timer;
-	private static final long periodoTimer= 100;
+	//private static final long periodoTimer= 100;
 	private Map <String, BufferedImage> balcon= new TreeMap<String, BufferedImage>();
 	private Map <String, BufferedImage> conHoja= new TreeMap<String, BufferedImage>();
 	private Map <String, BufferedImage> doblePanel= new TreeMap<String, BufferedImage>();
@@ -31,18 +32,23 @@ public class Renderizable extends TimerTask {
 	private Map <String, BufferedImage> misc= new TreeMap<String, BufferedImage>();
 	private Map <String, BufferedImage> edificio= new TreeMap<String, BufferedImage>();	
 	private Map <String, BufferedImage> imagenes= new TreeMap<String, BufferedImage>();
-	private BufferedImage[][] imagenesVentanas;
+	private BufferedImage[][] imagenesVentanas= new BufferedImage[5][5];
 	private Seccion seccion;
-	private Ventana[][] ventanas;
+	private Ventana[][] ventanas= new Ventana[5][5];
 	private MapScreen screen= new MapScreen();
 	private Posicion posRalph;
 	private Posicion posFelix;
-	private int numSeccion;
 	private Posicion posLadrillo;
 	private Posicion posNicelander;
 	private Posicion posPato;
+	private EstadosJuego estado;
+	private long sleepR;
+	private long sleepP;
 
-	public Renderizable(){
+	public Renderizable(Seccion sec, Timer tim, long slp){
+		//necesitamos parametros del juego
+		
+		setSeccion(sec);
 		cargarImagenesEdificio();
 		cargarImagenesMisc();
 		cargarImagenesBalcon();
@@ -55,14 +61,26 @@ public class Renderizable extends TimerTask {
 		cargarImagenesFelix();
 		cargarImagenesRalph();
 		cargarTodo();
-		
-		//timer= tim;
+		screen.setNumSeccion(sec.getId());
+		screen.setEstado(estado);
+		screen.setImagenes(imagenes);
+		sleepR= slp+50;
+		sleepP= slp+100;
+
+		this.timer= tim;
 	}
 	
 	
-	@Override
+	//@Override
 	public void run(){
-		
+		screen.setImagenesVentanas(imagenesVentanas);
+		screen.setPosFelix(posFelix);
+		screen.setPosLadrillo(posLadrillo);
+		screen.setPosNicelander(posNicelander);
+		screen.setPosPato(posPato);
+		screen.setPosRalph(posRalph);
+		screen.repaint();
+		screen.render();
 	}
 
 	public void finRender() {
@@ -75,7 +93,8 @@ public class Renderizable extends TimerTask {
 
 	public void setSeccion(Seccion seccion) {
 		this.seccion = seccion;
-		setNumSeccion(seccion.getId());
+		screen.setNumSeccion(seccion.getId());
+		cargarSeccion();
 		setVentanas(seccion.getVentanas());
 	}
 
@@ -84,7 +103,8 @@ public class Renderizable extends TimerTask {
 	}
 
 	public void setVentanas(Ventana[][] ventanas) {
-		this.ventanas = ventanas;
+		Ventana [][] vent= ventanas;
+		this.ventanas = vent;
 	}
 
 	public Posicion getPosRalph() {
@@ -103,14 +123,6 @@ public class Renderizable extends TimerTask {
 		this.posFelix = posFelix;
 	}
 
-	public int getNumSeccion() {
-		return numSeccion;
-	}
-
-	public void setNumSeccion(int numSeccion) {
-		this.numSeccion = numSeccion;
-	}
-	
 	public Posicion getPosLadrillo() {
 		return posLadrillo;
 	}
@@ -243,8 +255,8 @@ public class Renderizable extends TimerTask {
 	private void cargarImagenNicelander(){
 		try{
 			if(nicelander.isEmpty()){
-				nicelander.put("sinPie", ImageIO.read(new File("src/imagenes/nicelander_conPie.png")));
-				nicelander.put("conPie", ImageIO.read(new File("src/imagenes/nicelander_sinPie.png")));
+				nicelander.put("sinPie", ImageIO.read(new File("src/imagenes/nicelander_sinPie.png")));
+				nicelander.put("conPie", ImageIO.read(new File("src/imagenes/nicelander_conPie.png")));
 			}
 			
 		} catch(IOException e){
@@ -515,7 +527,7 @@ public class Renderizable extends TimerTask {
 		case 3:
 			imagenes.put("pato", pato.get("aleteoIzquierda1"));
 			try {
-				Thread.sleep(500);
+				Thread.sleep(sleepP);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -525,7 +537,7 @@ public class Renderizable extends TimerTask {
 		case 4:
 			imagenes.put("pato",pato.get("aleteoDerecha1"));
 			try {
-				Thread.sleep(500);
+				Thread.sleep(sleepP);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -541,19 +553,18 @@ public class Renderizable extends TimerTask {
 	 * @param ralphDerecha = si ralph mira a derecha
 	 */
 	public void refreshImagenPosicionRalph(Direccion d, boolean ralphDerecha){
-		if(ralphDerecha){
 			switch(d.getValue()){
 			case 1:
 				imagenes.put("ralph", ralph.get("subir1"));
 				try {
-					Thread.sleep(500);
+					Thread.sleep(sleepR);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				imagenes.put("ralph", ralph.get("subir2"));
 				try {
-					Thread.sleep(500);
+					Thread.sleep(sleepR);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -563,14 +574,14 @@ public class Renderizable extends TimerTask {
 			case 2:
 				imagenes.put("ralph", ralph.get("subir1"));
 				try {
-					Thread.sleep(500);
+					Thread.sleep(sleepR);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				imagenes.put("ralph", ralph.get("subir2"));
 				try {
-					Thread.sleep(500);
+					Thread.sleep(sleepR);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -580,14 +591,14 @@ public class Renderizable extends TimerTask {
 			case 3:
 				imagenes.put("ralph", ralph.get("moverIzquierda1"));
 				try {
-					Thread.sleep(500);
+					Thread.sleep(sleepR);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				imagenes.put("ralph", ralph.get("moverIzquierda2"));
 				try {
-					Thread.sleep(500);
+					Thread.sleep(sleepR);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -597,14 +608,14 @@ public class Renderizable extends TimerTask {
 			case 4:
 				imagenes.put("ralph", ralph.get("moverDerecha1"));
 				try {
-					Thread.sleep(500);
+					Thread.sleep(sleepR);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				imagenes.put("ralph", ralph.get("moverDerecha2"));
 				try {
-					Thread.sleep(500);
+					Thread.sleep(sleepR);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -612,78 +623,6 @@ public class Renderizable extends TimerTask {
 				imagenes.put("ralph", ralph.get("parado"));
 				break;
 			}
-		} else{
-			switch(d.getValue()){
-			case 1:
-				imagenes.put("ralph", ralph.get("subir1"));
-				try {
-					Thread.sleep(500);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				imagenes.put("ralph", ralph.get("subir2"));
-				try {
-					Thread.sleep(500);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				imagenes.put("ralph", ralph.get("parado"));
-				break;
-			case 2:
-				imagenes.put("ralph", ralph.get("subir1"));
-				try {
-					Thread.sleep(500);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				imagenes.put("ralph", ralph.get("subir2"));
-				try {
-					Thread.sleep(500);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				imagenes.put("ralph", ralph.get("parado"));
-				break;
-			case 3:
-				imagenes.put("ralph", ralph.get("moverDerecha1"));
-				try {
-					Thread.sleep(500);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				imagenes.put("ralph", ralph.get("moverDerecha2"));
-				try {
-					Thread.sleep(500);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				imagenes.put("ralph", ralph.get("parado"));
-				break;
-			case 4:
-				imagenes.put("ralph", ralph.get("moverIzquierda1"));
-				try {
-					Thread.sleep(500);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				imagenes.put("ralph", ralph.get("moverIzquierda2"));
-				try {
-					Thread.sleep(500);
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				imagenes.put("ralph", ralph.get("parado"));
-				break;
-			}
-		}
 	}
 
 	/**
@@ -692,47 +631,130 @@ public class Renderizable extends TimerTask {
 	public void refreshTiroRalph(){
 		imagenes.put("ralph", ralph.get("tirar1"));
 		try {
-			Thread.sleep(500);
+			Thread.sleep(sleepR);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		imagenes.put("ralph", ralph.get("tirar2"));
 		try {
-			Thread.sleep(500);
+			Thread.sleep(sleepR);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		imagenes.put("ralph", ralph.get("tirar3"));
 		try {
-			Thread.sleep(500);
+			Thread.sleep(sleepR);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		imagenes.put("ralph", ralph.get("tirar4"));
 		try {
-			Thread.sleep(500);
+			Thread.sleep(sleepR);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		imagenes.put("ralph", ralph.get("tirar5"));
 		try {
-			Thread.sleep(500);
+			Thread.sleep(sleepR);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		imagenes.put("ralph", ralph.get("tirar6"));
 		try {
-			Thread.sleep(500);
+			Thread.sleep(sleepR);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		imagenes.put("ralph", ralph.get("parado"));
+	}
+
+	public EstadosJuego getEstado() {
+		return estado;
+	}
+
+	public void setEstado(EstadosJuego estado) {
+		this.estado = estado;
+	}
+
+	public MapScreen getScreen() {
+		return screen;
+	}
+	
+	public void setScreen(MapScreen screen) {
+		this.screen = screen;
+	}
+		
+	public void refreshMuerteFelix(){
+		imagenes.put("felix", ralph.get("muerte1"));
+		try {
+			Thread.sleep(sleepR);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		imagenes.put("felix", ralph.get("muerte2"));
+		try {
+			Thread.sleep(sleepR);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		imagenes.put("felix", ralph.get("muerte3"));
+		try {
+			Thread.sleep(sleepR);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		imagenes.put("felix", ralph.get("muerte4"));
+		try {
+			Thread.sleep(sleepR);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		imagenes.put("felix", ralph.get("muerte5"));
+		try {
+			Thread.sleep(sleepR);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		imagenes.put("felix", ralph.get("muerte6"));
+		try {
+			Thread.sleep(sleepR);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		imagenes.put("felix", ralph.get("paradoDerecha"));
+	}
+	
+	public void setAreglarImagenVentana(Posicion pos){
+		Ventana auxV= ventanas[pos.getX()][pos.getY()];
+		if(!auxV.rota()){
+			int x= pos.getX();
+			int y= pos.getY();
+			switch(auxV.getClass().getSimpleName()){
+				case "DoblePanel":
+					imagenesVentanas[x][y]= doblePanel.get("sana");
+					break;
+			
+				case "Puerta":
+					imagenesVentanas[x][y]= puerta.get("sana");
+					break;
+		
+				case "Balcon":
+					imagenesVentanas[x][y]= balcon.get("sano");
+					break;
+			}
+		}
 	}
 	
 }

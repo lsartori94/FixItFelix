@@ -1,8 +1,12 @@
 package juego;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.Timer;
+
 import misc.*;
 import personajes.Felix;
 import personajes.Ralph;
+import userInterface.Renderizable;
 import entorno.*;
 /**
  * Clase que representa la entidad Juego que controla todo.
@@ -12,9 +16,10 @@ import entorno.*;
  * @author lsartori Agustín Liébana
  *
  */
-public final class Juego {
+public final class Juego implements KeyListener {
 	private Ralph ralph;
 	private Felix felix;
+	private Pato pato;
 	private Mapa mapa;
 	private double factVentRota = 0.2;
 	private double factObsVent = 0.1;
@@ -22,17 +27,20 @@ public final class Juego {
 	private int indiceSec;
 	private int level = 0;
 	private int obstaculos;
+	private int vuelta;
+	private boolean hayPato;
 	int filas= 5;
 	int colum= 5;
 	private int puntaje= 0;
 	private double vel = 1;
-	private HighScores highscores;
+	//private HighScores highscores;
 	boolean gameon = true;
-	private EstadoJuego estado;
+	private EstadosJuego estado;
 	int iSec = 0;
 	int vidaTot;
-	private final int vidaInicial = 3;
-	Posicion tmp;
+	private final int vidaInicial = 3000;
+	Posicion tmp, posR, ini;
+	private Renderizable ren;
 
 	/**
 	 * Es el metodo que da el esqueleto a la prueba.
@@ -49,9 +57,11 @@ public final class Juego {
 		for(int i= 0; i < l_act; i++){
 			Ladrillo lad= ralph.getLadrillo(i);
 			lad.caer();
+			ren.setPosLadrillo(lad.getPosicionl());
 			if(lad.getPosicionl().compareTo(felix.getPosicion())==0){
 				felix.golpe();
 				System.out.println("Ladrillazo en "+felix.getPosicion().getX()+" * "+felix.getPosicion().getY());
+				ren.refreshMuerteFelix();
 			}
 		}
 	}
@@ -59,28 +69,110 @@ public final class Juego {
 	public void go() {
 			
 		tmp = new Posicion(0,1);
-		//Timer tim= new Timer();
-		//LogicaDeMovimientos timer= new LogicaDeMovimientos(tim);
-		//tim.schedule(timer, 0, levelRate);
+		ini = new Posicion(2,1);
 		vidaTot = vidaInicial;
 		felix= new Felix();
 		felix.setVidas(vidaInicial);
-		Posicion posR= new Posicion(0, 4);
+		posR= new Posicion(0, 4);
 		ralph= new Ralph( posR );
+		vuelta= 0;
+		
+		Timer timer= new Timer();
+		long sleep= 10;
+;
 		
 		comenzar(level);
 		
-		while ( gameon ){
-			
+		ren= new Renderizable(mapa.getSeccion(iSec), timer, sleep);
+		ren.getScreen().getContentPane().addKeyListener(new KeyListener() {
+			public void keyTyped(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			public void keyPressed(KeyEvent e) {
+				// TODO Auto-generated method stub
+					 int key = e.getKeyCode();
+					 Direccion dir= null;
+					 
+					 	if (key == KeyEvent.VK_LEFT) {
+					 		System.out.println("dsgk;sdnflk;sdjflksd;jfdslkf");
+					 		try {
+								Thread.sleep(1500);
+							} catch (InterruptedException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+					        dir = Direccion.LEFT;
+					 		getFelix().move(dir);
+					 		ren.setPosFelix(getFelix().getPosicion());
+					 		ren.refreshImagenPosicionFelix(dir, false);
+					    }
+
+					    if (key == KeyEvent.VK_RIGHT) {
+					        dir = Direccion.RIGHT;
+					 		getFelix().move(dir);
+					 		ren.setPosFelix(getFelix().getPosicion());
+					 		ren.refreshImagenPosicionFelix(dir, true);
+					    }
+
+					    if (key == KeyEvent.VK_UP) {
+					        dir = Direccion.UP;
+					 		getFelix().move(dir);
+					 		ren.setPosFelix(getFelix().getPosicion());
+					 		ren.refreshImagenPosicionFelix(dir, true);
+					    }
+
+					    if (key == KeyEvent.VK_DOWN) {
+					        dir = Direccion.DOWN;
+					 		getFelix().move(dir);
+					 		ren.setPosFelix(getFelix().getPosicion());
+					 		ren.refreshImagenPosicionFelix(dir, true);
+					    }
+					    
+					    if (key == KeyEvent.VK_SPACE) {
+					    	getFelix().martillar();
+					    	felix.getSec().getVentana(felix.getPosicion()).setPuntaje(puntaje+1);
+					    }
+				}
+
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});;
+		ren.getScreen().setFocusable(true);
+		timer.schedule(ren, 0, sleep);
+		
+		
+		while(gameon){
 			iniPersonajes(iSec);
-					
 			while( gameon && (felix.getVidas() > 0) && (mapa.getSeccion(iSec).getCantRotas() > 0) ){
-				ralph.shoot();
-				if(mapa.getSeccion(0).getVentana(felix.getPosicion()).rota()){
+				vuelta= vuelta+1;
+				if(hayPato){
+					hayPato= moverPato() ;
+				}
+				Direccion dirRan= (Math.random() < 0.5) ? Direccion.LEFT : Direccion.RIGHT;
+				moverRalph(dirRan);
+				if(vuelta%4 == 0){
+					ralph.shoot();
+					ren.refreshTiroRalph();
+				}
+				try {
+					Thread.sleep(250);
+				} catch (InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				if(mapa.getSeccion(iSec).getVentana(felix.getPosicion()).rota()){
 					fMartillar();
+					if(!mapa.getSeccion(iSec).getVentana(felix.getPosicion()).rota())
+						mapa.getSeccion(iSec).setCantRotas(mapa.getSeccion(iSec).getCantRotas()-1);
+						ren.setAreglarImagenVentana(felix.getPosicion());
 				}else{
 					fMove();
 				}
+				
 				checkColisiones();
 			}
 			
@@ -97,20 +189,26 @@ public final class Juego {
 	}
 	
 	public void iniPersonajes(int secc){
+		ren.setSeccion(mapa.getSeccion(iSec));
+		
 		System.out.println("Level "+level+", seccion "+iSec);
 		System.out.println("Se van a inicializar Felix y Ralph");
 		felix.iniciar(mapa.getSeccion(secc));
+		ren.setPosFelix(felix.getPosicion());
+//		felix.setPosicion(ini);
 		System.out.println(" ");
 		System.out.println("Felix se creo en la posicion "+felix.getPosicion().getX()+", "+felix.getPosicion().getY()+" con "+felix.getVidas()+" vidas");
 		System.out.println("Poder de Felix= "+felix.Poder());
 		ralph.newLevel( vel, mapa.getSeccion(secc) );
+		ren.setPosRalph(ralph.getPosicion());
 		System.out.println(" ");
 		System.out.println("Ralph se inicio en la Seccion " +ralph.getSeccion().getId()+ " en la posicion "+ralph.getPosicion().getX()+ ", "+ralph.getPosicion().getY());
 		System.out.println("Ralph tiene "+ralph.getCantLadrillos()+ " ladrillos, con una velocidad de lanzamiento de "+ralph.getVelocidad());
 		System.out.println("Ralph se mueve on velocidad "+ralph.getVelocidad());
+		pato= new Pato(mapa.getSeccion(secc).getPosPato());
+		ren.setPosPato(pato.getPosicion());
 	}
 	
-
 	/**
 	 *Inicia el mapa y los personajes.
 	 *Posee una cantidad de filas y columnas.
@@ -133,11 +231,10 @@ public final class Juego {
 	 * Se crea una seccion unica con esa matriz , luego con eso el mapa.
 	 * Finalmente se instancian felix y ralph.
 	 */
-	
 	private void comenzar(int lvl){
 		// codigo a ejecutar para iniciar el juego
 		
-		estado = EstadoJuego.INGAME;
+		estado = EstadosJuego.INGAME;
 		
 		if( lvl > 0 && lvl < 10){
 			factVentRota = factVentRota * Math.pow((1+0.15),lvl);
@@ -147,13 +244,15 @@ public final class Juego {
 		System.out.println("Factoriales "+factVentRota+" , "+factObsVent);
 		
 		Seccion [] sec= new Seccion [3];
+		//sec = sec2;
+		hayPato=(lvl > 3)?true:false;
 		for(indiceSec = 0; indiceSec < 3; indiceSec++){
 			System.out.println("Seccion "+indiceSec);
 			Ventana [][] ventanas = inicializarVentanas();
-			sec[indiceSec]= new Seccion((filas - 2), colum, cantRota, obstaculos, ventanas, indiceSec);
+			sec[indiceSec]= new Seccion((filas - 2), colum, cantRota, obstaculos, ventanas, indiceSec, hayPato); 
 		}
-		mapa= new Mapa(sec, lvl);
-		//mapa= map;   //atada con alambre
+		Mapa map = new Mapa(sec, lvl);
+		mapa = map;   //atada con alambre
 	}
 	
 	private Ventana [][] inicializarVentanas(){
@@ -173,17 +272,13 @@ public final class Juego {
 					check2 = Math.random();
 					luck = Coin.getRandom();
 					if(check > factVentRota){
-						if(j == 2){
-							if(i == 1 ){
-								if(indiceSec == 0){
+						if( j == 2 && (i == 1 || i == 2) ){
+							if(i == 1 && indiceSec == 0){
 									vent[j][i]= new Puerta(false);
 									System.out.println("Puerta sana creada en "+j+" , "+i);
-								}
-							}else if(i == 2){
-								if(indiceSec == 0){
+							}else if(i == 2 && indiceSec == 0){
 									vent[j][i]= new Balcon(false);
 									System.out.println("Balcon sano creado en "+j+" , "+i);
-								}
 							}else if( check2 <= factObsVent ){
 								switch( luck ){
 									case MOLDURA:
@@ -235,17 +330,13 @@ public final class Juego {
 						}else
 							vent[j][i]= new DoblePanel( false, false, false);							
 					}else{
-						if(j == 2){
-							if(i == 1){
-								if(indiceSec == 0){
+						if( j == 2 && (i == 1 || i == 2) ){
+							if(i == 1 && indiceSec == 0){
 									vent[j][i]= new Puerta(true);
 									System.out.println("Puerta rota creada en "+j+" , "+i);
-								}
-							}else if(i == 2){
-								if(indiceSec == 0){
+							}else if(i == 2 && indiceSec == 0){
 									vent[j][i]= new Balcon(true);
 									System.out.println("Balcon roto creado en "+j+" , "+i);
-								}
 							}else if( check2 <= factObsVent ){
 								switch( luck ){
 									case MOLDURA:
@@ -312,18 +403,20 @@ public final class Juego {
 	private final void gameover(){
 		//codigo a ejecutar al perder
 		gameon = false;
-		estado = EstadoJuego.GAMEOVER;
+		estado = EstadosJuego.GAMEOVER;
 		int vfinal= vidaTot - felix.getVidas();
 		System.out.println("Ralph acerto "+vfinal+ " ladrillos luego de lanzar "+(50-ralph.getCantLadrillos()));
 		System.out.println("Fin de simulacion.");
-//		ejecutar grafica de fin de juego perdedor
+		//ejecutar grafica de fin de juego perdedor
+		ren.getScreen().dibujarLose();
 	}
 
 	private final void win(){
-		estado = EstadoJuego.WIN;
+		estado = EstadosJuego.WIN;
 		gameon = false;
 		//codigo a ejecutar al ganar el juego
-//		ejecutar grafica de fin de juego ganador
+		//ejecutar grafica de fin de juego ganador
+		ren.getScreen().dibujarWin();
 	}
 
 	/**
@@ -340,24 +433,33 @@ public final class Juego {
 			if(felix.getPosicion().getY() % 2 != 0){
 				if(felix.getPosicion().getX()<4){
 					felix.move(Direccion.RIGHT);
+					ren.setPosFelix(getFelix().getPosicion());
+			 		ren.refreshImagenPosicionFelix(Direccion.RIGHT, true);
 				}else if(felix.getPosicion().getX()==4){
 					if(felix.getPosicion().getY()==3){
 						if(mapa.getSeccion(iSec).getCantRotas() > 0){
 							felix.setPosicion(tmp);
+					 		ren.setPosFelix(getFelix().getPosicion());
 							System.out.println("Felix regreso a 0 * 1.");
 						}
 						//gameon = false;
 						//System.out.println("Felix llego al final de su recorrido.");
 					}else{
 						felix.move(Direccion.UP);
+					 	ren.setPosFelix(getFelix().getPosicion());
+						ren.refreshImagenPosicionFelix(Direccion.UP, true);
 					}
 				}
 				}else{
 				if(felix.getPosicion().getX()>0 ){
 					felix.move(Direccion.LEFT);
+					ren.setPosFelix(getFelix().getPosicion());
+					ren.refreshImagenPosicionFelix(Direccion.LEFT, false);
 				}
 				else if((felix.getPosicion().getX()) == 0){
 					felix.move(Direccion.UP);
+					ren.setPosFelix(getFelix().getPosicion());
+					ren.refreshImagenPosicionFelix(Direccion.UP, true);
 				}
 			}
 		}
@@ -367,15 +469,150 @@ public final class Juego {
 	 * Metodo que realiza el martilleo de felix y el arreglo de ventana
 	 * Suma al puntaje el puntaje de arreglar la ventana
 	 */
-	private void fMartillar(){
-		puntaje=puntaje + felix.martillar();
+	private void fMartillar(){ 
+		felix.martillar();
+		felix.getSec().getVentana(felix.getPosicion()).setPuntaje(puntaje+1);
 	}
 		
-	public void setEstado( EstadoJuego status){
+	public void setEstado( EstadosJuego status){
 		estado = status;
 	}
 	
-	public EstadoJuego getEstado(){
+	public EstadosJuego getEstado(){
 		return estado;
 	}
+	
+	/**
+	 * Metodo que se encarga de mover al pato
+	 * @return true= se movio. false= pato salio del mapa
+	 */
+	private boolean moverPato(){
+		boolean	bol= pato.mover(Direccion.RIGHT);
+		ren.setPosPato(pato.getPosicion());
+		ren.refreshImagenPosicionPato(Direccion.RIGHT);
+		return bol;
+	}
+
+	/**
+	 * Metodo que se encarga de mover a Ralph
+	 * @param dir = direccion a la que se mueve
+	 */
+	private void moverRalph(Direccion dir){
+		switch(dir.getValue()){
+		case 4:
+			if(ralph.getPosicion().getX()<3){
+				ralph.move(Direccion.RIGHT);
+				ren.setPosRalph(ralph.getPosicion());
+				ren.refreshImagenPosicionRalph(Direccion.RIGHT, true);
+			}else if((ralph.getPosicion().getX()) == 3){
+				ralph.move(Direccion.RIGHT);
+				ren.setPosRalph(ralph.getPosicion());
+				ren.refreshImagenPosicionRalph(Direccion.RIGHT, true);
+			}
+		break;
+		case 3:
+			if(ralph.getPosicion().getX()>1){
+				ralph.move(Direccion.LEFT);
+				ren.setPosRalph(ralph.getPosicion());
+				ren.refreshImagenPosicionRalph(Direccion.LEFT, false);
+			}else if(ralph.getPosicion().getX()==1){
+				ralph.move(Direccion.LEFT);
+				ren.setPosRalph(ralph.getPosicion());
+				ren.refreshImagenPosicionRalph(Direccion.LEFT, false);
+			}
+		}
+	}
+
+	
+	public Ralph getRalph() {
+		return ralph;
+	}
+	
+
+	public void setRalph(Ralph ralph) {
+		this.ralph = ralph;
+	}
+	
+
+	public Felix getFelix() {
+		return felix;
+	}
+	
+
+	public void setFelix(Felix felix) {
+		this.felix = felix;
+	}
+	
+
+	public Pato getPato() {
+		return pato;
+	}
+	
+
+	public void setPato(Pato pato) {
+		this.pato = pato;
+	}
+	
+
+	public Mapa getMapa() {
+		return mapa;
+	}
+	
+
+	public void setMapa(Mapa mapa) {
+		this.mapa = mapa;
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+			 int key = e.getKeyCode();
+			 Direccion dir= null;
+			 
+			 	if (key == KeyEvent.VK_LEFT) {
+			        dir = Direccion.LEFT;
+			 		getFelix().move(dir);
+			 		ren.setPosFelix(getFelix().getPosicion());
+			 		ren.refreshImagenPosicionFelix(dir, false);
+			    }
+
+			    if (key == KeyEvent.VK_RIGHT) {
+			        dir = Direccion.RIGHT;
+			 		getFelix().move(dir);
+			 		ren.setPosFelix(getFelix().getPosicion());
+			 		ren.refreshImagenPosicionFelix(dir, true);
+			    }
+
+			    if (key == KeyEvent.VK_UP) {
+			        dir = Direccion.UP;
+			 		getFelix().move(dir);
+			 		ren.setPosFelix(getFelix().getPosicion());
+			 		ren.refreshImagenPosicionFelix(dir, true);
+			    }
+
+			    if (key == KeyEvent.VK_DOWN) {
+			        dir = Direccion.DOWN;
+			 		getFelix().move(dir);
+			 		ren.setPosFelix(getFelix().getPosicion());
+			 		ren.refreshImagenPosicionFelix(dir, true);
+			    }
+			    
+			    if (key == KeyEvent.VK_SPACE) {
+			    	getFelix().martillar();
+			    	felix.getSec().getVentana(felix.getPosicion()).setPuntaje(puntaje+1);
+			    }
+		}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+	
 }

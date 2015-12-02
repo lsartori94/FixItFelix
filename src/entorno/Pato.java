@@ -11,25 +11,14 @@ import misc.Posicion;
  */
 public class Pato {
 	private Posicion posicion;
-	private boolean derecha;
 	private boolean destruir= false;
 
-	public Pato(Posicion pos, int vel){
+	public Pato(Posicion pos){
 		posicion = pos;
-		double ran= Math.random();
-		derecha= (ran < 0.5) ? true : false;
 	}
 
 	public Posicion getPosicion() {
 		return posicion;
-	}
-
-	public boolean derecha(){
-		return derecha;
-	}
-	
-	public void setDerecha(boolean bol){
-		derecha= bol;
 	}
 	
 	public boolean setPosicion(Posicion pos) {

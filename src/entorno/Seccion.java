@@ -14,6 +14,8 @@ public class Seccion {
 	private int cantRotas;
 	private int cantModificador;
 	private int id;
+	private boolean hayPato;
+	private Posicion posPato;
 	private Ventana [][] ventanas;
 
 	/**
@@ -25,13 +27,16 @@ public class Seccion {
 	 * @param cmod = cantidad de ventanas modificadas.
 	 * @param ventanas = matriz de ventanas.
 	 */
-	public Seccion(int cF, int cC, int cRot, int cMod, Ventana[][] ventanas, int iD){
+	public Seccion(int cF, int cC, int cRot, int cMod, Ventana[][] ventanas, int iD, boolean pato){
 		setCantFilas(cF);
 		setCantColumnas(cC);
 		setCantRotas(cRot);
 		setCantModificador(cMod);
 		setVentanas(ventanas);
 		setId(iD);
+		hayPato= pato;
+		if(hayPato)
+			posPato= new Posicion(0,(Math.random() < 0.5)?2:3);
 		//por ser prueba se informa creacion
 		System.out.println(" ");
 		System.out.println("Se creo seccion con "+getCantFilas()+" filas, "+getCantColumnas()+" columnas, con ID "+getId());
@@ -90,4 +95,21 @@ public class Seccion {
 	public Ventana getVentana(Posicion pos){
 		return ventanas[pos.getX()][pos.getY()];
 	}
+
+	public boolean isHayPato() {
+		return hayPato;
+	}
+
+	public void setHayPato(boolean hayPato) {
+		this.hayPato = hayPato;
+	}
+
+	public Posicion getPosPato() {
+		return posPato;
+	}
+
+	public void setPosPato(Posicion posPato) {
+		this.posPato = posPato;
+	}
+	
 }

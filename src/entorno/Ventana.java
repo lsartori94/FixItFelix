@@ -106,13 +106,16 @@ public class Ventana {
 		 * 
 		 * @param img = imagen de ventana sana
 		 */
-		public void arreglar(){
+		public boolean arreglar(){
+			boolean ret = false;
 			setGolpesAct(getGolpesAct()+1);
 		//	System.out.println("GOLPES ACUUTAL "+getGolpes_act());
 			if(getGolpesAct() == getGolpesFix()){
 			//	al ser pruba se informa
 				setRota(false);
+				ret = true;
 				System.out.println("Ventana Arreglada");
 			}
+			return ret;
 		}
 }

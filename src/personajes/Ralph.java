@@ -46,6 +46,7 @@ public class Ralph {
 			ladrillos[getLadrilloAct()].caer();
 			setCantLadrillos(getCantLadrillos()-1);
 			setLadrillo_act(getLadrilloAct()+1);
+	//		System.out.println("salio del shoot.");
 		}
 	}
 

@@ -1,10 +1,11 @@
 package personajes;
 import entorno.Seccion;
 import misc.Direccion;
+import misc.Hoja;
 import misc.Posicion;
 
 public class Felix {
-	private Posicion posicion;
+	private Posicion posicion, tmp;
 	private Seccion sec;
 	private static final Posicion posInicial= new Posicion(2, 1);
 	private int vidas;
@@ -39,8 +40,8 @@ public class Felix {
 		return posicion;
 	}
 
-	public void setPosicion(Posicion posicion) {
-		this.posicion = posicion;
+	public void setPosicion(Posicion pos) {
+		posicion = pos;
 		//al ser prueba se informa del movimiento
 		//System.out.println("Felix se movio a ["+posicion.getX()+" , "+posicion.getY()+"]");
 
@@ -64,10 +65,10 @@ public class Felix {
 
 	//metodo a ejecutar cuando se tenga que arreglar algo
 	public int martillar(){
-		getSec().getVentana(getPosicion()).arreglar();
-		getSec().setCantRotas(getSec().getCantRotas()-1);
-		//se informa por ser prueba
 		System.out.println("Felix martilla ventana");
+		if(getSec().getVentana(getPosicion()).arreglar())
+			getSec().setCantRotas(getSec().getCantRotas()-1);
+		//se informa por ser prueba
 		// devuelve el puntaje de martillar un panel
 		return sec.getVentana(posicion).getPuntaje();
 	}
@@ -133,7 +134,7 @@ public class Felix {
 	 * A su vez controla que se pueda mover a esa ventana (que no tenga modificadores)
 	 */
 	public void move(Direccion d){
-		Posicion tmp= posicion;
+		tmp = new Posicion(posicion.getX(),posicion.getY());
 	
 		switch (d.getValue()) {
 			case 1:
@@ -173,7 +174,7 @@ public class Felix {
 			case 3:
 				tmp.setX(tmp.getX()-1);
 				if (tmp.getX() >= 0){
-					if(getSec().getVentana(tmp).getHoja().getValue() == 1){
+					if(getSec().getVentana(tmp).getHoja() == Hoja.ABIERTA){
 							System.out.println("Hay ventana con hojas abiertas en destino, no puede moverse en esa direccion");
 					}else{
 						switch (getSec().getVentana(posicion).getHoja().getValue()){
@@ -195,7 +196,7 @@ public class Felix {
 			case 4:
 				tmp.setX(tmp.getX()+1);
 				if (tmp.getX() < 5){
-					if(getSec().getVentana(tmp).getHoja().getValue() == 1){
+					if(getSec().getVentana(tmp).getHoja() == Hoja.ABIERTA){
 						System.out.println("Hay ventana con hojas abiertas en destino, no puede moverse en esa direccion");
 					}else{
 						switch (getSec().getVentana(posicion).getHoja().getValue()){

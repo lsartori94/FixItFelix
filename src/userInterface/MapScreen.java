@@ -1,22 +1,17 @@
 package userInterface;
-import java.awt.BorderLayout;
-import java.awt.Frame;
 import java.awt.Graphics;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
+import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.util.Map;
 import java.util.TreeMap;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import listeners.MouseOnClickListener;
+
+import javax.swing.*;
+
 import misc.EstadosJuego;
 import misc.Posicion;
 
 @SuppressWarnings("serial")
-public class MapScreen extends Frame {
+public class MapScreen extends JFrame {
 
 		private static final int maxDimX= 5;
 		private static final int minDimX= 0;
@@ -36,6 +31,11 @@ public class MapScreen extends Frame {
 		private static final int offsetHorizontalRalph= 15;
 		private static final int anchoVentana= 38;
 		private static final int altoVentana= 60;
+		private static final int offsetHorizontalPuertaBalcon= 11;
+		private static final int offsetVerticalPuerta= 14;
+		private static final int pisoPuerta= 1;
+		private static final int pisoBalcon= 2;
+		private static final int columnaPuertaBalcon= 2;
 		private static final int espacioDeZonaDeRalph= 10;
 		private static final int espacioHorizontalEntreVentanas= 16;
 		private static final int espacioVerticalEntreVentanas= 20;
@@ -63,33 +63,20 @@ public class MapScreen extends Frame {
 	 */
 	public void render(){
 		setTitle("FixIt Felix Jr.");
+		setAlwaysOnTop(true);
+		setAutoRequestFocus(true);
+		setIconImage(Toolkit.getDefaultToolkit().getImage(Game.class.getResource("/imagenes/felix_martillo_derecha_1.png")));
 		setSize(anchoPanel, altoPanel);
+		setResizable(false);
 		setVisible(true);
-		switch(estado.getValue()){
-		case 0:
-			dibujarMenu();
-			break;
-		case 1:
-			dibujarInstrucciones();
-			break;
-		case 2:
-			dibujarHighscore();
-			break;
-		case 3:
-			dibujarMapa();
-			break;
-		case 4:
-			dibujarWin();
-			break;
-		case 5:
-			dibujarLose();
-			break;
-		}
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		dibujarMapa();
 	}
 	
 	@Override
 	public void paint(Graphics g){
 		super.paintComponents(g);
+		dibujarMapa();
 	}
 
 	/**
@@ -110,26 +97,57 @@ public class MapScreen extends Frame {
 						auxAncho= offsetHorizontalVentana+(anchoVentana+espacioHorizontalEntreVentanas)*x;
 						auxAlto= offsetVerticalVentana+(altoVentana+espacioDeZonaDeRalph+espacioVerticalEntreVentanas)*(maxDimY-y);
 						this.getGraphics().drawImage(imagenesVentanas[x][y], auxAncho, auxAlto, null);
-						if((posLadrillo.getX() == x)&&(posLadrillo.getY() == y))
-							// Pinta ladrillo
-							this.getGraphics().drawImage(imagenes.get("ladrillo"), auxAncho+offsetLadrillo, auxAlto+offsetLadrillo, null);
-						if((posNicelander.getX() == x)&&(posNicelander.getY() == y))
-							// Pinta nicelander
-							this.getGraphics().drawImage(imagenes.get("nicelander"), auxAncho+offsetHorizontalNicelander, auxAlto+offsetVerticalNicelander, null);
-						if((posRalph.getY() == y)&&(posRalph.getX() == x))
-							// Pinta Ralph
-							this.getGraphics().drawImage(imagenes.get("ralph"), auxAncho-offsetHorizontalRalph, auxAlto-offsetVerticalRalph, null);
-						if((posFelix.getY() == y)&&(posFelix.getX() == x))
-							// Pinta Felix
-							this.getGraphics().drawImage(imagenes.get("felix"), auxAncho+offsetFelix, auxAlto+offsetFelix, null);
-						if((posPato.getY() == y)&&(posPato.getX() == x))
-							// Pinta Pato
-							this.getGraphics().drawImage(imagenes.get("pato"), auxAncho, auxAlto, null);
+						if(posLadrillo != null){
+							if((posLadrillo.getX() == x)&&(posLadrillo.getY() == y))
+								// Pinta ladrillo
+								this.getGraphics().drawImage(imagenes.get("ladrillo"), auxAncho+offsetLadrillo, auxAlto+offsetLadrillo, null);
+						}
+						if(posNicelander != null){
+							if((posNicelander.getX() == x)&&(posNicelander.getY() == y))
+								// Pinta nicelander
+								this.getGraphics().drawImage(imagenes.get("nicelander"), auxAncho+offsetHorizontalNicelander, auxAlto+offsetVerticalNicelander, null);
+						}
+						if(posRalph != null){
+							if((posRalph.getY() == y)&&(posRalph.getX() == x))
+								// Pinta Ralph
+								this.getGraphics().drawImage(imagenes.get("ralph"), auxAncho-offsetHorizontalRalph, auxAlto-offsetVerticalRalph, null);
+						}
+						if(posFelix != null){
+							if((posFelix.getY() == y)&&(posFelix.getX() == x))
+								// Pinta Felix
+								this.getGraphics().drawImage(imagenes.get("felix"), auxAncho+offsetFelix, auxAlto+offsetFelix, null);
+						}
+						if(posPato != null){
+							if((posPato.getY() == y)&&(posPato.getX() == x))
+								// Pinta Pato
+								this.getGraphics().drawImage(imagenes.get("pato"), auxAncho, auxAlto, null);
+						}
 
 						break;
 					default:
-						auxAncho= offsetHorizontalVentana+(anchoVentana+espacioHorizontalEntreVentanas)*x;
-						auxAlto= offsetVerticalVentana+(altoVentana+espacioVerticalEntreVentanas)*(maxDimY-y);
+						if(numSeccion == 0){
+							if( x == columnaPuertaBalcon){
+								if(y == pisoPuerta){
+									//desvia la puerta para que calze bien
+									auxAncho= offsetHorizontalVentana+(anchoVentana+offsetHorizontalPuertaBalcon)*x;
+									auxAlto= offsetVerticalVentana+(altoVentana+offsetVerticalPuerta)*(maxDimY-y);
+								}else if(y == pisoBalcon){
+									//desvia el balcon para que calze bien
+									auxAncho= offsetHorizontalVentana+(anchoVentana+offsetHorizontalPuertaBalcon)*x;
+									auxAlto= offsetVerticalVentana+(altoVentana+espacioVerticalEntreVentanas)*(maxDimY-y);
+								}else{
+									//usa la desviacion estandar
+									auxAncho= offsetHorizontalVentana+(anchoVentana+espacioHorizontalEntreVentanas)*x;
+									auxAlto= offsetVerticalVentana+(altoVentana+espacioVerticalEntreVentanas)*(maxDimY-y);	
+								}
+							} else{
+								auxAncho= offsetHorizontalVentana+(anchoVentana+espacioHorizontalEntreVentanas)*x;
+								auxAlto= offsetVerticalVentana+(altoVentana+espacioVerticalEntreVentanas)*(maxDimY-y);
+							}
+						}else{
+							auxAncho= offsetHorizontalVentana+(anchoVentana+espacioHorizontalEntreVentanas)*x;
+							auxAlto= offsetVerticalVentana+(altoVentana+espacioVerticalEntreVentanas)*(maxDimY-y);
+						}
 						if(numSeccion == 2){
 							if(y != maxDimY){
 								// Si no es la ultima seccion y es la fila 4 dibuja ventanas
@@ -138,22 +156,31 @@ public class MapScreen extends Frame {
 						}else{
 							this.getGraphics().drawImage(imagenesVentanas[x][y], auxAncho, auxAlto, null);
 						}
-						if((posLadrillo.getX() == x)&&(posLadrillo.getY() == y))
-							// Pinta ladrillo
-							this.getGraphics().drawImage(imagenes.get("ladrillo"), auxAncho+offsetLadrillo, auxAlto+offsetLadrillo, null);
-						if((posNicelander.getX() == x)&&(posNicelander.getY() == y))
-							// Pinta Nicelander
-							this.getGraphics().drawImage(imagenes.get("nicelander"), auxAncho+offsetHorizontalNicelander, auxAlto+offsetVerticalNicelander, null);
-						if((posRalph.getY() == y)&&(posRalph.getX() == x))
-							// Pinta Ralph
-							this.getGraphics().drawImage(imagenes.get("ralph"), auxAncho-15, auxAlto-20, null);
-						if((posFelix.getY() == y)&&(posFelix.getX() == x))
-							// Pinta Felix
-							this.getGraphics().drawImage(imagenes.get("felix"), auxAncho+offsetFelix, auxAlto+offsetFelix, null);
-						if((posPato.getY() == y)&&(posPato.getX() == x))
-							// Pinta Pato
-							this.getGraphics().drawImage(imagenes.get("pato"), auxAncho, auxAlto, null);
-
+						if(posLadrillo != null){
+							if((posLadrillo.getX() == x)&&(posLadrillo.getY() == y))
+								// Pinta ladrillo
+								this.getGraphics().drawImage(imagenes.get("ladrillo"), auxAncho+offsetLadrillo, auxAlto+offsetLadrillo, null);
+						}
+						if(posNicelander != null){
+							if((posNicelander.getX() == x)&&(posNicelander.getY() == y))
+								// Pinta nicelander
+								this.getGraphics().drawImage(imagenes.get("nicelander"), auxAncho+offsetHorizontalNicelander, auxAlto+offsetVerticalNicelander, null);
+						}
+						if(posRalph != null){
+							if((posRalph.getY() == y)&&(posRalph.getX() == x))
+								// Pinta Ralph
+								this.getGraphics().drawImage(imagenes.get("ralph"), auxAncho-offsetHorizontalRalph, auxAlto-offsetVerticalRalph, null);
+						}
+						if(posFelix != null){
+							if((posFelix.getY() == y)&&(posFelix.getX() == x))
+								// Pinta Felix
+								this.getGraphics().drawImage(imagenes.get("felix"), auxAncho+offsetFelix, auxAlto+offsetFelix, null);
+						}
+						if(posPato != null){
+							if((posPato.getY() == y)&&(posPato.getX() == x))
+								// Pinta Pato
+								this.getGraphics().drawImage(imagenes.get("pato"), auxAncho, auxAlto, null);
+						}
 						break;
 				}
 			}
@@ -234,80 +261,13 @@ public class MapScreen extends Frame {
 		this.posPato = posPato;
 	}
 
-	
 	public EstadosJuego getEstado() {
 		return estado;
 	}
-	
 
 	public void setEstado(EstadosJuego estado) {
 		this.estado = estado;
 	}
 
 	
-	private void dibujarMenu(){
-		int anchoVentana= 512;
-		int altoVentana= 400;
-		String title= "FixIt Felix Jr.";
-		JPanel total= new JPanel();
-		JLabel titulo = new JLabel();
-		JPanel superior = new JPanel();
-		JPanel inferior = new JPanel();
-		GridLayout botonesGrid = new GridLayout(3, 3);
-		JPanel botones = new JPanel(botonesGrid);
-		JButton start = new JButton("Comenzar");
-		JButton howTo = new JButton("Como Jugar?");
-		JButton highS = new JButton("Puntajes Altos");
-		ImageIcon image = new ImageIcon("src/imagenes/titulo.png");
-		// Setea el titulo
-		total.setLayout(new BorderLayout());
-		titulo.setIcon(image);
-		superior.setLayout(new BorderLayout());
-		superior.add(titulo, BorderLayout.CENTER);
-		inferior.setLayout(new BorderLayout());
-		total.add(superior, BorderLayout.NORTH);
-
-		// Agrego botones
-		start.addMouseListener(new MouseOnClickListener(){
-			public void actionPerformed(ActionEvent e){
-				estado= EstadosJuego.ONGAME;
-				setVisible(false);
-			}
-		});
-		howTo.addMouseListener(new MouseOnClickListener(){
-			public void actionPerformed(ActionEvent e){
-				estado= EstadosJuego.INSTRUCCIONES;
-				setVisible(false);
-			}
-			
-		});
-		highS.addMouseListener(new MouseOnClickListener(){
-			public void actionPerformed(ActionEvent e){
-				estado= EstadosJuego.HIGHSCORE;
-				setVisible(false);
-			}
-		});
-		botones.add(start);
-		botones.add(howTo);
-		botones.add(highS);
-		botones.setSize(100, 100);
-		
-		// Agrego Layout de Botones
-		inferior.add(botones, BorderLayout.CENTER);
-		total.add(inferior, BorderLayout.CENTER);
-
-		add(total);
-		this.setTitle(title);
-		this.setSize(anchoVentana, altoVentana);
-		
-		setVisible(true);
-	}
-
-	private void dibujarInstrucciones(){
-		
-	}
-	
-	private void dibujarHighscore(){
-		
-	}
 }

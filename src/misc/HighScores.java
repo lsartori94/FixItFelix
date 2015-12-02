@@ -26,7 +26,7 @@ public class HighScores{
 	 * @return = persona+highscore
 	 */
 	public String getStringIn(int i){
-		return listaScores[i].getName()+listaScores[i].getScore();
+		return listaScores[i].getName()+"  "+listaScores[i].getScore();
 	}
 
 	public Persona [] getLista(){
