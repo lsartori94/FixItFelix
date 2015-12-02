@@ -1,14 +1,11 @@
 package juego;
 import java.util.Timer;
 import java.util.TimerTask;
-
 import personajes.Ralph;
-import userInterface.Renderizable;
 
 public class LogicaDeLadrillos extends TimerTask {
 	private Ralph ralphie;
 	private boolean stop= false;
-	private Renderizable render;
 	private Timer timer;
 	
 	public LogicaDeLadrillos(Timer timr){

@@ -4,7 +4,9 @@ import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.util.Map;
 import java.util.TreeMap;
+
 import javax.swing.*;
+
 import misc.EstadosJuego;
 import misc.Posicion;
 
@@ -67,7 +69,7 @@ public class MapScreen extends JFrame {
 		setSize(anchoPanel, altoPanel);
 		setResizable(false);
 		setVisible(true);
-		this.setDefaultCloseOperation(this.EXIT_ON_CLOSE);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		dibujarMapa();
 	}
 	

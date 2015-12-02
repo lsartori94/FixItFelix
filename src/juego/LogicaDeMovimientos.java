@@ -18,9 +18,13 @@ public class LogicaDeMovimientos extends TimerTask {
 	private Felix felix;
 	private Mapa map;
 	
-	public LogicaDeMovimientos(Timer timr){
+	public LogicaDeMovimientos(Timer timr, boolean pato){
 		this.timer= timr;
+		stop= true;
 		vuelta= 0;
+		hayPato= pato;
+		vuelta= 0;
+
 	}
 	
 	@Override
@@ -73,11 +77,7 @@ public class LogicaDeMovimientos extends TimerTask {
 	 */
 	private boolean moverPato(){
 		boolean bol= false;
-		if(pato.derecha()){
-			bol= pato.mover(Direccion.LEFT);
-		}else{
-			bol= pato.mover(Direccion.RIGHT);
-		}
+		bol= pato.mover(Direccion.RIGHT);
 		return bol;
 	}
 
@@ -93,4 +93,16 @@ public class LogicaDeMovimientos extends TimerTask {
 				stop= felix.golpe();
 		}
 	}
+
+	
+	public boolean isStop() {
+		return stop;
+	}
+	
+	
+
+	public void setStop(boolean stop) {
+		this.stop = stop;
+	}
+
 }

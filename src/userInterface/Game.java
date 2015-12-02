@@ -7,7 +7,6 @@ import javax.swing.border.EmptyBorder;
 import misc.EstadosJuego;
 import misc.HighScores;
 import misc.Persona;
-import misc.Posicion;
 import java.awt.Color;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -19,11 +18,6 @@ import java.awt.Toolkit;
 import javax.swing.JTextPane;
 import java.awt.CardLayout;
 import org.eclipse.wb.swing.FocusTraversalOnArray;
-import entorno.Balcon;
-import entorno.DoblePanel;
-import entorno.Puerta;
-import entorno.Seccion;
-import entorno.Ventana;
 import java.awt.Component;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -32,6 +26,7 @@ import java.awt.Font;
 import javax.swing.JList;
 import javax.swing.AbstractListModel;
 import javax.swing.ListSelectionModel;
+import juego.Juego;
 
 /**
  * Clase que gestiona la intefaz gráfica e inicia el juego
@@ -49,7 +44,6 @@ public class Game extends JFrame {
 	private HighScores hgs;
 	private static Persona auxper= new Persona("ASDF", 25548787);
 	private static Persona[] per= new Persona[5];
-	private static Renderizable ren;
 	/**
 	 * Launch the application.
 	 */
@@ -104,12 +98,17 @@ public class Game extends JFrame {
 		
 		JButton btnComenzar = new JButton("Comenzar");
 		btnComenzar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e)  {
 			    estado= EstadosJuego.INGAME;
+			    setVisible(false);
 			    
 			    //ACA VA LA INTANCIA DE JUEGO PARA USAR PAPAAAAAAAAAA
+			    Juego juego= new Juego();
+			    juego.go();
+			    /**
 				Ventana [][]vent= new Ventana[5][5];
 				int secId= 0;
+				boolean hayPato= true;
 				for(int i= 0; i<5; i++){
 					for(int i2=0; i2<5; i2++){
 						if(i == 2){
@@ -128,19 +127,48 @@ public class Game extends JFrame {
 						}
 					}
 				}
-				Seccion sec= new Seccion(5, 3, 0, 0, vent, secId);
-				Renderizable renAux= new Renderizable(sec);
-				ren= renAux;
-				ren.setPosFelix(new Posicion(2,1));
-				ren.setPosRalph(new Posicion(3,4));
-				ren.setPosLadrillo(new Posicion(1,1));
-				ren.setPosNicelander(new Posicion(1,3));
-				ren.setPosPato(new Posicion(1,2));
-				ren.run();
-				Menu.setVisible(false);
-				ren.getScreen().render();
+				Seccion sec= new Seccion(5, 3, 0, 0, vent, secId, hayPato);
 				
-				//ACA TERMINA EL BLOQUE PARA EL GAME
+				Timer timer= new Timer();
+				long sleep= 200;
+				
+				Renderizable ren= new Renderizable(sec, timer, sleep);
+				timer.schedule(ren, 0, sleep);
+				
+				while(1<2){
+					for(int a= 5; a>0; a--){
+						ren.setPosRalph(new Posicion(a-1, 4));
+						//ren.setPosPato(new Posicion(a-1, 2));
+						ren.refreshImagenPosicionRalph(Direccion.LEFT, false);
+						ren.refreshTiroRalph();
+						//ren.refreshImagenPosicionPato(Direccion.LEFT);
+						ren.setPosFelix(new Posicion(a-1, 1));
+						try {
+							Thread.sleep(sleep);
+						} catch (InterruptedException e2) {
+							// TODO Auto-generated catch block
+							e2.printStackTrace();
+						}
+						ren.setPosLadrillo(new Posicion(1, a-1));
+					}
+					for(int a2=1; a2<5; a2++){
+						ren.refreshImagenPosicionRalph(Direccion.RIGHT, true);
+						ren.setPosRalph(new Posicion(a2, 4));
+						ren.setPosPato(new Posicion(a2-1, 2));
+						ren.refreshImagenPosicionPato(Direccion.RIGHT);
+						ren.setPosFelix(new Posicion(a2, 1));
+						try {
+							Thread.sleep(sleep);
+						} catch (InterruptedException e2) {
+							// TODO Auto-generated catch block
+							e2.printStackTrace();
+						}
+						ren.setPosLadrillo(new Posicion(1, 4-a2));
+					}
+				}
+
+				
+				//ACA TERMINA EL BLOQUE PARA EL GAME **/
 			}
 		});
 		
