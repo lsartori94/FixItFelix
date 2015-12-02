@@ -190,7 +190,7 @@ public final class Juego implements KeyListener {
 	
 	public void iniPersonajes(int secc){
 		ren.setSeccion(mapa.getSeccion(iSec));
-		
+		ren.cargarTodo();
 		System.out.println("Level "+level+", seccion "+iSec);
 		System.out.println("Se van a inicializar Felix y Ralph");
 		felix.iniciar(mapa.getSeccion(secc));
