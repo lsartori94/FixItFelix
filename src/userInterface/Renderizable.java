@@ -44,6 +44,8 @@ public class Renderizable extends TimerTask {
 	private EstadosJuego estado;
 	private long sleepR;
 	private long sleepP;
+	private long sleepF;
+	private long sleepFelixMart;
 
 	public Renderizable(Seccion sec, Timer tim, long slp){
 		//necesitamos parametros del juego
@@ -64,8 +66,10 @@ public class Renderizable extends TimerTask {
 		screen.setNumSeccion(sec.getId());
 		screen.setEstado(estado);
 		screen.setImagenes(imagenes);
-		sleepR= slp+50;
-		sleepP= slp+100;
+		sleepR= 60;
+		sleepP= 100;
+		sleepF= 100;
+		sleepFelixMart= sleepF+250;
 
 		this.timer= tim;
 	}
@@ -79,6 +83,7 @@ public class Renderizable extends TimerTask {
 		screen.setPosNicelander(posNicelander);
 		screen.setPosPato(posPato);
 		screen.setPosRalph(posRalph);
+		screen.setEstado(getEstado());
 		screen.repaint();
 		screen.render();
 	}
@@ -297,9 +302,7 @@ public class Renderizable extends TimerTask {
 				felix.put("paradoIzquierda", ImageIO.read(new File("src/imagenes/felix_parado_izquierda.png")));
 				felix.put("moverDerecha", ImageIO.read(new File("src/imagenes/felix_mover_derecha.png")));
 				felix.put("moverIzquierda", ImageIO.read(new File("src/imagenes/felix_mover_izquierda.png")));
-				felix.put("saltarDerecha", ImageIO.read(new File("src/imagenes/felix_saltar_derecha.png")));
-				felix.put("saltarIzquierda", ImageIO.read(new File("src/imagenes/felix_saltar_izquierda.png")));
-				felix.put("golpe", ImageIO.read(new File("src/imagenes/felix_golpe.png")));
+				felix.put("golpe", ImageIO.read(new File("src/imagenes/felix_saltar_derecha.png")));
 				felix.put("martilloDerecha1", ImageIO.read(new File("src/imagenes/felix_martillo_derecha_1.png")));
 				felix.put("martilloDerecha2", ImageIO.read(new File("src/imagenes/felix_martillo_derecha_2.png")));
 				felix.put("martilloIzquierda1", ImageIO.read(new File("src/imagenes/felix_martillo_izquierda_1.png")));
@@ -317,6 +320,7 @@ public class Renderizable extends TimerTask {
 				felix.put("muerte4", ImageIO.read(new File("src/imagenes/felix_muerte_4.png")));
 				felix.put("muerte5", ImageIO.read(new File("src/imagenes/felix_muerte_5.png")));
 				felix.put("muerte6", ImageIO.read(new File("src/imagenes/felix_muerte_6.png")));
+				felix.put("muerte7", ImageIO.read(new File("src/imagenes/felix_muerte_7.png")));
 			}
 			
 		} catch(IOException e){
@@ -357,18 +361,10 @@ public class Renderizable extends TimerTask {
 					break;
 					
 				case "ConHoja":
-					try {
-						if(auxV.getClass().getMethod("getAbierta").equals(Hoja.ABIERTA)){
-							imagenesVentanas[x][y]= conHoja.get("abierta");
-						}else{
-							imagenesVentanas[x][y]= conHoja.get("cerrada");
-						}
-					} catch (NoSuchMethodException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (SecurityException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+					if(auxV.getHoja().equals(Hoja.ABIERTA)){
+						imagenesVentanas[x][y]= conHoja.get("abierta");
+					}else{
+						imagenesVentanas[x][y]= conHoja.get("cerrada");
 					}
 					break;
 					
@@ -432,9 +428,9 @@ public class Renderizable extends TimerTask {
 		if(felixDerecha){
 			switch(d.getValue()){
 			case 1:
-				imagenes.put("felix", felix.get("saltarDerecha"));
+				imagenes.put("felix", felix.get("paradoDerecha"));
 				try {
-					Thread.sleep(500);
+					Thread.sleep(sleepF);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -444,7 +440,7 @@ public class Renderizable extends TimerTask {
 			case 2:
 				imagenes.put("felix", felix.get("saltarDerecha"));
 				try {
-					Thread.sleep(500);
+					Thread.sleep(sleepF);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -454,7 +450,7 @@ public class Renderizable extends TimerTask {
 			case 3:
 				imagenes.put("felix", felix.get("moverIzquierda"));
 				try {
-					Thread.sleep(500);
+					Thread.sleep(sleepF);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -464,7 +460,7 @@ public class Renderizable extends TimerTask {
 			case 4:
 				imagenes.put("felix", felix.get("moverDerecha"));
 				try {
-					Thread.sleep(500);
+					Thread.sleep(sleepF);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -475,9 +471,9 @@ public class Renderizable extends TimerTask {
 		} else{
 			switch(d.getValue()){
 			case 1:
-				imagenes.put("felix", felix.get("saltarIzquierda"));
+				imagenes.put("felix", felix.get("paradoIzquierda"));
 				try {
-					Thread.sleep(500);
+					Thread.sleep(sleepF);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -487,7 +483,7 @@ public class Renderizable extends TimerTask {
 			case 2:
 				imagenes.put("felix", felix.get("saltarIzquierda"));
 				try {
-					Thread.sleep(500);
+					Thread.sleep(sleepF);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -497,7 +493,7 @@ public class Renderizable extends TimerTask {
 			case 3:
 				imagenes.put("felix", felix.get("moverIzquierda"));
 				try {
-					Thread.sleep(500);
+					Thread.sleep(sleepF);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -507,7 +503,7 @@ public class Renderizable extends TimerTask {
 			case 4:
 				imagenes.put("felix", felix.get("moverDerecha"));
 				try {
-					Thread.sleep(500);
+					Thread.sleep(sleepF);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -689,51 +685,105 @@ public class Renderizable extends TimerTask {
 	public void setScreen(MapScreen screen) {
 		this.screen = screen;
 	}
-		
-	public void refreshMuerteFelix(){
-		imagenes.put("felix", ralph.get("muerte1"));
+	
+	public void refreshImagenGolpeFelix(){
+		imagenes.put("felix", felix.get("golpe"));
 		try {
-			Thread.sleep(sleepR);
+			Thread.sleep(sleepFelixMart);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		imagenes.put("felix", ralph.get("muerte2"));
+		imagenes.put("felix", felix.get("paradoDerecha"));
+	}
+	
+	public void refreshImagenMuerteFelix(){
+		imagenes.put("felix", felix.get("muerte1"));
 		try {
-			Thread.sleep(sleepR);
+			Thread.sleep(sleepF);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		imagenes.put("felix", ralph.get("muerte3"));
+		imagenes.put("felix", felix.get("muerte2"));
 		try {
-			Thread.sleep(sleepR);
+			Thread.sleep(sleepF);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		imagenes.put("felix", ralph.get("muerte4"));
+		imagenes.put("felix", felix.get("muerte3"));
 		try {
-			Thread.sleep(sleepR);
+			Thread.sleep(sleepF);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		imagenes.put("felix", ralph.get("muerte5"));
+		imagenes.put("felix", felix.get("muerte4"));
 		try {
-			Thread.sleep(sleepR);
+			Thread.sleep(sleepF);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		imagenes.put("felix", ralph.get("muerte6"));
+		imagenes.put("felix", felix.get("muerte5"));
 		try {
-			Thread.sleep(sleepR);
+			Thread.sleep(sleepF);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		imagenes.put("felix", ralph.get("paradoDerecha"));
+		imagenes.put("felix", felix.get("muerte6"));
+		try {
+			Thread.sleep(sleepF);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		imagenes.put("felix", felix.get("muerte7"));
+		try {
+			Thread.sleep(sleepF);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		imagenes.put("felix", felix.get("paradoDerecha"));
+	}
+	
+	public void refreshImagenMartilleoFelix(Boolean felixDerecha){
+		if(felixDerecha){
+			imagenes.put("felix", felix.get("martilloDerecha1"));
+			try {
+				Thread.sleep(sleepF);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			imagenes.put("felix", felix.get("martilloDerecha2"));
+			try {
+				Thread.sleep(sleepF);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			imagenes.put("felix", felix.get("paradoDerecha"));
+		}else {
+			imagenes.put("felix", felix.get("martilloIzquierda1"));
+			try {
+				Thread.sleep(sleepF);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			imagenes.put("felix", felix.get("martilloIzquierda2"));
+			try {
+				Thread.sleep(sleepF);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			imagenes.put("felix", felix.get("paradoIzquierda"));
+			}
 	}
 	
 	public void setAreglarImagenVentana(Posicion pos){

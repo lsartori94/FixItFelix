@@ -28,8 +28,15 @@ public class DoblePanel extends Ventana{
 	 */
 	public DoblePanel(boolean mold, boolean mace, boolean rota) {
 		super(mold, mace, rota, Hoja.NO, golpesFix);
-		Panel pR= new Panel(rota, rota);
-		Panel pS= new Panel(rota, rota);
+		Panel pR, pS;
+		if((!mace)&(!mold)){
+			pR= new Panel(rota, rota);
+			pS= new Panel(rota, rota);
+		}else{
+			super.setGolpesFix(0);
+			pR= new Panel(false, false);
+			pS= new Panel(false, false);
+		}
 		setPanelInferior(pR);
 		setPanelSuperior(pS);
 	}

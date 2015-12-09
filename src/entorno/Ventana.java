@@ -30,9 +30,13 @@ public class Ventana {
 			setMoldura(mold);
 			setMacetero(mace);
 			setGolpesFix(fix);
+			setRota(rota);
+			if((mold)|(mace)){
+					setGolpesFix(0);
+					setRota(false);
+			}
 			setHoja(hoja);
 			setGolpesAct(golpesIniciar);
-			setRota(rota);
 		}
 
 		public boolean moldura() {
@@ -109,7 +113,6 @@ public class Ventana {
 		public boolean arreglar(){
 			boolean ret = false;
 			setGolpesAct(getGolpesAct()+1);
-		//	System.out.println("GOLPES ACUUTAL "+getGolpes_act());
 			if(getGolpesAct() == getGolpesFix()){
 			//	al ser pruba se informa
 				setRota(false);

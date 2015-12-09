@@ -39,8 +39,8 @@ public class MapScreen extends JFrame {
 		private static final int espacioDeZonaDeRalph= 10;
 		private static final int espacioHorizontalEntreVentanas= 16;
 		private static final int espacioVerticalEntreVentanas= 20;
-		private static final int anchoWin= 200;
-		private static final int altoWin= 150;
+		private static final int anchoWin= 250;
+		private static final int altoWin= 200;
 		private static final int anchoLose= 200;
 		private static final int altoLose= 200;
 		private int numSeccion;
@@ -89,113 +89,120 @@ public class MapScreen extends JFrame {
 		this.getGraphics().drawImage(imagenes.get("seccion"), posHorizontalMapa, posVerticalMapa, null);
 		int auxAncho;
 		int auxAlto;
-		// Se agrega de abajo para arriba por la implementacion de la matriz de ventanas
-		for(int x=minDimX; x<maxDimX; x++){
-			for(int y=maxDimY; y>minDimY; y--){
-				switch(y){
-					case maxDimY-1:
-						// Deja un espacio distinto al ser el piso de ralph
-						auxAncho= offsetHorizontalVentana+(anchoVentana+espacioHorizontalEntreVentanas)*x;
-						auxAlto= offsetVerticalVentana+(altoVentana+espacioDeZonaDeRalph+espacioVerticalEntreVentanas)*(maxDimY-y);
-						this.getGraphics().drawImage(imagenesVentanas[x][y], auxAncho, auxAlto, null);
-						if(posLadrillo != null){
-							if((posLadrillo.getX() == x)&&(posLadrillo.getY() == y))
-								// Pinta ladrillo
-								this.getGraphics().drawImage(imagenes.get("ladrillo"), auxAncho+offsetLadrillo, auxAlto+offsetLadrillo, null);
-						}
-						if(posNicelander != null){
-							if((posNicelander.getX() == x)&&(posNicelander.getY() == y))
-								// Pinta nicelander
-								this.getGraphics().drawImage(imagenes.get("nicelander"), auxAncho+offsetHorizontalNicelander, auxAlto+offsetVerticalNicelander, null);
-						}
-						if(posRalph != null){
-							if((posRalph.getY() == y)&&(posRalph.getX() == x))
-								// Pinta Ralph
-								this.getGraphics().drawImage(imagenes.get("ralph"), auxAncho-offsetHorizontalRalph, auxAlto-offsetVerticalRalph, null);
-						}
-						if(posFelix != null){
-							if((posFelix.getY() == y)&&(posFelix.getX() == x))
-								// Pinta Felix
-								this.getGraphics().drawImage(imagenes.get("felix"), auxAncho+offsetFelix, auxAlto+offsetFelix, null);
-						}
-						if(posPato != null){
-							if((posPato.getY() == y)&&(posPato.getX() == x))
-								// Pinta Pato
-								this.getGraphics().drawImage(imagenes.get("pato"), auxAncho, auxAlto, null);
-						}
+		if(estado == EstadosJuego.INGAME){
+			// Se agrega de abajo para arriba por la implementacion de la matriz de ventanas
+			for(int x=minDimX; x<maxDimX; x++){
+				for(int y=maxDimY; y>minDimY; y--){
+					switch(y){
+						case maxDimY-1:
+							// Deja un espacio distinto al ser el piso de ralph
+							auxAncho= offsetHorizontalVentana+(anchoVentana+espacioHorizontalEntreVentanas)*x;
+							auxAlto= offsetVerticalVentana+(altoVentana+espacioDeZonaDeRalph+espacioVerticalEntreVentanas)*(maxDimY-y);
+							this.getGraphics().drawImage(imagenesVentanas[x][y], auxAncho, auxAlto, null);
+							if(posLadrillo != null){
+								if((posLadrillo.getX() == x)&&(posLadrillo.getY() == y))
+									// Pinta ladrillo
+									this.getGraphics().drawImage(imagenes.get("ladrillo"), auxAncho+offsetLadrillo, auxAlto+offsetLadrillo, null);
+							}
+							if(posNicelander != null){
+								if((posNicelander.getX() == x)&&(posNicelander.getY() == y))
+									// Pinta nicelander
+									this.getGraphics().drawImage(imagenes.get("nicelander"), auxAncho+offsetHorizontalNicelander, auxAlto+offsetVerticalNicelander, null);
+							}
+							if(posRalph != null){
+								if((posRalph.getY() == y)&&(posRalph.getX() == x))
+									// Pinta Ralph
+									this.getGraphics().drawImage(imagenes.get("ralph"), auxAncho-offsetHorizontalRalph, auxAlto-offsetVerticalRalph, null);
+							}
+							if(posFelix != null){
+								if((posFelix.getY() == y)&&(posFelix.getX() == x))
+									// Pinta Felix
+									this.getGraphics().drawImage(imagenes.get("felix"), auxAncho+offsetFelix, auxAlto+offsetFelix, null);
+							}
+							if(posPato != null){
+								if((posPato.getY() == y)&&(posPato.getX() == x))
+									// Pinta Pato
+									this.getGraphics().drawImage(imagenes.get("pato"), auxAncho, auxAlto, null);
+							}
 
-						break;
-					default:
-						if(numSeccion == 0){
-							if( x == columnaPuertaBalcon){
-								if(y == pisoPuerta){
-									//desvia la puerta para que calze bien
-									auxAncho= offsetHorizontalVentana+(anchoVentana+offsetHorizontalPuertaBalcon)*x;
-									auxAlto= offsetVerticalVentana+(altoVentana+offsetVerticalPuerta)*(maxDimY-y);
-								}else if(y == pisoBalcon){
-									//desvia el balcon para que calze bien
-									auxAncho= offsetHorizontalVentana+(anchoVentana+offsetHorizontalPuertaBalcon)*x;
-									auxAlto= offsetVerticalVentana+(altoVentana+espacioVerticalEntreVentanas)*(maxDimY-y);
-								}else{
-									//usa la desviacion estandar
+							break;
+						default:
+							if(numSeccion == 0){
+								if( x == columnaPuertaBalcon){
+									if(y == pisoPuerta){
+										//desvia la puerta para que calze bien
+										auxAncho= offsetHorizontalVentana+(anchoVentana+offsetHorizontalPuertaBalcon)*x;
+										auxAlto= offsetVerticalVentana+(altoVentana+offsetVerticalPuerta)*(maxDimY-y);
+									}else if(y == pisoBalcon){
+										//desvia el balcon para que calze bien
+										auxAncho= offsetHorizontalVentana+(anchoVentana+offsetHorizontalPuertaBalcon)*x;
+										auxAlto= offsetVerticalVentana+(altoVentana+espacioVerticalEntreVentanas)*(maxDimY-y);
+									}else{
+										//usa la desviacion estandar
+										auxAncho= offsetHorizontalVentana+(anchoVentana+espacioHorizontalEntreVentanas)*x;
+										auxAlto= offsetVerticalVentana+(altoVentana+espacioVerticalEntreVentanas)*(maxDimY-y);	
+									}
+								} else{
 									auxAncho= offsetHorizontalVentana+(anchoVentana+espacioHorizontalEntreVentanas)*x;
-									auxAlto= offsetVerticalVentana+(altoVentana+espacioVerticalEntreVentanas)*(maxDimY-y);	
+									auxAlto= offsetVerticalVentana+(altoVentana+espacioVerticalEntreVentanas)*(maxDimY-y);
 								}
-							} else{
+							}else{
 								auxAncho= offsetHorizontalVentana+(anchoVentana+espacioHorizontalEntreVentanas)*x;
 								auxAlto= offsetVerticalVentana+(altoVentana+espacioVerticalEntreVentanas)*(maxDimY-y);
 							}
-						}else{
-							auxAncho= offsetHorizontalVentana+(anchoVentana+espacioHorizontalEntreVentanas)*x;
-							auxAlto= offsetVerticalVentana+(altoVentana+espacioVerticalEntreVentanas)*(maxDimY-y);
-						}
-						if(numSeccion == 2){
-							if(y != maxDimY){
-								// Si no es la ultima seccion y es la fila 4 dibuja ventanas
+							if(numSeccion == 2){
+								if(y != maxDimY){
+									// Si no es la ultima seccion y es la fila 4 dibuja ventanas
+									this.getGraphics().drawImage(imagenesVentanas[x][y], auxAncho, auxAlto, null);
+								}
+							}else{
 								this.getGraphics().drawImage(imagenesVentanas[x][y], auxAncho, auxAlto, null);
 							}
-						}else{
-							this.getGraphics().drawImage(imagenesVentanas[x][y], auxAncho, auxAlto, null);
-						}
-						if(posLadrillo != null){
-							if((posLadrillo.getX() == x)&&(posLadrillo.getY() == y))
-								// Pinta ladrillo
-								this.getGraphics().drawImage(imagenes.get("ladrillo"), auxAncho+offsetLadrillo, auxAlto+offsetLadrillo, null);
-						}
-						if(posNicelander != null){
-							if((posNicelander.getX() == x)&&(posNicelander.getY() == y))
-								// Pinta nicelander
-								this.getGraphics().drawImage(imagenes.get("nicelander"), auxAncho+offsetHorizontalNicelander, auxAlto+offsetVerticalNicelander, null);
-						}
-						if(posRalph != null){
-							if((posRalph.getY() == y)&&(posRalph.getX() == x))
-								// Pinta Ralph
-								this.getGraphics().drawImage(imagenes.get("ralph"), auxAncho-offsetHorizontalRalph, auxAlto-offsetVerticalRalph, null);
-						}
-						if(posFelix != null){
-							if((posFelix.getY() == y)&&(posFelix.getX() == x))
-								// Pinta Felix
-								this.getGraphics().drawImage(imagenes.get("felix"), auxAncho+offsetFelix, auxAlto+offsetFelix, null);
-						}
-						if(posPato != null){
-							if((posPato.getY() == y)&&(posPato.getX() == x))
-								// Pinta Pato
-								this.getGraphics().drawImage(imagenes.get("pato"), auxAncho, auxAlto, null);
-						}
-						break;
+							if(posLadrillo != null){
+								if((posLadrillo.getX() == x)&&(posLadrillo.getY() == y))
+									// Pinta ladrillo
+									this.getGraphics().drawImage(imagenes.get("ladrillo"), auxAncho+offsetLadrillo, auxAlto+offsetLadrillo, null);
+							}
+							if(posNicelander != null){
+								if((posNicelander.getX() == x)&&(posNicelander.getY() == y))
+									// Pinta nicelander
+									this.getGraphics().drawImage(imagenes.get("nicelander"), auxAncho+offsetHorizontalNicelander, auxAlto+offsetVerticalNicelander, null);
+							}
+							if(posRalph != null){
+								if((posRalph.getY() == y)&&(posRalph.getX() == x))
+									// Pinta Ralph
+									this.getGraphics().drawImage(imagenes.get("ralph"), auxAncho-offsetHorizontalRalph, auxAlto-offsetVerticalRalph, null);
+							}
+							if(posFelix != null){
+								if((posFelix.getY() == y)&&(posFelix.getX() == x))
+									// Pinta Felix
+									this.getGraphics().drawImage(imagenes.get("felix"), auxAncho+offsetFelix, auxAlto+offsetFelix, null);
+							}
+							if(posPato != null){
+								if((posPato.getY() == y)&&(posPato.getX() == x))
+									// Pinta Pato
+									this.getGraphics().drawImage(imagenes.get("pato"), auxAncho, auxAlto, null);
+							}
+							break;
+					}
+					
 				}
 			}
+		}else if (estado == EstadosJuego.WIN){
+			dibujarWin();
 		}
+		else if (estado == EstadosJuego.GAMEOVER)
+			dibujarLose();
 	}
 	
 	public void dibujarWin(){
-		dibujarMapa();
 		this.getGraphics().drawImage(imagenes.get("win"), anchoWin, altoWin, null);
+		setEstado(EstadosJuego.INGAME);
 	}
 	
 	public void dibujarLose(){
-		dibujarMapa();
 		this.getGraphics().drawImage(imagenes.get("win"), anchoLose, altoLose, null);
+		setEstado(EstadosJuego.ONMENU);
 	}
 	
 	public BufferedImage[][] getImagenesVentanas() {

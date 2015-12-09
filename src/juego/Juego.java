@@ -56,13 +56,13 @@ public final class Juego implements KeyListener {
 		//evalua los ladrillos tirados para ver si golpearona felix
 		for(int i= 0; i < l_act; i++){
 			Ladrillo lad= ralph.getLadrillo(i);
-			lad.caer();
 			ren.setPosLadrillo(lad.getPosicionl());
 			if(lad.getPosicionl().compareTo(felix.getPosicion())==0){
 				felix.golpe();
 				System.out.println("Ladrillazo en "+felix.getPosicion().getX()+" * "+felix.getPosicion().getY());
-				ren.refreshMuerteFelix();
+				ren.refreshImagenGolpeFelix();
 			}
+			lad.caer();
 		}
 	}
 	
@@ -82,12 +82,6 @@ public final class Juego implements KeyListener {
 			 Direccion dir= null;
 			 
 			 	if (key == KeyEvent.VK_LEFT) {
-			 		try {
-						Thread.sleep(1500);
-					} catch (InterruptedException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
 			        dir = Direccion.LEFT;
 			 		getFelix().move(dir);
 			 		ren.setPosFelix(getFelix().getPosicion());
@@ -140,9 +134,10 @@ public final class Juego implements KeyListener {
 		comenzar(level);
 		
 		ren= new Renderizable(mapa.getSeccion(iSec), timer, sleep);
+		ren.setEstado(getEstado());
 		KeyListener keylogger = new MyKeyListener();
+		ren.getScreen().setFocusable(true);
 		ren.getScreen().addKeyListener(keylogger);
-		//ren.getScreen().setFocusable(true);
 		timer.schedule(ren, 0, sleep);
 		
 		
@@ -160,19 +155,19 @@ public final class Juego implements KeyListener {
 					ren.refreshTiroRalph();
 				}
 				try {
-					Thread.sleep(2050);
+					Thread.sleep(150);
 				} catch (InterruptedException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				//if(mapa.getSeccion(iSec).getVentana(felix.getPosicion()).rota()){
-				//	fMartillar();
-				//	if(!mapa.getSeccion(iSec).getVentana(felix.getPosicion()).rota())
-				//		mapa.getSeccion(iSec).setCantRotas(mapa.getSeccion(iSec).getCantRotas()-1);
-				//		ren.setAreglarImagenVentana(felix.getPosicion());
-				//}else{
-				//	fMove();
-				//}
+				if(mapa.getSeccion(iSec).getVentana(felix.getPosicion()).rota()){
+					fMartillar();
+					ren.refreshImagenMartilleoFelix(felix.derecha());
+					if(!mapa.getSeccion(iSec).getVentana(felix.getPosicion()).rota())
+						ren.setAreglarImagenVentana(felix.getPosicion());
+				}else{
+					fMove();
+				}
 				
 				checkColisiones();
 			}
@@ -181,6 +176,15 @@ public final class Juego implements KeyListener {
 				if( iSec < 2 ){
 					iSec++;
 				}else if( level < 9 ){
+					setEstado(EstadosJuego.WIN);
+					ren.setEstado(getEstado());
+					win();
+					try {
+						Thread.sleep(1500);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 					pasarNivel();
 				}else
 					win();
@@ -294,10 +298,12 @@ public final class Juego implements KeyListener {
 									
 									case HOJA:
 										oja = Hoja.getRandom();
-										vent[j][i]= new DoblePanel( false, false, false);
-										vent[j][i].setHoja(oja);
-										if( oja != Hoja.NO )
-											hoja++;
+										if( oja == Hoja.NO ){
+											vent[j][i]= new DoblePanel( false, false, false);
+										}else{
+										vent[j][i]= new ConHoja(oja);
+												hoja++;
+										}
 										break;
 									
 									default:
@@ -319,10 +325,12 @@ public final class Juego implements KeyListener {
 							
 								case HOJA:
 									oja = Hoja.getRandom();
-									vent[j][i]= new DoblePanel( false, false, false);
-									vent[j][i].setHoja(oja);
-									if( oja != Hoja.NO )
-										hoja++;
+									if( oja == Hoja.NO ){
+										vent[j][i]= new DoblePanel( false, false, false);
+									}else{
+										vent[j][i]= new ConHoja(oja);
+											hoja++;
+									}
 									break;
 							
 								default:
@@ -335,24 +343,27 @@ public final class Juego implements KeyListener {
 							if(i == 1 && indiceSec == 0){
 									vent[j][i]= new Puerta(true);
 									System.out.println("Puerta rota creada en "+j+" , "+i);
+									cantRota++;
 							}else if(i == 2 && indiceSec == 0){
 									vent[j][i]= new Balcon(true);
 									System.out.println("Balcon roto creado en "+j+" , "+i);
+									cantRota++;
 							}else if( check2 <= factObsVent ){
 								switch( luck ){
 									case MOLDURA:
-										vent[j][i]= new DoblePanel( true, false, true );
+										vent[j][i]= new DoblePanel( true, false, false );
 										moldura++;
 										break;
 								
 									case MACETA:
-										vent[j][i]= new DoblePanel( false, true, true );
+										vent[j][i]= new DoblePanel( false, true, false );
 										maceta++;
 										break;
 								
 									case HOJA:
 										vent[j][i]= new DoblePanel( false, false, true );
 										vent[j][i].setHoja(Hoja.NO);
+										cantRota++;
 										break;
 								
 									default:
@@ -364,26 +375,28 @@ public final class Juego implements KeyListener {
 						}else if( check2 <= factObsVent ){
 							switch( luck ){
 								case MOLDURA:
-									vent[j][i]= new DoblePanel( true, false, true );
+									vent[j][i]= new DoblePanel( true, false, false );
 									moldura++;
 									break;
 							
 								case MACETA:
-									vent[j][i]= new DoblePanel( false, true, true );
+									vent[j][i]= new DoblePanel( false, true, false );
 									maceta++;
 									break;
 							
 								case HOJA:
 									vent[j][i]= new DoblePanel( false, false, true );
 									vent[j][i].setHoja(Hoja.NO);
+									cantRota++;
 									break;
 							
 								default:
 									System.out.println("Error en el tipo de HOJA al crear.");
 								}
-						}else
+						}else{
 							vent[j][i]= new DoblePanel( false, false, true);
-						cantRota++;
+							cantRota++;
+						}
 					}
 			}
 			obstaculos = moldura + maceta + hoja;
@@ -414,7 +427,7 @@ public final class Juego implements KeyListener {
 
 	private final void win(){
 		estado = EstadosJuego.WIN;
-		gameon = false;
+		//gameon = false;
 		//codigo a ejecutar al ganar el juego
 		//ejecutar grafica de fin de juego ganador
 		ren.getScreen().dibujarWin();

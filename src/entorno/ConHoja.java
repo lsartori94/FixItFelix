@@ -27,7 +27,7 @@ public class ConHoja extends Ventana{
 		hoja= h;
 	}
 
-	public Hoja getAbierta(){
-		return hoja;
+	public boolean getAbierta(){
+		return (hoja.getValue() == 1)?true:false;
 	}
 }
