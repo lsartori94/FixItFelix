@@ -1,4 +1,5 @@
 package juego;
+import java.awt.CardLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Timer;
@@ -6,6 +7,7 @@ import java.util.Timer;
 import misc.*;
 import personajes.Felix;
 import personajes.Ralph;
+import userInterface.Game;
 import userInterface.Renderizable;
 import entorno.*;
 /**
@@ -16,7 +18,7 @@ import entorno.*;
  * @author lsartori Agustín Liébana
  *
  */
-public final class Juego implements KeyListener {
+public final class Juego implements KeyListener, Runnable {
 	private Ralph ralph;
 	private Felix felix;
 	private Pato pato;
@@ -38,10 +40,17 @@ public final class Juego implements KeyListener {
 	private EstadosJuego estado;
 	int iSec = 0;
 	int vidaTot;
-	private final int vidaInicial = 1;
+	private final int vidaInicial = 10;
 	Posicion tmp, posR, ini;
 	private Renderizable ren;
 
+	//public Juego(){
+		//Game g= new Game();
+		//g.setVisible(true);
+		
+	//}
+	
+	
 	/**
 	 * Es el metodo que da el esqueleto a la prueba.
 	 * Es un loop del cual se sale si ralph se queda sin ladrillos o si felix muere.
@@ -132,7 +141,10 @@ public final class Juego implements KeyListener {
 		
 		ren= new Renderizable(mapa.getSeccion(iSec), timer, sleep);
 		KeyListener keylogger = new MyKeyListener();
-		ren.getScreen().setFocusable(true);
+		//ren.getScreen().setFocusable(true);
+		ren.getScreen().getRootPane().setRequestFocusEnabled(true);
+		ren.getScreen().getRootPane().setFocusable(true);
+		ren.getScreen().getRootPane().addKeyListener(keylogger);
 		ren.getScreen().addKeyListener(keylogger);
 		timer.schedule(ren, 0, sleep);
 		
@@ -629,5 +641,22 @@ public final class Juego implements KeyListener {
 		// TODO Auto-generated method stub
 		
 	}
+
+	
+	public Renderizable getRen() {
+		return ren;
+	}
+
+	public void setRen(Renderizable ren) {
+		this.ren = ren;
+	}
+
+
+	@Override
+	public void run() {
+		// TODO Auto-generated method stub
+		go();
+	}
+	
 	
 }

@@ -47,10 +47,7 @@ public class Game extends JFrame {
 	//public static void main(String[] args) {
 	//	EventQueue.invokeLater(new Runnable() {
 	//		public void run() {
-	//			try {
-				//	for(int i=0; i<5; i++)
-				//		per[i]= auxper;
-				//	HighScores hig= new HighScores(per);
+		
 			//		Game frame = new Game(hig);
 		//			setVisible(true);
 
@@ -66,7 +63,7 @@ public class Game extends JFrame {
 	 * Create the frame.
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public Game(HighScore hig) {
+	public Game () {
 		setBackground(Color.BLACK);
 		setResizable(false);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Game.class.getResource("/imagenes/felix_martillo_derecha_1.png")));
@@ -96,11 +93,11 @@ public class Game extends JFrame {
 		btnComenzar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e)  {
 			    estado= EstadosJuego.INGAME;
+			   
 			    setVisible(false);
-			    
-			    Juego juego= new Juego();
-			    juego.go();
-				
+			    Juego j= new Juego();
+			    Thread game= new Thread(j);
+			    game.start();
 			}
 		});
 		
@@ -294,7 +291,7 @@ public class Game extends JFrame {
 					.addComponent(btnNewButton))
 		);
 		PuntajesAltos.setLayout(gl_PuntajesAltos);
-
+		
 		contentPane.setFocusTraversalPolicy(new FocusTraversalOnArray(new Component[]{Menu, txtpnByLucaY, btnPuntajesAltos, btnComenzar, btnInstrucciones, lblNewLabel, Instrucciones, label, btnMenu}));
 
 	}

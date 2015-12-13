@@ -69,7 +69,8 @@ public class MapScreen extends JFrame {
 		setSize(anchoPanel, altoPanel);
 		setResizable(false);
 		setVisible(true);
-		//setFocusable(true);
+		setFocusableWindowState(true);
+		setFocusable(true);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		dibujarMapa();
 	}
