@@ -161,12 +161,12 @@ public final class Juego implements KeyListener {
 					e1.printStackTrace();
 				}
 				if(mapa.getSeccion(iSec).getVentana(felix.getPosicion()).rota()){
-					fMartillar();
-					ren.refreshImagenMartilleoFelix(felix.derecha());
+					//fMartillar();
+					//ren.refreshImagenMartilleoFelix(felix.derecha());
 					if(!mapa.getSeccion(iSec).getVentana(felix.getPosicion()).rota())
 						ren.setAreglarImagenVentana(felix.getPosicion());
 				}else{
-					fMove();
+					//fMove();
 				}
 				
 				checkColisiones();
