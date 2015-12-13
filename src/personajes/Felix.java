@@ -29,7 +29,6 @@ public class Felix {
 		setPosicion(tmpPos);
 		setSec(sec);
 		setPoder(false);
-		//por ser prueba se informa creacion
 	}
 
 	/*
@@ -42,8 +41,6 @@ public class Felix {
 
 	public void setPosicion(Posicion pos) {
 		posicion = pos;
-		//al ser prueba se informa del movimiento
-		//System.out.println("Felix se movio a ["+posicion.getX()+" , "+posicion.getY()+"]");
 
 	}
 
@@ -68,7 +65,6 @@ public class Felix {
 		System.out.println("Felix martilla ventana");
 		if(getSec().getVentana(getPosicion()).arreglar())
 			getSec().setCantRotas(getSec().getCantRotas()-1);
-		//se informa por ser prueba
 		// devuelve el puntaje de martillar un panel
 		return sec.getVentana(posicion).getPuntaje();
 	}
@@ -83,10 +79,6 @@ public class Felix {
 		return muerto;
 	}
 
-	// metodo a ejecutar cuando se gane el nivel
-	public void victoria(){
-
-	}
 	
 	public int getLimiteSup() {
 		return limiteSup;

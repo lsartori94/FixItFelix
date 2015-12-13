@@ -42,11 +42,9 @@ public class Ralph {
 	 */
 	public void shoot(){
 		if(getCantLadrillos() != 0){
-			System.out.println("Ralph lanzo un ladrillo en "+getPosicion().getX()+" * "+getPosicion().getY());
 			ladrillos[getLadrilloAct()].caer();
 			setCantLadrillos(getCantLadrillos()-1);
 			setLadrillo_act(getLadrilloAct()+1);
-	//		System.out.println("salio del shoot.");
 		}
 	}
 
@@ -119,16 +117,6 @@ public class Ralph {
 		return ladrillos[i];
 	}
 	
-	/*
-	 * Este metodo se utilizara para romper ventanas con Ralph. En el test
-	 * no es utilizado ya que las ventanas y sus estados se inicializan
-	 * de manera aleatoria.
-	 */
-	public void romper(){
-		seccion.getVentana(posicion).romper();
-		System.out.println("Ralph rompio la Ventana ["+posicion.getX()+" , "+posicion.getY()+"]");
-	}
-	
 	public void setLadrillo_act(int act){
 		ladrilloAct= act;
 	}
@@ -149,18 +137,14 @@ public class Ralph {
 			tmp.setY(tmp.getY()+1);
 			if (tmp.getY() < 4){
 				setPosicion(tmp);
-				System.out.println("Ralph se movio arriba");
-			}else
-				System.out.println("Ralph no puede acceder a esa posicion");
+			}
 			break;
 		
 		case 2:
 			tmp.setY(tmp.getY()-1);
 			if (tmp.getY() > 1){
 				setPosicion(tmp);
-				System.out.println("Ralph se movio abajo");
-			}else
-				System.out.println("Ralph no puede acceder a esa posicion");
+			}
 			break;
 	
 		case 3:
@@ -168,9 +152,7 @@ public class Ralph {
 			if (tmp.getX() >= 0){
 				setPosicion(tmp);
 				setDerecha(false);
-				System.out.println("Ralph se movio a la izquierda.");
-			}else
-				System.out.println("Ralph no puede acceder a esa posicion");
+			}
 			break;
 		
 		case 4:
@@ -178,9 +160,7 @@ public class Ralph {
 			if (tmp.getX() < 5){
 				setPosicion(tmp);
 				setDerecha(true);
-				System.out.println("Ralph se movio a la derecha.");
-			}else
-				System.out.println("Ralph no puede acceder a esa posicion");
+			}
 			break;
 		
 		default:

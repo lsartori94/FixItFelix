@@ -41,7 +41,7 @@ public class MapScreen extends JFrame {
 		private static final int espacioVerticalEntreVentanas= 20;
 		private static final int anchoWin= 250;
 		private static final int altoWin= 200;
-		private static final int anchoLose= 200;
+		private static final int anchoLose= 225;
 		private static final int altoLose= 200;
 		private int numSeccion;
 		private EstadosJuego estado;
@@ -189,7 +189,7 @@ public class MapScreen extends JFrame {
 				}
 			}
 		}else if (estado == EstadosJuego.WIN){
-			dibujarWin();
+			dibujarWin();					
 		}
 		else if (estado == EstadosJuego.GAMEOVER)
 			dibujarLose();
@@ -197,12 +197,10 @@ public class MapScreen extends JFrame {
 	
 	public void dibujarWin(){
 		this.getGraphics().drawImage(imagenes.get("win"), anchoWin, altoWin, null);
-		setEstado(EstadosJuego.INGAME);
 	}
 	
 	public void dibujarLose(){
-		this.getGraphics().drawImage(imagenes.get("win"), anchoLose, altoLose, null);
-		setEstado(EstadosJuego.ONMENU);
+		this.getGraphics().drawImage(imagenes.get("gameOver"), anchoLose, altoLose, null);
 	}
 	
 	public BufferedImage[][] getImagenesVentanas() {

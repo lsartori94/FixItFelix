@@ -5,8 +5,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import misc.EstadosJuego;
-import misc.HighScores;
-import misc.Persona;
+import misc.HighScore;
 import java.awt.Color;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -23,10 +22,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JLayeredPane;
 import java.awt.Font;
-import javax.swing.JList;
-import javax.swing.AbstractListModel;
-import javax.swing.ListSelectionModel;
 import juego.Juego;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 /**
  * Clase que gestiona la intefaz gráfica e inicia el juego
@@ -41,36 +39,34 @@ public class Game extends JFrame {
 	@SuppressWarnings("unused")
 	private EstadosJuego estado;
 	@SuppressWarnings("unused")
-	private HighScores hgs;
-	private static Persona auxper= new Persona("ASDF", 25548787);
-	private static Persona[] per= new Persona[5];
+	private HighScore [] hgs= {new HighScore("Agus", 2546463), new HighScore("Luca", 254646), new HighScore("Agus", 25464), new HighScore("Luca", 2546), new HighScore("Agus", 254)};
+	private JTable table;
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					for(int i=0; i<5; i++)
-						per[i]= auxper;
-					HighScores hig= new HighScores(per);
-					Game frame = new Game(hig);
-					frame.setVisible(true);
+	//public static void main(String[] args) {
+	//	EventQueue.invokeLater(new Runnable() {
+	//		public void run() {
+	//			try {
+				//	for(int i=0; i<5; i++)
+				//		per[i]= auxper;
+				//	HighScores hig= new HighScores(per);
+			//		Game frame = new Game(hig);
+		//			setVisible(true);
 
 					
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	//			} catch (Exception e) {
+	//				e.printStackTrace();
+	//			}
+	//		}
+	//	});
+	//}
 
 	/**
 	 * Create the frame.
 	 */
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	public Game(HighScores hig) {
-		hgs= hig;
+	public Game(HighScore hig) {
 		setBackground(Color.BLACK);
 		setResizable(false);
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Game.class.getResource("/imagenes/felix_martillo_derecha_1.png")));
@@ -102,73 +98,9 @@ public class Game extends JFrame {
 			    estado= EstadosJuego.INGAME;
 			    setVisible(false);
 			    
-			    //ACA VA LA INTANCIA DE JUEGO PARA USAR PAPAAAAAAAAAA
 			    Juego juego= new Juego();
 			    juego.go();
-			    /**
-				Ventana [][]vent= new Ventana[5][5];
-				int secId= 0;
-				boolean hayPato= true;
-				for(int i= 0; i<5; i++){
-					for(int i2=0; i2<5; i2++){
-						if(i == 2){
-							if(secId == 0){
-								if(i2 == 1){
-									vent[i][i2]= new Puerta(false);
-								}else if(i2 == 2){
-									vent[i][i2]= new Balcon(false);
-								}else
-									vent[i][i2]= new DoblePanel(false, false, false);
-							} else{
-								vent[i][i2]= new DoblePanel(false, false, false);
-							}
-						} else{
-							vent[i][i2]= new DoblePanel(false, false, false);
-						}
-					}
-				}
-				Seccion sec= new Seccion(5, 3, 0, 0, vent, secId, hayPato);
 				
-				Timer timer= new Timer();
-				long sleep= 200;
-				
-				Renderizable ren= new Renderizable(sec, timer, sleep);
-				timer.schedule(ren, 0, sleep);
-				
-				while(1<2){
-					for(int a= 5; a>0; a--){
-						ren.setPosRalph(new Posicion(a-1, 4));
-						//ren.setPosPato(new Posicion(a-1, 2));
-						ren.refreshImagenPosicionRalph(Direccion.LEFT, false);
-						ren.refreshTiroRalph();
-						//ren.refreshImagenPosicionPato(Direccion.LEFT);
-						ren.setPosFelix(new Posicion(a-1, 1));
-						try {
-							Thread.sleep(sleep);
-						} catch (InterruptedException e2) {
-							// TODO Auto-generated catch block
-							e2.printStackTrace();
-						}
-						ren.setPosLadrillo(new Posicion(1, a-1));
-					}
-					for(int a2=1; a2<5; a2++){
-						ren.refreshImagenPosicionRalph(Direccion.RIGHT, true);
-						ren.setPosRalph(new Posicion(a2, 4));
-						ren.setPosPato(new Posicion(a2-1, 2));
-						ren.refreshImagenPosicionPato(Direccion.RIGHT);
-						ren.setPosFelix(new Posicion(a2, 1));
-						try {
-							Thread.sleep(sleep);
-						} catch (InterruptedException e2) {
-							// TODO Auto-generated catch block
-							e2.printStackTrace();
-						}
-						ren.setPosLadrillo(new Posicion(1, 4-a2));
-					}
-				}
-
-				
-				//ACA TERMINA EL BLOQUE PARA EL GAME **/
 			}
 		});
 		
@@ -282,48 +214,84 @@ public class Game extends JFrame {
 		lblPuntajesAltos.setForeground(Color.RED);
 		lblPuntajesAltos.setFont(new Font("Tahoma", Font.BOLD, 30));
 		
-		JList list = new JList();
-		list.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		list.setForeground(Color.RED);
-		list.setBackground(Color.BLACK);
-		HighScores hgs= hig;
-		list.setModel(new AbstractListModel() {
-			String[] values = new String[] {"1.  "+hgs.getStringIn(0), "", "", "2.  "+hgs.getStringIn(1), "", "", "3.  "+hgs.getStringIn(2), "", "", "4.  "+hgs.getStringIn(3), "", "", "5.  "+hgs.getStringIn(4)};
-			public int getSize() {
-				return values.length;
+		table = new JTable();
+		table.setBackground(Color.BLACK);
+		table.setShowVerticalLines(false);
+		table.setShowHorizontalLines(false);
+		table.setShowGrid(false);
+		table.setFont(new Font("Tahoma", Font.BOLD, 23));
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+				{hgs[0].getName(), new Integer(hgs[0].getScore())},
+				{"", null},
+				{"", null},
+				{hgs[1].getName(), new Integer(hgs[1].getScore())},
+				{"", null},
+				{"", null},
+				{hgs[2].getName(), new Integer(hgs[2].getScore())},
+				{"", null},
+				{"", null},
+				{hgs[3].getName(), new Integer(hgs[3].getScore())},
+				{"", null},
+				{null, null},
+				{hgs[4].getName(), new Integer(hgs[4].getScore())},
+			},
+			new String[] {
+				"Jugador", "Puntaje"
 			}
-			public Object getElementAt(int index) {
-				return values[index];
+		) {
+			Class[] columnTypes = new Class[] {
+				String.class, Integer.class
+			};
+			public Class getColumnClass(int columnIndex) {
+				return columnTypes[columnIndex];
 			}
 		});
-		list.setVisibleRowCount(5);
+		table.getColumnModel().getColumn(0).setResizable(false);
+		table.getColumnModel().getColumn(0).setPreferredWidth(100);
+		table.setForeground(Color.RED);
+		
+		JLabel lblJugador = new JLabel("JUGADOR");
+		lblJugador.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblJugador.setForeground(Color.RED);
+		
+		JLabel lblPuntaje = new JLabel("PUNTAJE");
+		lblPuntaje.setForeground(Color.RED);
+		lblPuntaje.setFont(new Font("Tahoma", Font.BOLD, 20));
 		GroupLayout gl_PuntajesAltos = new GroupLayout(PuntajesAltos);
 		gl_PuntajesAltos.setHorizontalGroup(
-			gl_PuntajesAltos.createParallelGroup(Alignment.TRAILING)
+			gl_PuntajesAltos.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_PuntajesAltos.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(btnNewButton)
-					.addContainerGap(675, Short.MAX_VALUE))
-				.addGroup(gl_PuntajesAltos.createSequentialGroup()
-					.addGap(279)
-					.addComponent(lblPuntajesAltos, GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
-					.addGap(245))
-				.addGroup(gl_PuntajesAltos.createSequentialGroup()
-					.addContainerGap(294, Short.MAX_VALUE)
-					.addComponent(list, GroupLayout.PREFERRED_SIZE, 298, GroupLayout.PREFERRED_SIZE)
-					.addGap(192))
+					.addGroup(gl_PuntajesAltos.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_PuntajesAltos.createSequentialGroup()
+							.addGap(10)
+							.addComponent(btnNewButton))
+						.addGroup(gl_PuntajesAltos.createSequentialGroup()
+							.addGap(279)
+							.addComponent(lblPuntajesAltos, GroupLayout.PREFERRED_SIZE, 260, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_PuntajesAltos.createSequentialGroup()
+							.addGap(216)
+							.addGroup(gl_PuntajesAltos.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_PuntajesAltos.createSequentialGroup()
+									.addComponent(lblJugador, GroupLayout.PREFERRED_SIZE, 110, GroupLayout.PREFERRED_SIZE)
+									.addGap(143)
+									.addComponent(lblPuntaje, GroupLayout.PREFERRED_SIZE, 110, GroupLayout.PREFERRED_SIZE))
+								.addComponent(table, GroupLayout.PREFERRED_SIZE, 347, GroupLayout.PREFERRED_SIZE))))
+					.addContainerGap(205, Short.MAX_VALUE))
 		);
 		gl_PuntajesAltos.setVerticalGroup(
-			gl_PuntajesAltos.createParallelGroup(Alignment.TRAILING)
+			gl_PuntajesAltos.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_PuntajesAltos.createSequentialGroup()
 					.addGap(40)
 					.addComponent(lblPuntajesAltos, GroupLayout.PREFERRED_SIZE, 85, GroupLayout.PREFERRED_SIZE)
-					.addGap(106)
-					.addComponent(list, GroupLayout.PREFERRED_SIZE, 171, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, 109, Short.MAX_VALUE)
-					.addComponent(btnNewButton)
-					.addContainerGap())
+					.addGap(41)
+					.addGroup(gl_PuntajesAltos.createParallelGroup(Alignment.BASELINE)
+						.addComponent(lblJugador, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblPuntaje, GroupLayout.PREFERRED_SIZE, 27, GroupLayout.PREFERRED_SIZE))
+					.addGap(34)
+					.addComponent(table, GroupLayout.PREFERRED_SIZE, 233, GroupLayout.PREFERRED_SIZE)
+					.addGap(51)
+					.addComponent(btnNewButton))
 		);
 		PuntajesAltos.setLayout(gl_PuntajesAltos);
 

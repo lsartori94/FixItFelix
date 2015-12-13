@@ -4,11 +4,11 @@ package misc;
  * @author lsartori
  *
  */
-public class Persona{
+public class HighScore{
 	private String name;
 	private int score;
 
-	public Persona(String nam, int sc){
+	public HighScore(String nam, int sc){
 		this.name= nam;
 		this.score= sc;
 	}

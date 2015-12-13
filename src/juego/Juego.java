@@ -33,12 +33,12 @@ public final class Juego implements KeyListener {
 	int colum= 5;
 	private int puntaje= 0;
 	private double vel = 1;
-	//private HighScores highscores;
+	private HighScore highs;
 	boolean gameon = true;
 	private EstadosJuego estado;
 	int iSec = 0;
 	int vidaTot;
-	private final int vidaInicial = 3000;
+	private final int vidaInicial = 1;
 	Posicion tmp, posR, ini;
 	private Renderizable ren;
 
@@ -57,12 +57,11 @@ public final class Juego implements KeyListener {
 		for(int i= 0; i < l_act; i++){
 			Ladrillo lad= ralph.getLadrillo(i);
 			ren.setPosLadrillo(lad.getPosicionl());
+			lad.caer();
 			if(lad.getPosicionl().compareTo(felix.getPosicion())==0){
 				felix.golpe();
-				System.out.println("Ladrillazo en "+felix.getPosicion().getX()+" * "+felix.getPosicion().getY());
 				ren.refreshImagenGolpeFelix();
 			}
-			lad.caer();
 		}
 	}
 	
@@ -110,13 +109,12 @@ public final class Juego implements KeyListener {
 			    }
 			    
 			    if (key == KeyEvent.VK_SPACE) {
-			    	getFelix().martillar();
-			    	felix.getSec().getVentana(felix.getPosicion()).setPuntaje(puntaje+1);
+			    	fMartillar();
 			    }
 		}
 	}
 	
-	public void go() {
+	public HighScore go() {
 			
 		tmp = new Posicion(0,1);
 		ini = new Posicion(2,1);
@@ -129,12 +127,10 @@ public final class Juego implements KeyListener {
 		
 		Timer timer= new Timer();
 		long sleep= 10;
-;
 		
 		comenzar(level);
 		
 		ren= new Renderizable(mapa.getSeccion(iSec), timer, sleep);
-		ren.setEstado(getEstado());
 		KeyListener keylogger = new MyKeyListener();
 		ren.getScreen().setFocusable(true);
 		ren.getScreen().addKeyListener(keylogger);
@@ -142,6 +138,7 @@ public final class Juego implements KeyListener {
 		
 		
 		while(gameon){
+			ren.setEstado(getEstado());
 			iniPersonajes(iSec);
 			while( gameon && (felix.getVidas() > 0) && (mapa.getSeccion(iSec).getCantRotas() > 0) ){
 				vuelta= vuelta+1;
@@ -160,15 +157,6 @@ public final class Juego implements KeyListener {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				if(mapa.getSeccion(iSec).getVentana(felix.getPosicion()).rota()){
-					//fMartillar();
-					//ren.refreshImagenMartilleoFelix(felix.derecha());
-					if(!mapa.getSeccion(iSec).getVentana(felix.getPosicion()).rota())
-						ren.setAreglarImagenVentana(felix.getPosicion());
-				}else{
-					//fMove();
-				}
-				
 				checkColisiones();
 			}
 			
@@ -176,21 +164,21 @@ public final class Juego implements KeyListener {
 				if( iSec < 2 ){
 					iSec++;
 				}else if( level < 9 ){
-					setEstado(EstadosJuego.WIN);
-					ren.setEstado(getEstado());
 					win();
-					try {
-						Thread.sleep(1500);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
 					pasarNivel();
-				}else
+				}else{
 					win();
+					gameon = false;
+					estado = EstadosJuego.GAMEOVER;
+				}
 			}else 
 				gameover();
-		}
+		}				
+
+		//chequeo puntaje
+		//checkHighscore();
+		
+		return highs;
 	}
 	
 	public void iniPersonajes(int secc){
@@ -200,7 +188,6 @@ public final class Juego implements KeyListener {
 		System.out.println("Se van a inicializar Felix y Ralph");
 		felix.iniciar(mapa.getSeccion(secc));
 		ren.setPosFelix(felix.getPosicion());
-//		felix.setPosicion(ini);
 		System.out.println(" ");
 		System.out.println("Felix se creo en la posicion "+felix.getPosicion().getX()+", "+felix.getPosicion().getY()+" con "+felix.getVidas()+" vidas");
 		System.out.println("Poder de Felix= "+felix.Poder());
@@ -244,7 +231,7 @@ public final class Juego implements KeyListener {
 		if( lvl > 0 && lvl < 10){
 			factVentRota = factVentRota * Math.pow((1+0.15),lvl);
 			factObsVent = factObsVent * Math.pow((1+0.15),lvl);
-			vel = vel * Math.pow((1+0.15),lvl);
+			vel = vel * Math.pow((1+0.0005),lvl);
 		}
 		System.out.println("Factoriales "+factVentRota+" , "+factObsVent);
 		
@@ -369,8 +356,10 @@ public final class Juego implements KeyListener {
 									default:
 										System.out.println("Error en el tipo de HOJA al crear.");
 									}
-							}else
+							}else{
 								vent[j][i]= new DoblePanel( false, false, true);
+								cantRota++;
+							}
 							
 						}else if( check2 <= factObsVent ){
 							switch( luck ){
@@ -415,22 +404,29 @@ public final class Juego implements KeyListener {
 	}
 
 	private final void gameover(){
-		//codigo a ejecutar al perder
 		gameon = false;
 		estado = EstadosJuego.GAMEOVER;
 		int vfinal= vidaTot - felix.getVidas();
 		System.out.println("Ralph acerto "+vfinal+ " ladrillos luego de lanzar "+(50-ralph.getCantLadrillos()));
 		System.out.println("Fin de simulacion.");
-		//ejecutar grafica de fin de juego perdedor
-		ren.getScreen().dibujarLose();
+		ren.setEstado(estado);
+		try {
+			Thread.sleep(1500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	private final void win(){
-		estado = EstadosJuego.WIN;
-		//gameon = false;
-		//codigo a ejecutar al ganar el juego
-		//ejecutar grafica de fin de juego ganador
-		ren.getScreen().dibujarWin();
+	 	setEstado(EstadosJuego.WIN);
+		ren.setEstado(getEstado());
+		try {
+			Thread.sleep(1500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -484,8 +480,13 @@ public final class Juego implements KeyListener {
 	 * Suma al puntaje el puntaje de arreglar la ventana
 	 */
 	private void fMartillar(){ 
-		felix.martillar();
-		felix.getSec().getVentana(felix.getPosicion()).setPuntaje(puntaje+1);
+		ren.refreshImagenMartilleoFelix(felix.derecha());
+		if(mapa.getSeccion(iSec).getVentana(felix.getPosicion()).rota()){
+			felix.martillar();
+			felix.getSec().getVentana(felix.getPosicion()).setPuntaje(puntaje+1);
+			if(!mapa.getSeccion(iSec).getVentana(felix.getPosicion()).rota())
+				ren.setAreglarImagenVentana(felix.getPosicion());
+		}
 	}
 		
 	public void setEstado( EstadosJuego status){

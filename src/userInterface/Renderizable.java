@@ -67,8 +67,8 @@ public class Renderizable extends TimerTask {
 		screen.setEstado(estado);
 		screen.setImagenes(imagenes);
 		sleepR= 60;
-		sleepP= 100;
-		sleepF= 100;
+		sleepP= 110;
+		sleepF= 110;
 		sleepFelixMart= sleepF+250;
 
 		this.timer= tim;
@@ -170,7 +170,7 @@ public class Renderizable extends TimerTask {
 			if(misc.isEmpty()){
 				misc.put("titulo", ImageIO.read(new File("src/imagenes/titulo.png")));
 				misc.put("gameOver", ImageIO.read(new File("src/imagenes/gameover.png")));
-				misc.put("levelWin", ImageIO.read(new File("src/imagenes/win.gif")));
+				misc.put("levelWin", ImageIO.read(new File("src/imagenes/win.png")));
 				misc.put("fondo", ImageIO.read(new File("src/imagenes/fondo.png")));
 				misc.put("instrucciones", ImageIO.read(new File("src/imagenes/instrucciones.png")));
 			}
@@ -676,6 +676,7 @@ public class Renderizable extends TimerTask {
 
 	public void setEstado(EstadosJuego estado) {
 		this.estado = estado;
+		screen.setEstado(estado);
 	}
 
 	public MapScreen getScreen() {
