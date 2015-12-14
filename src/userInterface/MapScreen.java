@@ -1,4 +1,7 @@
 package userInterface;
+import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
@@ -52,6 +55,8 @@ public class MapScreen extends JFrame {
 		private Posicion posLadrillo;
 		private Posicion posNicelander;
 		private Posicion posPato;
+		private Integer puntaje;
+		private Integer vidas;
 	
 
 	public MapScreen(){
@@ -87,6 +92,17 @@ public class MapScreen extends JFrame {
 	public void dibujarMapa(){
 		// Pinta seccion
 		this.getGraphics().drawImage(imagenes.get("fondo"), 0, 0, null);
+		
+		String points= "Puntaje= " + puntaje.toString();
+		JLabel textP = new JLabel(points);
+		textP.setOpaque(false);
+		textP.setBackground(Color.BLACK);
+		textP.setForeground(Color.RED);
+	    textP.setFont(new Font("Verdana",1,20));
+	    textP.setBounds(10, 10, 10, 10);
+		JPanel menu = new JPanel();
+	    this.add(textP);
+
 		this.getGraphics().drawImage(imagenes.get("seccion"), posHorizontalMapa, posVerticalMapa, null);
 		int auxAncho;
 		int auxAlto;
@@ -274,6 +290,22 @@ public class MapScreen extends JFrame {
 
 	public void setEstado(EstadosJuego estado) {
 		this.estado = estado;
+	}
+
+	public int getPuntaje() {
+		return puntaje;
+	}
+
+	public void setPuntaje(int puntaje) {
+		this.puntaje = new Integer(puntaje);
+	}
+
+	public int getVidas() {
+		return vidas;
+	}
+
+	public void setVidas(int vidas) {
+		this.vidas = new Integer(vidas);
 	}
 
 	

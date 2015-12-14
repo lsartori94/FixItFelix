@@ -69,6 +69,7 @@ public final class Juego implements KeyListener, Runnable {
 			lad.caer();
 			if(lad.getPosicionl().compareTo(felix.getPosicion())==0){
 				felix.golpe();
+				ren.getScreen().setVidas(felix.getVidas());
 				ren.refreshImagenGolpeFelix();
 			}
 		}
@@ -150,6 +151,8 @@ public final class Juego implements KeyListener, Runnable {
 		
 		
 		while(gameon){
+			ren.getScreen().setVidas(felix.getVidas());
+			ren.getScreen().setPuntaje(puntaje);
 			ren.setEstado(getEstado());
 			iniPersonajes(iSec);
 			while( gameon && (felix.getVidas() > 0) && (mapa.getSeccion(iSec).getCantRotas() > 0) ){
@@ -412,6 +415,9 @@ public final class Juego implements KeyListener, Runnable {
 		level++;
 		iSec = 0;
 		felix.setVidas(felix.getVidas()+1);
+		ren.getScreen().setVidas(felix.getVidas());
+		puntaje= puntaje+200;
+		ren.getScreen().setPuntaje(puntaje);
 		comenzar(level);
 	}
 
@@ -494,7 +500,8 @@ public final class Juego implements KeyListener, Runnable {
 	private void fMartillar(){ 
 		ren.refreshImagenMartilleoFelix(felix.derecha());
 		if(mapa.getSeccion(iSec).getVentana(felix.getPosicion()).rota()){
-			felix.martillar();
+			puntaje= puntaje + felix.martillar();
+			ren.getScreen().setPuntaje(puntaje);
 			felix.getSec().getVentana(felix.getPosicion()).setPuntaje(puntaje+1);
 			if(!mapa.getSeccion(iSec).getVentana(felix.getPosicion()).rota())
 				ren.setAreglarImagenVentana(felix.getPosicion());
