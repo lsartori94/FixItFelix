@@ -13,7 +13,6 @@ public class Mapa {
 
 	/**
 	 * Metodo para iniciar el mapa en un nivel.
-	 * A futuro modificar para aceptar distintos niveles.
 	 * @param secc = array de secciones.
 	 * @param tamanio = cantidad de secciones.
 	 */

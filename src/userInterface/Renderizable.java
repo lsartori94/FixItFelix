@@ -48,8 +48,6 @@ public class Renderizable extends TimerTask {
 	private long sleepFelixMart;
 
 	public Renderizable(Seccion sec, Timer tim, long slp){
-		//necesitamos parametros del juego
-		
 		setSeccion(sec);
 		cargarImagenesEdificio();
 		cargarImagenesMisc();

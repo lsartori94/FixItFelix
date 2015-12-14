@@ -1,7 +1,7 @@
 package misc;
 /**
  * Clase que representa a una persona con su nombre y su highscore
- * @author lsartori
+ * @author lsartori Agustin Liebana
  *
  */
 public class HighScore{

@@ -1,6 +1,6 @@
 package misc;
 /**
- * Esta clase representa los estados de juego
+ * Esta clase representa el estado actual del juego.
  * @author Luca Sartori, Agutín Liébana
  *
  */

@@ -8,7 +8,6 @@ import misc.Hoja;
  * No puede estar rota.
  * No da puntos
  * 
- * Revisar para posterior agregado se sentido de apertura
  * 
  * @author lsartori Agustín Liébana
  *
