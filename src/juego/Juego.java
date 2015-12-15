@@ -33,7 +33,6 @@ public final class Juego implements Runnable {
 	int colum= 5;
 	private int puntaje= 0;
 	private double vel = 1;
-	private HighScore highs;
 	boolean gameon = true;
 	private EstadosJuego estado;
 	int iSec = 0;
@@ -56,14 +55,14 @@ public final class Juego implements Runnable {
 			lad.caer();
 			if((lad.getPosicionl().compareTo(felix.getPosicion())==0)){
 				felix.golpe();
-				ren.getScreen().setVidas(felix.getVidas());
 				ren.refreshImagenGolpeFelix();
+				ren.refreshVida(felix.getVidas());
 			}
 			if(hayPato){
 				if((pato.getPosicion().compareTo(felix.getPosicion())==0)){
 					felix.golpe();
-					ren.getScreen().setVidas(felix.getVidas());
 					ren.refreshImagenGolpeFelix();
+					ren.refreshVida(felix.getVidas());
 				}
 			}
 		}
@@ -161,7 +160,7 @@ public final class Juego implements Runnable {
 		 * Ralph tira un ladrillo cada 4 vueltas, el movimiento de Ralph es random
 		 */
 		while(gameon){
-			ren.getScreen().setVidas(felix.getVidas());
+			ren.refreshVida(felix.getVidas());
 			ren.getScreen().setPuntaje(puntaje);
 			ren.setEstado(getEstado());
 			iniPersonajes(iSec);
@@ -444,7 +443,7 @@ public final class Juego implements Runnable {
 	private final void pasarNivel(){
 		level++;
 		iSec = 0;
-		ren.getScreen().setVidas(felix.getVidas());
+		ren.refreshVida(felix.getVidas());
 		puntaje= puntaje+200;
 		ren.getScreen().setPuntaje(puntaje);
 		comenzar(level);
@@ -493,6 +492,7 @@ public final class Juego implements Runnable {
 	 * y se avisa por consola. Igualmente la simulacion termina cuando Felix muera
 	 * o cuando Ralph no tenga mas ladrillos.
 	 */
+	@SuppressWarnings("unused")
 	private void fMove(){
 		if(felix.getPosicion().getY() < 4 ){
 			if(felix.getPosicion().getY() % 2 != 0){
@@ -544,14 +544,17 @@ public final class Juego implements Runnable {
 				ren.setAreglarImagenVentana(felix.getPosicion());
 		}
 	}
+	
 		
 	public void setEstado( EstadosJuego status){
 		estado = status;
 	}
 	
+	
 	public EstadosJuego getEstado(){
 		return estado;
 	}
+	
 	
 	/**
 	 * Metodo que se encarga de mover al pato
@@ -564,6 +567,7 @@ public final class Juego implements Runnable {
 		return bol;
 	}
 
+	
 	/**
 	 * Metodo que se encarga de mover a Ralph
 	 * @param dir = direccion a la que se mueve

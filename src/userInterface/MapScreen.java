@@ -58,7 +58,6 @@ public class MapScreen extends JFrame {
 		private Posicion posNicelander;
 		private Posicion posPato;
 		private Integer puntaje;
-		private Integer vidas;
 	
 	/**
 	 * Inicia el refresco de imagen y dibuja una primera vez
@@ -96,6 +95,8 @@ public class MapScreen extends JFrame {
 		int auxAncho;
 		int auxAlto;
 		if(estado == EstadosJuego.INGAME){
+			// Pinta las vidas en pantalla
+			this.getGraphics().drawImage(imagenes.get("vida"), 500, 500, null);
 			// Se agrega de abajo para arriba por la implementacion de la matriz de ventanas
 			for(int x=minDimX; x<maxDimX; x++){
 				for(int y=maxDimY; y>minDimY; y--){
@@ -295,19 +296,11 @@ public class MapScreen extends JFrame {
 		this.puntaje = new Integer(puntaje);
 	}
 
-	public int getVidas() {
-		return vidas;
-	}
-
-	public void setVidas(int vidas) {
-		this.vidas = new Integer(vidas);
-	}
-
 	public void dibujarPuntaje(){
 		this.getGraphics().drawImage(imagenes.get("fondo"), 0, 0, null);
 		String points= "Puntaje= " + puntaje.toString();
 		JLabel textP = new JLabel(points);
-		textP.setOpaque(false);
+		textP.setOpaque(true);
 		textP.setBackground(Color.BLACK);
 		textP.setForeground(Color.RED);
 	    textP.setFont(new Font("Verdana", 1, 100));

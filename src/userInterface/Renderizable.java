@@ -185,6 +185,9 @@ public class Renderizable extends TimerTask {
 				misc.put("levelWin", ImageIO.read(new File("src/imagenes/win.png")));
 				misc.put("fondo", ImageIO.read(new File("src/imagenes/fondo.png")));
 				misc.put("instrucciones", ImageIO.read(new File("src/imagenes/instrucciones.png")));
+				misc.put("1vida", ImageIO.read(new File("src/imagenes/1vida.png")));
+				misc.put("2vida", ImageIO.read(new File("src/imagenes/2vida.png")));
+				misc.put("3vida", ImageIO.read(new File("src/imagenes/3vida.png")));
 			}
 		} catch(IOException e){
 			System.out.println("Error interno en Misc" + e.getMessage());
@@ -429,6 +432,7 @@ public class Renderizable extends TimerTask {
 		imagenes.put("pato", pato.get("aleteoDerecha1"));
 		imagenes.put("felix", felix.get("paradoDerecha"));
 		imagenes.put("ralph", ralph.get("parado"));
+		imagenes.put("vida", misc.get("3vida"));
 	}
 
 	/**
@@ -829,6 +833,24 @@ public class Renderizable extends TimerTask {
 					imagenesVentanas[x][y]= balcon.get("sano");
 					break;
 			}
+		}
+	}
+	
+	/**
+	 * cambia el valor de la grafica de vidas
+	 * @param vida cantidad de vidas
+	 */
+	public void refreshVida(int vida){
+		switch(vida){
+		case 1:
+			imagenes.put("vida", misc.get("1vida"));
+			break;
+		case 2:
+			imagenes.put("vida", misc.get("2vida"));
+			break;
+		case 3:
+			imagenes.put("vida", misc.get("3vida"));
+			break;
 		}
 	}
 	
