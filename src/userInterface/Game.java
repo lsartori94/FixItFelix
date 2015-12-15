@@ -1,6 +1,5 @@
 package userInterface;
 
-import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -11,7 +10,6 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JLabel;
 import java.awt.Toolkit;
 import javax.swing.JTextPane;
@@ -38,27 +36,9 @@ public class Game extends JFrame {
 	private JLayeredPane contentPane;
 	@SuppressWarnings("unused")
 	private EstadosJuego estado;
-	@SuppressWarnings("unused")
 	private HighScore [] hgs= {new HighScore("Agus", 2546463), new HighScore("Luca", 254646), new HighScore("Agus", 25464), new HighScore("Luca", 2546), new HighScore("Agus", 254)};
 	private JTable table;
-	/**
-	 * Launch the application.
-	 */
-	//public static void main(String[] args) {
-	//	EventQueue.invokeLater(new Runnable() {
-	//		public void run() {
-		
-			//		Game frame = new Game(hig);
-		//			setVisible(true);
-
-					
-	//			} catch (Exception e) {
-	//				e.printStackTrace();
-	//			}
-	//		}
-	//	});
-	//}
-
+	
 	/**
 	 * Create the frame.
 	 */

@@ -16,10 +16,14 @@ import misc.EstadosJuego;
 import misc.Hoja;
 import misc.Posicion;
 
+/**
+ * Metodo que se encarga de la carga de imágenes y del llamado al dibujado de las mismas
+ * @author lsartori
+ *
+ */
 public class Renderizable extends TimerTask {
 
 	private Timer timer;
-	//private static final long periodoTimer= 100;
 	private Map <String, BufferedImage> balcon= new TreeMap<String, BufferedImage>();
 	private Map <String, BufferedImage> conHoja= new TreeMap<String, BufferedImage>();
 	private Map <String, BufferedImage> doblePanel= new TreeMap<String, BufferedImage>();
@@ -47,9 +51,13 @@ public class Renderizable extends TimerTask {
 	private long sleepF;
 	private long sleepFelixMart;
 
+	/**
+	 * Carga todas las imagenes de memoria y setea los relojes de refrescado
+	 * @param sec seccion actual a dibujar
+	 * @param tim instancia de timer para el automatizado
+	 * @param slp velocidad del timer
+	 */
 	public Renderizable(Seccion sec, Timer tim, long slp){
-		//necesitamos parametros del juego
-		
 		setSeccion(sec);
 		cargarImagenesEdificio();
 		cargarImagenesMisc();
@@ -74,8 +82,12 @@ public class Renderizable extends TimerTask {
 		this.timer= tim;
 	}
 	
-	
-	//@Override
+	/*
+	 * metodo que realiza el llamado al dibujado
+	 * (non-Javadoc)
+	 * @see java.util.TimerTask#run()
+	 */
+	@Override
 	public void run(){
 		screen.setImagenesVentanas(imagenesVentanas);
 		screen.setPosFelix(posFelix);
@@ -687,6 +699,9 @@ public class Renderizable extends TimerTask {
 		this.screen = screen;
 	}
 	
+	/*
+	 * refresca la imagen de felix cuando lo golpea un ladrillo
+	 */
 	public void refreshImagenGolpeFelix(){
 		imagenes.put("felix", felix.get("golpe"));
 		try {
@@ -698,6 +713,9 @@ public class Renderizable extends TimerTask {
 		imagenes.put("felix", felix.get("paradoDerecha"));
 	}
 	
+	/*
+	 * refresca la imagen de felix cuando muere
+	 */
 	public void refreshImagenMuerteFelix(){
 		imagenes.put("felix", felix.get("muerte1"));
 		try {
@@ -751,6 +769,9 @@ public class Renderizable extends TimerTask {
 		imagenes.put("felix", felix.get("paradoDerecha"));
 	}
 	
+	/*
+	 * referesca la imagen de felix cuando martilla
+	 */
 	public void refreshImagenMartilleoFelix(Boolean felixDerecha){
 		if(felixDerecha){
 			imagenes.put("felix", felix.get("martilloDerecha1"));
@@ -787,6 +808,9 @@ public class Renderizable extends TimerTask {
 			}
 	}
 	
+	/*
+	 * refresca la imagen de una ventana cuando se arregla
+	 */
 	public void setAreglarImagenVentana(Posicion pos){
 		Ventana auxV= ventanas[pos.getX()][pos.getY()];
 		if(!auxV.rota()){
