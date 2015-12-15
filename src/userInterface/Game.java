@@ -36,7 +36,7 @@ public class Game extends JFrame {
 	private JLayeredPane contentPane;
 	@SuppressWarnings("unused")
 	private EstadosJuego estado;
-	private HighScore [] hgs= {new HighScore("Agus", 2546463), new HighScore("Luca", 254646), new HighScore("Agus", 25464), new HighScore("Luca", 2546), new HighScore("Agus", 254)};
+	private HighScore [] hgs= {new HighScore("Agus", 2846463), new HighScore("Luca", 274646), new HighScore("Agus", 264644), new HighScore("Luca", 25456), new HighScore("Agus", 22254)};
 	private JTable table;
 	
 	/**

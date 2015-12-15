@@ -7,7 +7,6 @@ package entorno;
  * 
  * @author lsartori Agustín Liébana
  *
- *Paneles se encuentran comentados por ser prueba.
  */
 
 public class Balcon extends Semicirculo{

@@ -43,8 +43,10 @@ public final class Juego implements Runnable {
 
 	
 	/**
-	 * Metodo que controla si hubo una colisión entre felix y ladrillo o pato
-	 * Si hay choque, Felix pierde una vida
+	 * El metodo checkColisiones se encarga de continuar el movimiento
+	 * de los ladrillos lanzados, asi como checkear las colisiones de
+	 * mismos con Felix, desencadenando las acciones apropiadas para cada
+	 * caso.
 	 */
 	private void checkColisiones(){
 		int l_act= ralph.getLadrilloAct();
@@ -69,10 +71,11 @@ public final class Juego implements Runnable {
 	}
 	
 	/**
-	 * Clase listener de teclado que realiza las acciones de felix
-	 * @author lsartori
-	 *
+	 * Customizacion de KeyListener utilizada para la funcionalidad
+	 * de los movimientos de Felix. keyPressed fue incluida para
+	 * comprobar su correcto funcionamiento en el log de la consola. 
 	 */
+
 	public class MyKeyListener implements KeyListener {
 		@Override
 		public void keyTyped(KeyEvent e) {
@@ -123,11 +126,12 @@ public final class Juego implements Runnable {
 	}
 	
 	/**
-	 * Es el metodo que da el esqueleto a la prueba.
-	 * Es un loop del cual se sale si ralph se queda sin ladrillos o si felix muere.
-	 * Cada iteracion del loop representa un turno de movimientos.
-	 * @return 
+	 * Este es el motor del juego. A lo largo de ejecucion se inicializan
+	 * los niveles con sus respectivas secciones de ventanas, asi como las 
+	 * posiciones iniciales y los modificadores asociados a cada uno de ellos.
+	 * 
 	 */
+	
 	public void go() {
 			
 		tmp = new Posicion(0,1);
@@ -216,9 +220,11 @@ public final class Juego implements Runnable {
 	}
 	
 	/**
-	 * Metodo que inicia los personajes con sus valores default
-	 * @param secc
+	 * Se inicializan todos los personajes en la seccion que se
+	 * recibe como parametro. Los println son para controlar el 
+	 * log de consola. 
 	 */
+
 	public void iniPersonajes(int secc){
 		ren.setSeccion(mapa.getSeccion(iSec));
 		ren.cargarTodo();
@@ -246,7 +252,7 @@ public final class Juego implements Runnable {
 	 *Hay un contador de ventanas rotas para el control.
 	 *
 	 * ACLARACION
-	 * Si bien la seccion correspondiente de ventanas es de 3*5 nosotos
+	 * Si bien la seccion correspondiente de ventanas es de 3*5 nosotros
 	 * utilizamos 5*5 porque sumamos una fila exclusiva de moviento de ralph(fila 4)
 	 * y una fila de "desechos de ladrillos" (fila 0) para que caigan a una seccion
 	 * a la que no puede ir felix.
@@ -255,10 +261,20 @@ public final class Juego implements Runnable {
 	 * 
 	 * Se crea una seccion unica con esa matriz , luego con eso el mapa.
 	 * Finalmente se instancian felix y ralph.
+	 * 
+	 * Luck se utiliza para generar aleatoriamente las ventanas con
+	 * modificadores (mulduras, macetas, etc).
+	 * 
+	 * Segun el nivel del juego, los factores de ventanas rotas,
+	 * cantidad de ventanas con obstaculos y la velocidad de desplazamiento
+	 * con la que se moveran los diferentes personajes automatizados en el
+	 * juego son incrementados a medida que se avanza sobre el mismo, con 
+	 * el ratio indicado en la consigna.
+	 * Estos son luego utilizados al momento de generar las ventanas o mover
+	 * los ladrillos, entre otras cosas.
 	 */
+	
 	private void comenzar(int lvl){
-		// codigo a ejecutar para iniciar el juego
-		
 		estado = EstadosJuego.INGAME;
 		
 		if( lvl > 0 && lvl < 10){
@@ -269,7 +285,6 @@ public final class Juego implements Runnable {
 		System.out.println("Factoriales "+factVentRota+" , "+factObsVent);
 		
 		Seccion [] sec= new Seccion [3];
-		//sec = sec2;
 		hayPato=(lvl > 3)?true:false;
 		for(indiceSec = 0; indiceSec < 3; indiceSec++){
 			System.out.println("Seccion "+indiceSec);
@@ -277,7 +292,7 @@ public final class Juego implements Runnable {
 			sec[indiceSec]= new Seccion((filas - 2), colum, cantRota, obstaculos, ventanas, indiceSec, hayPato); 
 		}
 		Mapa map = new Mapa(sec, lvl);
-		mapa = map;   //atada con alambre
+		mapa = map;
 	}
 	
 	
@@ -436,7 +451,7 @@ public final class Juego implements Runnable {
 		return vent;
 	}
 	
-	/*
+	/**
 	 * Codigo a ejecutar para pasar de nivel
 	 * Suma 200 puntos
 	 */
@@ -484,7 +499,10 @@ public final class Juego implements Runnable {
 	}
 
 	/**
-	 * Metodo que reliza los movimientos de Felix en caso de que se quiera automatizar, NO USADO PARA JUGAR.
+	 * ESTE METODO ES OBSOLETO PARA EL JUEGO.
+	 * SE UTILIZO PARA LA SIMULACION DE LA PRIMER ENTREGA UNICAMENTE.
+	 * SE CONSERVO YA QUE FUE UTIL HASTA TENER LOS CONTROLES DE TECLADO FUNCIONALES.
+	 * Metodo que reliza los movimientos de Felix
 	 * Los movimientos son en base a lo indicado, del centro a la derecha
 	 * en el piso 1 y luego recorre el piso 2 hacia izquierda y el 3 a derecha.
 	 * Si uno aumenta las vidas de Felix en sus atributos
