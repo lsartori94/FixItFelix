@@ -11,7 +11,6 @@ import misc.Posicion;
  */
 public class Pato {
 	private Posicion posicion;
-	private boolean destruir= false;
 
 	public Pato(Posicion pos){
 		posicion = pos;
@@ -21,12 +20,16 @@ public class Pato {
 		return posicion;
 	}
 	
+	/**
+	 * Setea la posición antes controlando que se encuentre dentros de los limites lógicos del mapa
+	 * @param pos
+	 * @return
+	 */
 	public boolean setPosicion(Posicion pos) {
 		if((pos.getX() > 0)||(pos.getX() < 4)){
 			this.posicion = pos;
 			return true;
 		}else{
-			destruir= true;
 			return false;
 		}
 	}
@@ -65,7 +68,4 @@ public class Pato {
 		return bol;
 	}
 	
-	public boolean getDestruir(){
-		return destruir;
-	}
 }

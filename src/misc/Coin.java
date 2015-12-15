@@ -1,5 +1,13 @@
 package misc;
 
+
+/**
+ * @author Agustin Liebana lsartori
+ * 
+ * Enumerativo simple utilizado para generar aleatoriamente
+ * los modificadores de las ventanas.
+ *
+ */
 public enum Coin {
 	HOJA(0),
 	MACETA(1),

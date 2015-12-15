@@ -2,7 +2,7 @@ package listeners;
 import java.awt.event.*;
 
 /**
- * escucha de click de mouse
+ * Metodo de escucha de click de mouse para los botones del menu
  * @author lsartori
  *
  */

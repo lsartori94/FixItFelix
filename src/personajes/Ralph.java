@@ -18,7 +18,6 @@ public class Ralph {
 	private boolean derecha;
 	private Posicion posicion;
 
-	//metodo para iniciar a Ralph por nivel. no se asume Sprite por ser prueba
 	/*
 	 * En el constructor de Ralph, inicializamos su posicion inicial, ademas
 	 * seteamos los atributos relativos a los ladrillos que Ralph lanzará, como
@@ -26,12 +25,11 @@ public class Ralph {
 	 * 
 	 * @author Agustín Liébana lsartori
 	 */
+	
 	public Ralph( Posicion pos ){
 		setPosicion( pos );
-		//por ser prueba se informa lo realizado
-	}
+		}
 
-	//metodo a ejecutar para que Ralph tire un ladrillo
 	/*
 	 * Este metodo se encarga de lanzar un ladrillo. Cada vez que se
 	 * ejecute el mismo, se desencadena el metodo Caer de la clase ladrillo
@@ -40,6 +38,7 @@ public class Ralph {
 	 * en movimiento decencente, asi como se decrementa la cantidad de ladrillos
 	 * restantes que dispone Ralph para lanzar.
 	 */
+	
 	public void shoot(){
 		if(getCantLadrillos() != 0){
 			ladrillos[getLadrilloAct()].caer();
@@ -103,6 +102,7 @@ public class Ralph {
 	 * y estados particulares. Para el caso del ejemplo son todos
 	 * iguales en cuanto a sus caracteristicas.
 	 */
+	
 	private void crearLadrillos(int cant, Posicion pos){
 		Ladrillo [] tmp= new Ladrillo[cant];
 		for(int i= 0; i<cant; i++){
@@ -127,9 +127,8 @@ public class Ralph {
 	
 	/*
 	 * Al igual que felix, este metodo permite el movimiento de Ralph.
-	 * Nuevamente sus condicionales son especificos para el diseño de la
-	 * seccion y pueden mutar en la version completa del juego.
 	 */
+	
 	public void move(Direccion d){
 		Posicion tmp= posicion;
 		switch (d.getValue()) {

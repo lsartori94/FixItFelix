@@ -14,7 +14,6 @@ public class Felix {
 	private int limiteInf = 0;
 	private boolean derecha;
 
-	//inicia Default Felix
 	/*
 	 * Inicializamos a felix en la posicion 2, 1 que se coorresponde con la posicion
 	 * de la puerta del edificio. Ademas seteamos la cantidad de vidas y el estado
@@ -23,6 +22,7 @@ public class Felix {
 	 * @author Agustín Liébana lsartori
 	 * 
 	 */
+	
 	public void iniciar(Seccion sec){
 		//se asume como posicion inicial el piso 0 a la mitad del mapa (fila 3 de 5)
 		Posicion tmpPos = posInicial;
@@ -120,10 +120,10 @@ public class Felix {
 
 	/*
 	 * Este metodo se encarga de mover a felix a lo largo de la matriz
-	 * que compone la seccion de ventanas. Los diferente case se corresponden
+	 * que compone la seccion de ventanas. Los diferentes case se corresponden
 	 * con los valores del enumerativo Direccion. Los condicionales de cada
 	 * movimiento estan ajustados al diseño actual de la seccion.
-	 * A su vez controla que se pueda mover a esa ventana (que no tenga modificadores)
+	 * A su vez controla que se pueda mover a esa ventana (que no tenga modificadores).
 	 */
 	public void move(Direccion d){
 		tmp = new Posicion(posicion.getX(),posicion.getY());
