@@ -44,10 +44,15 @@ public final class Juego implements Runnable {
 
 	
 	/**
+<<<<<<< HEAD
 	 * El metodo checkColisiones se encarga de continuar el movimiento
 	 * de los ladrillos lanzados, asi como checkear las colisiones de
 	 * mismos con Felix, desencadenando las acciones apropiadas para cada
 	 * caso.
+=======
+	 * Metodo que controla si hubo una colisión entre felix y ladrillo o pato
+	 * Si hay choque, Felix pierde una vida
+>>>>>>> a02f65a2d560d8dc18529ec9dcee8519b39a9fd8
 	 */
 	private void checkColisiones(){
 		int l_act= ralph.getLadrilloAct();
@@ -72,11 +77,18 @@ public final class Juego implements Runnable {
 	}
 	
 	/**
+<<<<<<< HEAD
 	 * Customizacion de KeyListener utilizada para la funcionalidad
 	 * de los movimientos de Felix. keyPressed fue incluida para
 	 * comprobar su correcto funcionamiento en el log de la consola. 
 	 */
-
+	
+=======
+	 * Clase listener de teclado que realiza las acciones de felix
+	 * @author lsartori
+	 *
+	 */
+>>>>>>> a02f65a2d560d8dc18529ec9dcee8519b39a9fd8
 	public class MyKeyListener implements KeyListener {
 		@Override
 		public void keyTyped(KeyEvent e) {
@@ -127,13 +139,22 @@ public final class Juego implements Runnable {
 	}
 	
 	/**
+<<<<<<< HEAD
 	 * Este es el motor del juego. A lo largo de ejecucion se inicializan
 	 * los niveles con sus respectivas secciones de ventanas, asi como las 
 	 * posiciones iniciales y los modificadores asociados a cada uno de ellos.
 	 * 
 	 */
 	
+	public HighScore go() {
+=======
+	 * Es el metodo que da el esqueleto a la prueba.
+	 * Es un loop del cual se sale si ralph se queda sin ladrillos o si felix muere.
+	 * Cada iteracion del loop representa un turno de movimientos.
+	 * @return 
+	 */
 	public void go() {
+>>>>>>> a02f65a2d560d8dc18529ec9dcee8519b39a9fd8
 			
 		tmp = new Posicion(0,1);
 		ini = new Posicion(2,1);
@@ -221,11 +242,17 @@ public final class Juego implements Runnable {
 	}
 	
 	/**
+<<<<<<< HEAD
 	 * Se inicializan todos los personajes en la seccion que se
 	 * recibe como parametro. Los println son para controlar el 
 	 * log de consola. 
 	 */
-
+	
+=======
+	 * Metodo que inicia los personajes con sus valores default
+	 * @param secc
+	 */
+>>>>>>> a02f65a2d560d8dc18529ec9dcee8519b39a9fd8
 	public void iniPersonajes(int secc){
 		ren.setSeccion(mapa.getSeccion(iSec));
 		ren.cargarTodo();
@@ -452,7 +479,7 @@ public final class Juego implements Runnable {
 		return vent;
 	}
 	
-	/**
+	/*
 	 * Codigo a ejecutar para pasar de nivel
 	 * Suma 200 puntos
 	 */
@@ -500,10 +527,14 @@ public final class Juego implements Runnable {
 	}
 
 	/**
+<<<<<<< HEAD
 	 * ESTE METODO ES OBSOLETO PARA EL JUEGO.
 	 * SE UTILIZO PARA LA SIMULACION DE LA PRIMER ENTREGA UNICAMENTE.
 	 * SE CONSERVO YA QUE FUE UTIL HASTA TENER LOS CONTROLES DE TECLADO FUNCIONALES.
-	 * Metodo que reliza los movimientos de Felix
+	 * Metodo que reliza los movimientos de Felix.
+=======
+	 * Metodo que reliza los movimientos de Felix en caso de que se quiera automatizar, NO USADO PARA JUGAR.
+>>>>>>> a02f65a2d560d8dc18529ec9dcee8519b39a9fd8
 	 * Los movimientos son en base a lo indicado, del centro a la derecha
 	 * en el piso 1 y luego recorre el piso 2 hacia izquierda y el 3 a derecha.
 	 * Si uno aumenta las vidas de Felix en sus atributos

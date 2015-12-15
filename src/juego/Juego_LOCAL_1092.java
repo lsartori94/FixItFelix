@@ -1,4 +1,5 @@
 package juego;
+import java.awt.CardLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.Timer;
@@ -6,6 +7,7 @@ import java.util.Timer;
 import misc.*;
 import personajes.Felix;
 import personajes.Ralph;
+import userInterface.Game;
 import userInterface.Renderizable;
 import entorno.*;
 /**
@@ -16,7 +18,7 @@ import entorno.*;
  * @author lsartori Agustín Liébana
  *
  */
-public final class Juego implements Runnable {
+public final class Juego implements KeyListener, Runnable {
 	private Ralph ralph;
 	private Felix felix;
 	private Pato pato;
@@ -38,10 +40,16 @@ public final class Juego implements Runnable {
 	private EstadosJuego estado;
 	int iSec = 0;
 	int vidaTot;
-	private final int vidaInicial = 3;
+	private final int vidaInicial = 10;
 	Posicion tmp, posR, ini;
 	private Renderizable ren;
 
+	//public Juego(){
+		//Game g= new Game();
+		//g.setVisible(true);
+		
+	//}
+	
 	
 	/**
 	 * El metodo checkColisiones se encarga de continuar el movimiento
@@ -49,6 +57,7 @@ public final class Juego implements Runnable {
 	 * mismos con Felix, desencadenando las acciones apropiadas para cada
 	 * caso.
 	 */
+	
 	private void checkColisiones(){
 		int l_act= ralph.getLadrilloAct();
 		//evalua los ladrillos tirados para ver si golpearona felix
@@ -56,17 +65,10 @@ public final class Juego implements Runnable {
 			Ladrillo lad= ralph.getLadrillo(i);
 			ren.setPosLadrillo(lad.getPosicionl());
 			lad.caer();
-			if((lad.getPosicionl().compareTo(felix.getPosicion())==0)){
+			if(lad.getPosicionl().compareTo(felix.getPosicion())==0){
 				felix.golpe();
 				ren.getScreen().setVidas(felix.getVidas());
 				ren.refreshImagenGolpeFelix();
-			}
-			if(hayPato){
-				if((pato.getPosicion().compareTo(felix.getPosicion())==0)){
-					felix.golpe();
-					ren.getScreen().setVidas(felix.getVidas());
-					ren.refreshImagenGolpeFelix();
-				}
 			}
 		}
 	}
@@ -76,7 +78,7 @@ public final class Juego implements Runnable {
 	 * de los movimientos de Felix. keyPressed fue incluida para
 	 * comprobar su correcto funcionamiento en el log de la consola. 
 	 */
-
+	
 	public class MyKeyListener implements KeyListener {
 		@Override
 		public void keyTyped(KeyEvent e) {
@@ -133,7 +135,7 @@ public final class Juego implements Runnable {
 	 * 
 	 */
 	
-	public void go() {
+	public HighScore go() {
 			
 		tmp = new Posicion(0,1);
 		ini = new Posicion(2,1);
@@ -149,21 +151,16 @@ public final class Juego implements Runnable {
 		
 		comenzar(level);
 		
-		/**
-		 * Instanciacion de la pantalla de juego, la cual es un frame distinto al menu
-		 */
 		ren= new Renderizable(mapa.getSeccion(iSec), timer, sleep);
 		KeyListener keylogger = new MyKeyListener();
+		//ren.getScreen().setFocusable(true);
 		ren.getScreen().getRootPane().setRequestFocusEnabled(true);
 		ren.getScreen().getRootPane().setFocusable(true);
 		ren.getScreen().getRootPane().addKeyListener(keylogger);
 		ren.getScreen().addKeyListener(keylogger);
 		timer.schedule(ren, 0, sleep);
 		
-		/**
-		 * loop de control de juego
-		 * Ralph tira un ladrillo cada 4 vueltas, el movimiento de Ralph es random
-		 */
+		
 		while(gameon){
 			ren.getScreen().setVidas(felix.getVidas());
 			ren.getScreen().setPuntaje(puntaje);
@@ -190,34 +187,24 @@ public final class Juego implements Runnable {
 			}
 			
 			if( felix.getVidas() > 0 ){
-				//cambio de seccion
 				if( iSec < 2 ){
 					iSec++;
 				}else if( level < 9 ){
-					//cambio de nive
 					win();
 					pasarNivel();
 				}else{
-					//fin de juego por ganar
 					win();
 					gameon = false;
 					estado = EstadosJuego.GAMEOVER;
 				}
 			}else 
-				//fin de juego por perder
 				gameover();
 		}				
-		estado=EstadosJuego.HIGHSCORE;
-		ren.setEstado(getEstado());
-		//imprime puntaje y espera
-		try {
-			Thread.sleep(7000);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		ren.cancel();
-		ren.getScreen().dispose();
+
+		//chequeo puntaje
+		//checkHighscore();
+		
+		return highs;
 	}
 	
 	/**
@@ -225,7 +212,7 @@ public final class Juego implements Runnable {
 	 * recibe como parametro. Los println son para controlar el 
 	 * log de consola. 
 	 */
-
+	
 	public void iniPersonajes(int secc){
 		ren.setSeccion(mapa.getSeccion(iSec));
 		ren.cargarTodo();
@@ -259,6 +246,11 @@ public final class Juego implements Runnable {
 	 * a la que no puede ir felix.
 	 * Felix se desplaza por las filas 1 a 3
 	 * i= filas; j= columnas
+	 * 
+	 * Las 2 iteraciones anidadas corresponden a los indices de la matriz de ventanas.
+	 * Cuando check es <0.5 las ventanas se inicilizan rotas. Caso contrario sanas.
+	 * A su vez cuando j=2 e i=1 y i=2 se intancian puerta y balcon respectivamente.
+	 * Luego se suman las ventanas rotas.
 	 * 
 	 * Se crea una seccion unica con esa matriz , luego con eso el mapa.
 	 * Finalmente se instancian felix y ralph.
@@ -296,14 +288,6 @@ public final class Juego implements Runnable {
 		mapa = map;
 	}
 	
-	
-	/**
-	 * Las 2 iteraciones anidadas corresponden a los indices de la matriz de ventanas.
-	 * Cuando check es <0.5 las ventanas se inicilizan rotas. Caso contrario sanas.
-	 * A su vez cuando j=2 e i=1 y i=2 se intancian puerta y balcon respectivamente.
-	 * Luego se suman las ventanas rotas.
-	 * @return
-	 */
 	private Ventana [][] inicializarVentanas(){
 		double check, check2;
 		cantRota = 0;
@@ -452,23 +436,17 @@ public final class Juego implements Runnable {
 		return vent;
 	}
 	
-	/**
-	 * Codigo a ejecutar para pasar de nivel
-	 * Suma 200 puntos
-	 */
 	private final void pasarNivel(){
+		// codigo a ejecutar para pasar de nivel
 		level++;
 		iSec = 0;
+		felix.setVidas(felix.getVidas()+1);
 		ren.getScreen().setVidas(felix.getVidas());
 		puntaje= puntaje+200;
 		ren.getScreen().setPuntaje(puntaje);
 		comenzar(level);
 	}
 
-	/**
-	 * Codigo a ejecturar cuando termina el juego
-	 * imprime la pantalla de game over
-	 */
 	private final void gameover(){
 		gameon = false;
 		estado = EstadosJuego.GAMEOVER;
@@ -484,10 +462,6 @@ public final class Juego implements Runnable {
 		}
 	}
 
-	/**
-	 * codigo a ejecutar cuando se gana un nivel o el juego
-	 * imprime la pantalla de victoria
-	 */
 	private final void win(){
 	 	setEstado(EstadosJuego.WIN);
 		ren.setEstado(getEstado());
@@ -503,7 +477,7 @@ public final class Juego implements Runnable {
 	 * ESTE METODO ES OBSOLETO PARA EL JUEGO.
 	 * SE UTILIZO PARA LA SIMULACION DE LA PRIMER ENTREGA UNICAMENTE.
 	 * SE CONSERVO YA QUE FUE UTIL HASTA TENER LOS CONTROLES DE TECLADO FUNCIONALES.
-	 * Metodo que reliza los movimientos de Felix
+	 * Metodo que reliza los movimientos de Felix.
 	 * Los movimientos son en base a lo indicado, del centro a la derecha
 	 * en el piso 1 y luego recorre el piso 2 hacia izquierda y el 3 a derecha.
 	 * Si uno aumenta las vidas de Felix en sus atributos
@@ -652,13 +626,73 @@ public final class Juego implements Runnable {
 		this.mapa = mapa;
 	}
 
-	/**
-	 * Metodo necesario para el thread que llama al verdedaro metodo principal de juego
-	 */
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+			 int key = e.getKeyCode();
+			 Direccion dir= null;
+			 
+			 	if (key == KeyEvent.VK_LEFT) {
+			        dir = Direccion.LEFT;
+			 		getFelix().move(dir);
+			 		ren.setPosFelix(getFelix().getPosicion());
+			 		ren.refreshImagenPosicionFelix(dir, false);
+			    }
+
+			    if (key == KeyEvent.VK_RIGHT) {
+			        dir = Direccion.RIGHT;
+			 		getFelix().move(dir);
+			 		ren.setPosFelix(getFelix().getPosicion());
+			 		ren.refreshImagenPosicionFelix(dir, true);
+			    }
+
+			    if (key == KeyEvent.VK_UP) {
+			        dir = Direccion.UP;
+			 		getFelix().move(dir);
+			 		ren.setPosFelix(getFelix().getPosicion());
+			 		ren.refreshImagenPosicionFelix(dir, true);
+			    }
+
+			    if (key == KeyEvent.VK_DOWN) {
+			        dir = Direccion.DOWN;
+			 		getFelix().move(dir);
+			 		ren.setPosFelix(getFelix().getPosicion());
+			 		ren.refreshImagenPosicionFelix(dir, true);
+			    }
+			    
+			    if (key == KeyEvent.VK_SPACE) {
+			    	getFelix().martillar();
+			    	felix.getSec().getVentana(felix.getPosicion()).setPuntaje(puntaje+1);
+			    }
+		}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
+	public Renderizable getRen() {
+		return ren;
+	}
+
+	public void setRen(Renderizable ren) {
+		this.ren = ren;
+	}
+
+
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
 		go();
 	}
-
+	
+	
 }

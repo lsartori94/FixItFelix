@@ -1,18 +1,20 @@
 package userInterface;
 import java.awt.Color;
-import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.util.Map;
 import java.util.TreeMap;
-
 import javax.swing.*;
-
 import misc.EstadosJuego;
 import misc.Posicion;
 
+/**
+ * Clase que representa la pantalla del juego, dibuja todos los graficos del mismo.
+ * @author lsartori
+ *
+ */
 @SuppressWarnings("serial")
 public class MapScreen extends JFrame {
 
@@ -58,13 +60,8 @@ public class MapScreen extends JFrame {
 		private Integer puntaje;
 		private Integer vidas;
 	
-
-	public MapScreen(){
-		
-	}
-
 	/**
-	 * Inicia el refresco de imagen
+	 * Inicia el refresco de imagen y dibuja una primera vez
 	 */
 	public void render(){
 		setTitle("FixIt Felix Jr.");
@@ -80,6 +77,9 @@ public class MapScreen extends JFrame {
 		dibujarMapa();
 	}
 	
+	/**
+	 * Metodo sobreescripto para el refrescado de las imagenes
+	 */
 	@Override
 	public void paint(Graphics g){
 		super.paintComponents(g);
@@ -87,22 +87,11 @@ public class MapScreen extends JFrame {
 	}
 
 	/**
-	 * Metodo que dibuja la seccion entera con sus personajes
+	 * Metodo que dibuja el mapa segun los estados del juego
 	 */
 	public void dibujarMapa(){
 		// Pinta seccion
 		this.getGraphics().drawImage(imagenes.get("fondo"), 0, 0, null);
-		
-		String points= "Puntaje= " + puntaje.toString();
-		JLabel textP = new JLabel(points);
-		textP.setOpaque(false);
-		textP.setBackground(Color.BLACK);
-		textP.setForeground(Color.RED);
-	    textP.setFont(new Font("Verdana",1,20));
-	    textP.setBounds(10, 10, 10, 10);
-		JPanel menu = new JPanel();
-	    this.add(textP);
-
 		this.getGraphics().drawImage(imagenes.get("seccion"), posHorizontalMapa, posVerticalMapa, null);
 		int auxAncho;
 		int auxAlto;
@@ -206,10 +195,16 @@ public class MapScreen extends JFrame {
 				}
 			}
 		}else if (estado == EstadosJuego.WIN){
+			//dibuja pantalla de victoria
 			dibujarWin();					
 		}
-		else if (estado == EstadosJuego.GAMEOVER)
+		else if (estado == EstadosJuego.GAMEOVER){
+			//dibuja pantalla de gameover
 			dibujarLose();
+		}else if (estado == EstadosJuego.HIGHSCORE){
+			//dibuja puntaje
+			dibujarPuntaje();
+		}
 	}
 	
 	public void dibujarWin(){
@@ -308,5 +303,15 @@ public class MapScreen extends JFrame {
 		this.vidas = new Integer(vidas);
 	}
 
+	public void dibujarPuntaje(){
+		this.getGraphics().drawImage(imagenes.get("fondo"), 0, 0, null);
+		String points= "Puntaje= " + puntaje.toString();
+		JLabel textP = new JLabel(points);
+		textP.setOpaque(false);
+		textP.setBackground(Color.BLACK);
+		textP.setForeground(Color.RED);
+	    textP.setFont(new Font("Verdana", 1, 100));
+	    this.add(textP);
+	}
 	
 }
