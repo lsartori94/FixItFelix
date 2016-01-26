@@ -22,6 +22,7 @@ public class Felix {
 	 * 
 	 * @author Agustín Liébana lsartori
 	 * 
+	 *
 	 */
 	public void iniciar(Seccion sec){
 		//se asume como posicion inicial el piso 0 a la mitad del mapa (fila 3 de 5)
